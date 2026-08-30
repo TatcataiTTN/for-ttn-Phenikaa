@@ -5,13 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>QML Force Fields — Luyện tập</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%9B%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="vendor/katex/dist/katex.min.css">
 </head>
 <body>
 <header class="topbar">
   <div class="topbar-inner">
-    <h1><span data-i18n="site_title">Luyện tập: Quantum Machine Learning Force Fields</span></h1>
+    <div class="brand">
+      <div class="brand-badge">⚛️</div>
+      <div>
+        <h1><span data-i18n="site_title">Luyện tập: Quantum Machine Learning Force Fields</span></h1>
+        <div class="brand-sub" data-i18n="site_subtitle">PaiNN &amp; siVQLM — 296 câu hỏi, dòng thời gian tương tác, kết quả train thật</div>
+      </div>
+    </div>
     <div class="lang-toggle">
       <button id="btn-vi" class="lang-btn active" data-lang="vi">VI</button>
       <button id="btn-en" class="lang-btn" data-lang="en">EN</button>
@@ -19,7 +27,7 @@
   </div>
   <nav class="tabs">
     <button class="tab-btn" data-tab="history" data-i18n="nav_history">Lịch sử &amp; Động lực</button>
-    <button class="tab-btn active" data-tab="quiz" data-i18n="nav_quiz">Trắc nghiệm (240 câu)</button>
+    <button class="tab-btn active" data-tab="quiz" data-i18n="nav_quiz">Trắc nghiệm (296 câu)</button>
     <button class="tab-btn" data-tab="exercises" data-i18n="nav_exercises">Bài tập tương tác</button>
     <button class="tab-btn" data-tab="compare" data-i18n="nav_compare">So sánh PaiNN vs siVQLM</button>
     <button class="tab-btn" data-tab="about" data-i18n="nav_about">Giới thiệu</button>
@@ -40,9 +48,10 @@
   <!-- ===================== QUIZ TAB ===================== -->
   <section id="tab-quiz" class="tab-panel active">
     <p class="hint" data-i18n="quiz_hint">
-      240 câu hỏi trắc nghiệm chia làm 24 nhóm chủ đề (Phần 1: kiến trúc PaiNN/siVQLM — nhóm 1–8;
-      Phần 2: bối cảnh lịch sử/khoa học — nhóm 9–24), trích từ tài liệu tự học đã kiểm chứng
-      (Exam_Practice/QML_Force_Fields_MCQ_240.tex). Chấm điểm ngay tại trình duyệt, tiến độ lưu ở
+      296 câu hỏi trắc nghiệm chia làm 26 nhóm chủ đề (Phần 1: kiến trúc PaiNN/siVQLM — nhóm 1–8;
+      Phần 2: bối cảnh lịch sử/khoa học — nhóm 9–24; Phần 3: thực hành code/kết quả train thật —
+      nhóm 25–26), trích từ tài liệu tự học đã kiểm chứng
+      (Exam_Practice/QML_Force_Fields_MCQ_296.tex). Chấm điểm ngay tại trình duyệt, tiến độ lưu ở
       localStorage của máy bạn (không gửi lên server nào).
     </p>
     <div class="summary-bar" id="quiz-summary"></div>
@@ -135,8 +144,8 @@
         Trang luyện tập tĩnh, chạy hoàn toàn trong trình duyệt, không có backend/server chấm bài.
         Nội dung bám sát pipeline nghiên cứu: 2 paper hạt giống (PaiNN — Schütt et al. 2021;
         siVQLM — Le et al. 2025), 8 paper mở rộng đã tải và xác minh, đọc source code gốc
-        (SchNetPack + demo PennyLane chính thức), 4 sơ đồ kiến trúc drawio, và tài liệu tự học
-        song ngữ EN-VI.
+        (SchNetPack + demo PennyLane chính thức), 6 sơ đồ kiến trúc/kết quả thật (TikZ/quantikz/
+        chemfig), và tài liệu tự học song ngữ EN-VI.
       </p>
       <p data-i18n="about_p2">
         Đáp án trắc nghiệm được trích xuất tự động từ file LaTeX gốc đã kiểm chứng thủ công
@@ -148,6 +157,21 @@
         mất nếu xoá dữ liệu trình duyệt hoặc dùng chế độ ẩn danh, và không đồng bộ giữa các thiết
         bị.
       </p>
+    </div>
+
+    <div class="card">
+      <h2 data-i18n="practical_title">Kết quả train THẬT (không phải số liệu giả định)</h2>
+      <p data-i18n="practical_p1">
+        Trong lúc xây dự án này, đã đọc trực tiếp 5 checkpoint PaiNN đã train thật trên rMD17
+        ethanol (<code>config.yaml</code> + <code>split.npz</code>, xem Sơ đồ 5), và tự chạy lại
+        toàn bộ pipeline siVQLM trên dữ liệu H<sub>2</sub>O thật (850 mẫu) — cả bản PennyLane
+        chính thức lẫn bản viết lại thuần JAX (xem Sơ đồ 6).
+      </p>
+      <div class="result-highlight" data-i18n="practical_result">
+        Kết quả: MAE ≈ <b>0.166 kcal/mol</b> trên tập test — nằm trong ngưỡng "chemical accuracy"
+        (&lt;1 kcal/mol). Chi tiết đầy đủ ở <code>Source_Code/practical_runs.md</code> và Nhóm
+        25–26 trong phần Trắc nghiệm.
+      </div>
     </div>
   </section>
 </main>

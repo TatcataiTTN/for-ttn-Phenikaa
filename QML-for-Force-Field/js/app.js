@@ -40,22 +40,24 @@ function renderQuizSummary() {
   const bar = document.getElementById("quiz-summary");
   if (!bar) return;
   const groups = groupBy(QUESTIONS);
-  let totalScore = 0, totalDone = 0;
+  let totalScore = 0, totalDone = 0, totalDoneMax = 0, totalAll = QUESTIONS.length;
   groups.forEach((g, groupId) => {
     const saved = loadProgress(groupId);
-    if (saved) { totalScore += saved.score; totalDone += 1; }
+    if (saved) { totalScore += saved.score; totalDone += 1; totalDoneMax += g.items.length; }
   });
   const totalGroups = groups.size;
   const lang = CURRENT_LANG;
   bar.innerHTML = `
     <span class="summary-chip">${lang === "vi" ? "Nhóm đã làm" : "Groups done"}: ${totalDone}/${totalGroups}</span>
-    <span class="summary-chip">${lang === "vi" ? "Tổng điểm" : "Total score"}: ${totalScore}/${totalDone * 10}</span>
+    <span class="summary-chip">${lang === "vi" ? "Tổng điểm" : "Total score"}: ${totalScore}/${totalDoneMax}</span>
+    <span class="summary-chip">${lang === "vi" ? "Tổng số câu" : "Total questions"}: ${totalAll}</span>
   `;
 }
 
 const PART_DIVIDERS = {
   1: { vi: "Phần 1 — Kiến trúc PaiNN & siVQLM (nhóm 1–8)", en: "Part 1 — PaiNN & siVQLM architecture (groups 1–8)" },
   9: { vi: "Phần 2 — Bối cảnh lịch sử & khoa học (nhóm 9–24)", en: "Part 2 — Historical & scientific context (groups 9–24)" },
+  25: { vi: "Phần 3 — Thực hành code & kết quả train thật (nhóm 25–26)", en: "Part 3 — Practical code & real training results (groups 25–26)" },
 };
 
 function renderQuiz() {
@@ -77,8 +79,9 @@ function renderQuiz() {
 
     const head = document.createElement("div");
     head.className = "group-head";
+    const groupTotal = g.items.length;
     const scoreText = saved
-      ? `${I18N[CURRENT_LANG].score_label}: ${saved.score}/10`
+      ? `${I18N[CURRENT_LANG].score_label}: ${saved.score}/${groupTotal}`
       : I18N[CURRENT_LANG].not_done;
     const groupLabel = CURRENT_LANG === "vi" ? "Nhóm" : "Group";
     head.innerHTML = `<h3>${groupLabel} ${groupId} — ${g.name}</h3><span class="group-score">${scoreText}</span>`;
@@ -111,7 +114,7 @@ function renderQuiz() {
     const submitBtn = document.createElement("button");
     submitBtn.className = "btn";
     submitBtn.textContent = I18N[CURRENT_LANG].submit_group;
-    submitBtn.addEventListener("click", () => submitGroup(groupId, g.items, head));
+    submitBtn.addEventListener("click", () => submitGroup(groupId, g.items, head, groupTotal));
     const resetBtn = document.createElement("button");
     resetBtn.className = "btn secondary";
     resetBtn.style.marginLeft = "8px";
@@ -152,7 +155,8 @@ function markAnswered(qDiv, q, chosenIdx) {
   });
 }
 
-function submitGroup(groupId, items, head) {
+function submitGroup(groupId, items, head, groupTotal) {
+  groupTotal = groupTotal || items.length;
   const answers = {};
   let score = 0;
   let allAnswered = true;
@@ -165,8 +169,8 @@ function submitGroup(groupId, items, head) {
   });
   if (!allAnswered) {
     alert(CURRENT_LANG === "vi"
-      ? "Vui lòng trả lời hết 10 câu trong nhóm trước khi nộp."
-      : "Please answer all 10 questions in this group before submitting.");
+      ? `Vui lòng trả lời hết ${groupTotal} câu trong nhóm trước khi nộp.`
+      : `Please answer all ${groupTotal} questions in this group before submitting.`);
     return;
   }
   items.forEach(q => {
@@ -174,7 +178,7 @@ function submitGroup(groupId, items, head) {
     markAnswered(qDiv, q, answers[q.id]);
   });
   saveProgress(groupId, { score, answers });
-  head.querySelector(".group-score").textContent = `${I18N[CURRENT_LANG].score_label}: ${score}/10`;
+  head.querySelector(".group-score").textContent = `${I18N[CURRENT_LANG].score_label}: ${score}/${groupTotal}`;
   renderQuizSummary();
 }
 

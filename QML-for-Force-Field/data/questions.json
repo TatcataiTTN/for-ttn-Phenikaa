@@ -3118,5 +3118,733 @@
       "Experimental spectroscopy data directly"
     ],
     "correct_index": 0
+  },
+  {
+    "id": 241,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "The SchNetPack training CLI entry point is:",
+    "options": [
+      "schnetpack-run",
+      "spktrain (a thin wrapper calling schnetpack.cli.train)",
+      "spkfit",
+      "python train.py directly, no CLI wrapper exists"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 242,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "spktrain's train() function is decorated with:",
+    "options": [
+      "@torch.jit.script",
+      "@click.command()",
+      "@hydra.main(config_path=\"configs\", config_name=\"train\")",
+      "@pytest.fixture"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 243,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "To train PaiNN on rMD17 ethanol matching the real shipped checkpoint, the CLI override for the molecule is:",
+    "options": [
+      "data.name=ethanol",
+      "molecule=ethanol.db",
+      "--molecule ethanol",
+      "data.molecule=ethanol"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 244,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "The repo ships 5 pretrained PaiNN checkpoints on rMD17 ethanol named:",
+    "options": [
+      "there are no pretrained checkpoints in the repo",
+      "painn_1 through painn_5 (an ensemble of 5 independent seeds)",
+      "painn_v1 through painn_v10",
+      "painn_best only, a single checkpoint"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 245,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "Each checkpoint directory (e.g. painn_1/) contains:",
+    "options": [
+      "A Jupyter notebook only",
+      "best_model, config.yaml, and split.npz",
+      "Only a .pt file, nothing else",
+      "Only a README"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 246,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "Attempting torch.load() on best_model without the schnetpack package installed:",
+    "options": [
+      "Only works if PennyLane is installed instead",
+      "Succeeds immediately, no dependency needed",
+      "Silently returns None",
+      "Fails with ModuleNotFoundError: No module named 'schnetpack' (verified this session)"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 247,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "The real cutoff radius used in painn_1/config.yaml is:",
+    "options": [
+      "0.5",
+      "10.0",
+      "5.0 (Angstrom)",
+      "1.0"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 248,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "The real learning rate in painn_1/config.yaml is:",
+    "options": [
+      "0.001 (1e-3)",
+      "0.01",
+      "1e-2 same as siVQLM",
+      "0.1"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 249,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "The real n_atom_basis (embedding dimension C) used is:",
+    "options": [
+      "32",
+      "128",
+      "1024",
+      "8"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 250,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "The real n_interactions (number of PaiNN blocks) used is:",
+    "options": [
+      "3",
+      "100",
+      "1",
+      "10"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 251,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "shared_interactions and shared_filters in the real config are both set to:",
+    "options": [
+      "true (all blocks share the same weights)",
+      "true for interactions, false for filters",
+      "false (each interaction block has independent weights)",
+      "not present in the config at all"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 252,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "The real data.batch_size in painn_1/config.yaml is:",
+    "options": [
+      "10",
+      "1",
+      "256 (same as siVQLM)",
+      "1000"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 253,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "The default rmd17.yaml config (before any override) uses num_train/num_val of:",
+    "options": [
+      "900 / 100 (identical to the trained checkpoint, no override needed)",
+      "9000 / 500",
+      "100 / 10",
+      "950 / 50"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 254,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "The default molecule in configs/data/rmd17.yaml (before override) is:",
+    "options": [
+      "aspirin",
+      "water",
+      "ethanol",
+      "malonaldehyde"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 255,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "The real split.npz for painn_1 shows train_idx / val_idx / test_idx sizes of:",
+    "options": [
+      "1000 / 1000 / 98000",
+      "900 / 100 / 99000",
+      "80 / 20 / 0",
+      "900 / 100 / 900"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 256,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "rMD17 ethanol's total number of configurations (train+val+test) is:",
+    "options": [
+      "850 (same as the siVQLM H2O dataset)",
+      "10,000",
+      "1,000,000",
+      "100,000"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 257,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "In the real config, the energy loss_weight and force loss_weight are:",
+    "options": [
+      "0.01 (energy) and 0.99 (forces)",
+      "0.99 (energy) and 0.01 (forces), reversed",
+      "0.5 and 0.5, equal weighting",
+      "1.0 and 0.0, forces ignored entirely"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 258,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "The real optimizer class used is:",
+    "options": [
+      "jax.example_libraries.optimizers.adam (same as siVQLM)",
+      "torch.optim.SGD",
+      "torch.optim.RMSprop",
+      "torch.optim.AdamW"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 259,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "The real learning-rate scheduler is:",
+    "options": [
+      "OneCycleLR",
+      "CosineAnnealingLR",
+      "A fixed learning rate, no scheduler used",
+      "schnetpack.train.ReduceLROnPlateau, factor=0.5, patience=75"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 260,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "The real EarlyStopping patience (in epochs of no val_loss improvement) is:",
+    "options": [
+      "0, disabled",
+      "5",
+      "1000 (same as max_epochs)",
+      "200"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 261,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "The real trainer.max_epochs is:",
+    "options": [
+      "10",
+      "5000 (same as siVQLM num_batches)",
+      "1000",
+      "unlimited, no cap set"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 262,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "The ExponentialMovingAverage callback's decay parameter in the real config is:",
+    "options": [
+      "0.5",
+      "1.0 (no averaging effect)",
+      "0.995",
+      "0.001"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 263,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "The real data transforms are applied in this order:",
+    "options": [
+      "CastTo32 first, then everything else",
+      "MatScipyNeighborList first, then SubtractCenterOfMass",
+      "Only CastTo32, no other transforms",
+      "SubtractCenterOfMass -> RemoveOffsets(energy) -> MatScipyNeighborList(cutoff) -> CastTo32"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 264,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "The real postprocessors (applied after the model, at inference) include:",
+    "options": [
+      "CastTo64 and AddOffsets(energy, add_mean=True)",
+      "RemoveOffsets, undoing the training-time offset removal",
+      "Only a softmax layer",
+      "No postprocessors are defined"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 265,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "The real property units declared in the config are:",
+    "options": [
+      "energy: kcal/mol, forces: kcal/mol/Ang",
+      "energy: Hartree, forces: Hartree/Bohr (same units as siVQLM)",
+      "no units declared, dimensionless",
+      "energy: eV, forces: eV/Ang"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 266,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "The radial basis function used is:",
+    "options": [
+      "A single raw distance, no basis expansion",
+      "GaussianRBF with n_rbf=20",
+      "Bessel basis with n_rbf=8",
+      "Fourier basis with n_rbf=100"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 267,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "The cutoff function (smooth envelope) used is:",
+    "options": [
+      "A hard step function (no smoothing)",
+      "No cutoff function is used",
+      "PolynomialCutoff of degree 10",
+      "CosineCutoff"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 268,
+    "group": 25,
+    "group_name": "SchNetPack practical A -- CLI, Hydra config, real checkpoint",
+    "stem": "This session's environment limitation regarding SchNetPack, honestly documented, is:",
+    "options": [
+      "The config.yaml and split.npz files could not be read either",
+      "SchNetPack cannot be installed on macOS at all",
+      "schnetpack was fully installed and the model was fully re-evaluated with new MAE numbers",
+      "The full schnetpack package (with pytorch_lightning, hydra-core, ase, matscipy, torchmetrics) was NOT installed, to avoid heavy changes to the user's global Python environment -- so best_model was not re-evaluated for real MAE"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 269,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "Initially, `import pennylane` failed in this session's environment because:",
+    "options": [
+      "The demo.py file itself had a syntax error",
+      "JAX and PennyLane cannot coexist in the same environment, ever",
+      "PennyLane was not installed at all and pip does not exist",
+      "pennylane.qchem eagerly imports h5py, which was built against a different numpy ABI than the already-installed numpy"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 270,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "The fix applied this session for the pennylane import error was:",
+    "options": [
+      "Reinstalling the entire Python distribution",
+      "pip install --upgrade h5py (only upgrading h5py)",
+      "Downgrading numpy to version 1.x",
+      "Switching from pip to conda for every package"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 271,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "After fixing h5py, which previously-working packages were verified to still import correctly?",
+    "options": [
+      "None -- the fix broke everything else",
+      "Only jax was re-checked",
+      "numpy, torch, jax, scikit-learn, and matplotlib (all re-checked)",
+      "Only numpy was re-checked"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 272,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "The real H2O dataset shipped with the official demo contains how many configurations?",
+    "options": [
+      "5,000",
+      "100,000 (same as rMD17 ethanol)",
+      "850",
+      "3"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 273,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "The real Energy.npy values fall in the range:",
+    "options": [
+      "-627.5 to 0 (kcal/mol)",
+      "1 to 100 (arbitrary units)",
+      "approximately -76.319749 to -76.302945 (Hartree)",
+      "0 to 1 (already pre-scaled in the raw file)"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 274,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "Positions.npy and Forces.npy both have shape:",
+    "options": [
+      "(850, 2, 3), only the 2 active atoms stored",
+      "(850, 3, 3) -- 850 samples, 3 atoms, 3 Cartesian components",
+      "(3, 850, 3), atoms as the first axis",
+      "(850,), a flat 1-D array"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 275,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "Does the real dataset need to be downloaded before running the demo?",
+    "options": [
+      "Yes, a 50GB download is required first",
+      "No -- Positions/Energy/Forces.npy already ship inside the repo's eqnn_force_field_data/ folder",
+      "Yes, but only from a paid API",
+      "No data exists; it must be generated synthetically"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 276,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "When the official demo.py was actually run this session (num_batches reduced 5000 to 300 to save time), the initial (step 0) train/test loss was approximately:",
+    "options": [
+      "train=NaN, test=NaN (it crashed immediately)",
+      "train=0.00001, test=0.00001 (already converged at step 0)",
+      "train=100.0, test=100.0",
+      "train=0.18668, test=0.17282"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 277,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "After 300 steps, the official demo.py's test loss reached approximately:",
+    "options": [
+      "0.00444 (down from 0.17282)",
+      "Still 0.17282, no improvement at all",
+      "Exactly 0, perfect fit",
+      "0.5, it got worse"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 278,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "Why was num_batches reduced from 5000 to 300 for the official-demo cross-check run?",
+    "options": [
+      "To save wall-clock time while still checking the loss converges in the right direction/order of magnitude",
+      "Because pennylane cannot run more than 300 steps",
+      "Because the dataset only has 300 valid samples",
+      "5000 steps caused a memory overflow"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 279,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "What was the purpose of running the official demo.py at all, given the raw-JAX reimplementation already existed?",
+    "options": [
+      "Because raw-JAX cannot compute gradients",
+      "There was no purpose; it was run by accident",
+      "To cross-validate that the raw-JAX reimplementation's convergence behaviour is consistent with the original, catching potential bugs in the from-scratch rewrite",
+      "To replace the raw-JAX version entirely, which was then deleted"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 280,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "The comparison between the two runs (official demo vs raw-JAX) showed:",
+    "options": [
+      "Both converge to a similar order-of-magnitude test loss within a few hundred steps, supporting that the raw-JAX rewrite has no logic bugs",
+      "The two runs produced completely contradictory, unrelated results",
+      "The official demo failed to run at all",
+      "The raw-JAX version diverged to infinity"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 281,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "eqnn_force_field_data/ is located under which path in this project?",
+    "options": [
+      "Literature_Review/papers/",
+      "Source_Code/qml-force-fields/pennylane-qml/demonstrations_v2/tutorial_eqnn_force_field/",
+      "Tự học /QML_Force_Fields/",
+      "Reference Drawio Latex/"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 282,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "Is the environment fix (h5py upgrade) documented anywhere in the project for future reproducibility?",
+    "options": [
+      "Yes, in Source_Code/practical_runs.md section 2.1",
+      "It is documented in the MCQ answer key only",
+      "No, it was fixed silently with no record",
+      "Only in a private note not saved to any file"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 283,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "The raw-JAX reimplementation (no PennyLane) is saved at:",
+    "options": [
+      "Reference Drawio Latex/raw_jax_sivqlm.py",
+      "Source_Code/schnetpack/raw_jax.py",
+      "Source_Code/prototypes/raw_jax_sivqlm.py",
+      "It was not saved anywhere, only run interactively"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 284,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "Why was a raw-JAX reimplementation written at all, once pennylane was working?",
+    "options": [
+      "Because PennyLane cannot compute gradients",
+      "Because JAX is faster than PennyLane in every possible case, with no exceptions",
+      "It was already written as a fallback before the pennylane fix succeeded, and is pedagogically valuable since it makes every gate an explicit matrix (useful for teaching), including the ring-topology 'odd' layer the block diagram could not show",
+      "Because the official demo.py contains a bug that had to be fixed"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 285,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "In the raw-JAX reimplementation, each gate is represented as:",
+    "options": [
+      "A PennyLane QNode, same as the original",
+      "An explicit 16x16 unitary matrix (since the full system is 4 qubits, dimension 2 to the power 4 = 16), built via np.kron/jnp.kron",
+      "A classical neural network layer",
+      "A random number with no matrix structure"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 286,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "Unlike Sơ đồ 3 (the quantikz block diagram), the raw-JAX script implements:",
+    "options": [
+      "The full 'odd' trainable layer including the (3,0) ring-topology wraparound pair, via an explicit permutation/kron construction",
+      "Only the 'even' layer, identical in scope to the diagram",
+      "A completely different, unrelated circuit architecture",
+      "Fewer gates than the diagram, a simplified version"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 287,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "In the raw-JAX run, the train/test split used was:",
+    "options": [
+      "50/50 with no fixed seed",
+      "A fixed 10-sample test set only",
+      "80\\%/20\\% with numpy seed=42",
+      "100\\% train, no test set held out"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 288,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "The raw-JAX run used batch_size and number of training steps of:",
+    "options": [
+      "batch_size=128, 400 steps",
+      "batch_size=256, 5000 steps (identical to the official demo defaults)",
+      "batch_size=10, matching SchNetPack's real batch_size",
+      "batch_size=1, 10 steps"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 289,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "The optimizer and learning rate used in the raw-JAX run were:",
+    "options": [
+      "AdamW, lr=1e-3 (identical to the real SchNetPack config)",
+      "Adam, lr=1e-2 (via jax.example_libraries.optimizers.adam)",
+      "Plain SGD, lr=1.0",
+      "No optimizer; parameters were fixed at initialization"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 290,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "After 400 steps, the raw-JAX run's train/test loss reached approximately:",
+    "options": [
+      "It diverged to NaN",
+      "train=0, test=0, exactly zero",
+      "train=0.00188, test=0.00125",
+      "train=0.4, test=0.4, no improvement"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 291,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "The raw-JAX run's final test MAE in the model's native scaled units ([-1,1]) was:",
+    "options": [
+      "approximately 3.15 (far outside the valid output range)",
+      "exactly 1.0, the maximum possible error",
+      "approximately 0.99999, essentially random",
+      "approximately 0.031525"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 292,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "Converting that scaled MAE back to physical units (Hartree) using the same MinMaxScaler.scale_, the real result was:",
+    "options": [
+      "exactly 0 Hartree, a perfect fit",
+      "approximately 0.00026487 Hartree",
+      "approximately 76.3 Hartree (the full energy scale, not the error)",
+      "approximately 1000 Hartree"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 293,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "Converting that MAE to kcal/mol (1 Hartree = 627.5 kcal/mol), the real result is approximately:",
+    "options": [
+      "0.00166 kcal/mol",
+      "0.166 kcal/mol",
+      "1.66 x 10 to the power 6 kcal/mol",
+      "166 kcal/mol"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 294,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "Is 0.166 kcal/mol within the 'chemical accuracy' threshold (<1 kcal/mol) discussed in Section 1.2 of the self-study document?",
+    "options": [
+      "The units cannot be compared at all",
+      "Chemical accuracy does not apply to force-field energies, only to reaction barriers",
+      "No, it is about 6x too large",
+      "Yes, comfortably within it"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 295,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "The total real wall-clock time for the 400-step raw-JAX training run was approximately:",
+    "options": [
+      "19.7 seconds on CPU",
+      "19.7 hours, requiring an overnight run",
+      "19.7 minutes on a quantum computer",
+      "0.0197 seconds, i.e. instantaneous"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 296,
+    "group": 26,
+    "group_name": "siVQLM practical A -- environment fix, real data, official demo run",
+    "stem": "What does the raw-JAX run's speed (under 20 seconds, CPU-only, no real quantum hardware) illustrate about siVQLM at this scale?",
+    "options": [
+      "That JAX cannot run on CPUs, only GPUs",
+      "At 4 qubits, exact statevector simulation is cheap enough that no quantum hardware or GPU is needed at all for this scale of problem",
+      "That the demo secretly used a real IBM quantum computer",
+      "That siVQLM already requires a supercomputer even at 4 qubits"
+    ],
+    "correct_index": 1
   }
 ]

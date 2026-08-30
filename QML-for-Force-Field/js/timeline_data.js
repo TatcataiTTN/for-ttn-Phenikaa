@@ -5,8 +5,8 @@ const TIMELINE = [
     year: "1924",
     label: { vi: "Thế năng Lennard-Jones", en: "Lennard-Jones potential" },
     detail: {
-      vi: "John Lennard-Jones đề xuất U_LJ(r) = 4ε[(σ/r)^12 − (σ/r)^6] để mô tả lực hút van der Waals và lực đẩy Pauli. Có thể coi là số hạng \"trường lực\" đầu tiên theo nghĩa hiện đại — vẫn dùng trong mọi trường lực cổ điển ngày nay.",
-      en: "John Lennard-Jones proposes U_LJ(r) = 4ε[(σ/r)^12 − (σ/r)^6] to model van der Waals attraction and Pauli repulsion. Arguably the first modern 'force field' term — still used in every classical force field today."
+      vi: "John Lennard-Jones đề xuất $U_{LJ}(r) = 4\\varepsilon\\left[(\\sigma/r)^{12} - (\\sigma/r)^{6}\\right]$ để mô tả lực hút van der Waals và lực đẩy Pauli. Có thể coi là số hạng \"trường lực\" đầu tiên theo nghĩa hiện đại — vẫn dùng trong mọi trường lực cổ điển ngày nay.",
+      en: "John Lennard-Jones proposes $U_{LJ}(r) = 4\\varepsilon\\left[(\\sigma/r)^{12} - (\\sigma/r)^{6}\\right]$ to model van der Waals attraction and Pauli repulsion. Arguably the first modern 'force field' term — still used in every classical force field today."
     }
   },
   {
@@ -79,6 +79,14 @@ const TIMELINE = [
     detail: {
       vi: "Le, Kiss, Schuhmacher, Tavernelli, Tacchino: VQLM bất biến đối xứng đầu tiên cho force field — LiH, H2O, dimer H2O. Vượt trội VQLM tổng quát về trainability, không thấy barren plateau ở độ sâu nông. Đây là 'Cánh cửa 2' — trọng tâm chính của dự án này.",
       en: "Le, Kiss, Schuhmacher, Tavernelli, Tacchino: the first symmetry-invariant VQLM for force fields — LiH, H2O, water dimer. Outperforms generic VQLMs on trainability, no barren plateau observed at shallow depth. This is 'Door 2' — this project's main focus."
+    }
+  },
+  {
+    year: "2026",
+    label: { vi: "Kết quả thật từ dự án này", en: "Real results from this project" },
+    detail: {
+      vi: "Trong phiên làm việc thực hiện dự án này: đọc trực tiếp 5 checkpoint PaiNN đã train thật trên rMD17 ethanol (config.yaml + split.npz, xem Sơ đồ 5), và tự chạy lại toàn bộ pipeline siVQLM trên dữ liệu H$_2$O thật (850 mẫu) — cả bản PennyLane chính thức lẫn bản viết lại thuần JAX, đạt MAE $\\approx$ 0.166 kcal/mol, nằm trong ngưỡng \"chemical accuracy\" (xem Sơ đồ 6, và Nhóm 25–26 trong phần Trắc nghiệm).",
+      en: "During this project's working session: directly read 5 real pretrained PaiNN checkpoints on rMD17 ethanol (config.yaml + split.npz, see Diagram 5), and actually re-ran the full siVQLM pipeline on real H$_2$O data (850 samples) — both the official PennyLane version and a from-scratch JAX rewrite, reaching MAE $\\approx$ 0.166 kcal/mol, within \"chemical accuracy\" (see Diagram 6, and Groups 25–26 in the Quiz tab)."
     }
   },
 ];
