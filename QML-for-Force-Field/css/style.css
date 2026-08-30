@@ -86,6 +86,12 @@ nav.tabs::-webkit-scrollbar { display: none; }
 }
 .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
 .tab-btn:hover:not(.active) { color: var(--ink); }
+.tab-btn-slides {
+  display: inline-flex; align-items: center; text-decoration: none;
+  background: var(--accent-grad, var(--accent)); color: #fff; border-radius: 8px 8px 0 0;
+  margin-right: 6px;
+}
+.tab-btn-slides:hover { color: #fff; opacity: .92; }
 
 main { max-width: 1080px; margin: 0 auto; padding: 28px 20px 70px; }
 .tab-panel { display: none; animation: fadeIn .25s ease; }

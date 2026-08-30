@@ -5,6 +5,7 @@ const I18N = {
   vi: {
     site_title: "Luyện tập: Quantum Machine Learning Force Fields",
     site_subtitle: "PaiNN & siVQLM — 296 câu hỏi, dòng thời gian tương tác, kết quả train thật",
+    nav_slides: "📖 Học đầy đủ (Slides)",
     nav_history: "Lịch sử & Động lực",
     nav_quiz: "Trắc nghiệm (296 câu)",
     nav_exercises: "Bài tập tương tác",
@@ -46,6 +47,7 @@ const I18N = {
   en: {
     site_title: "Practice: Quantum Machine Learning Force Fields",
     site_subtitle: "PaiNN & siVQLM — 296 questions, interactive timeline, real training results",
+    nav_slides: "📖 Full study (Slides)",
     nav_history: "History & Motivation",
     nav_quiz: "Quiz (296 questions)",
     nav_exercises: "Interactive exercises",

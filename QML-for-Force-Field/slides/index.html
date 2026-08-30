@@ -1,0 +1,1234 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<title>Học Máy Lượng Tử cho Trường Lực Phân Tử — Slides</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;1,300;1,400;1,500&family=Hanken+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<style>
+  :root {
+    --paper:    #F0EBDE;   /* warm cream / ivory paper canvas */
+    --paper-2:  #E6E0CE;
+    --ink:      #1F2BE0;   /* electric cobalt / royal blue */
+    --ink-soft: #5560E5;   /* lighter cobalt for secondary marks */
+    --grid:     rgba(31, 43, 224, 0.10);  /* very faint blue grid */
+    --rule:     #1F2BE0;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; background: #0a0a0a; }
+  body {
+    font-family: 'Hanken Grotesk', 'Helvetica Neue', sans-serif;
+    color: var(--ink);
+    overflow: hidden;
+  }
+
+  /* Deck wrapper — fills the viewport */
+  .deck { position: fixed; inset: 0; display: grid; place-items: center; }
+  .stage {
+    position: relative;
+    width: 100vw; height: 100vh;
+    overflow: hidden;
+    background: var(--paper);
+  }
+
+  /* Graph-paper grid behind every slide */
+  .stage::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(to right, var(--grid) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+    background-size: clamp(28px, 2.2vw, 44px) clamp(28px, 2.2vw, 44px);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .slide {
+    position: absolute; inset: 0;
+    opacity: 0; pointer-events: none;
+    transition: opacity 280ms ease;
+    z-index: 2;
+  }
+  .slide.active { opacity: 1; pointer-events: auto; }
+
+  /* ─── TYPE SYSTEM ──────────────────────────────────────────── */
+  .disp {
+    font-family: 'Newsreader', Georgia, serif;
+    
+    font-weight: 400;
+    line-height: 0.92;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+  .body-tx {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .micro {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink);
+  }
+  .mono {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-weight: 400;
+    color: var(--ink);
+  }
+
+  /* Single page-number marker, shared across slides.
+     Sits ABOVE the bottom hairline rule, with deliberate space between the
+     two so the chrome elements don't collide on any slide. */
+  .pagenum {
+    position: absolute;
+    right: clamp(28px, 2.4vw, 48px);
+    bottom: clamp(48px, 4.8vh, 76px);
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(11px, 0.82vw, 13px);
+    color: var(--ink);
+    letter-spacing: 0.06em;
+    z-index: 9;
+  }
+
+  /* Top + bottom slim hairlines that frame each slide.
+     Echo of the reference's thin rule above and below the composition. The
+     bottom rule is pinned at the slide's lower edge so the page number,
+     which sits above it, has clear space and never overlaps. */
+  .hairlines::before,
+  .hairlines::after {
+    content: '';
+    position: absolute;
+    left: clamp(36px, 3.6vw, 80px);
+    right: clamp(36px, 3.6vw, 80px);
+    height: 1.5px;
+    background: var(--ink);
+    z-index: 4;
+    pointer-events: none;
+  }
+  .hairlines::before { top: clamp(28px, 2.6vh, 48px); }
+  .hairlines::after  { bottom: clamp(20px, 2vh, 32px); }
+
+  /* Fixed nav hint — sits above the bottom hairline, same vertical level
+     as the page number on the opposite side, so neither overlaps the rule. */
+  .nav-hint {
+    position: fixed;
+    left: clamp(36px, 3.6vw, 80px);
+    bottom: clamp(48px, 4.8vh, 76px);
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(10px, 0.75vw, 12px);
+    color: var(--ink);
+    letter-spacing: 0.08em;
+    opacity: 0.4;
+    z-index: 12;
+    pointer-events: none;
+  }
+
+  /* ─── DECORATIVE: pixel-glitch stair (reusable SVG) ─────────── */
+  /* The SVG below renders a column of stair-stepped rectangles, each
+     filled with vertical scanlines — a direct echo of the reference's
+     "pixelated" shape on the right side. Decorative only, pointer-events
+     disabled, sits behind content. */
+  .pixel-glitch {
+    position: absolute;
+    pointer-events: none;
+    z-index: 3;
+  }
+  .pixel-glitch svg { display: block; width: 100%; height: 100%; }
+
+  /* ─── DECORATIVE: small QR-style block ───────────────────────── */
+  /* The QR is paper-backgrounded so it reads as a discrete patch when it
+     overlaps the pixel-glitch column behind it — without the paper fill,
+     the empty grid cells let the glitch's vertical scanlines bleed
+     through and the QR loses its shape. */
+  .qr-block {
+    position: absolute;
+    pointer-events: none;
+    z-index: 5;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    gap: 1.5px;
+    background: var(--paper);
+    padding: 4px;
+    box-shadow: 0 0 0 1.5px var(--paper);
+  }
+  .qr-block .px { background: var(--paper); }
+  .qr-block .px.on { background: var(--ink); }
+
+  /* ──────────────────────────────────────────────────────────────
+     SLIDE 1 — COVER
+     ────────────────────────────────────────────────────────────── */
+  .s-cover { background: var(--paper); }
+
+  .s-cover .titlewrap {
+    position: absolute;
+    left: clamp(36px, 3.6vw, 80px);
+    top: clamp(56px, 9vh, 160px);
+    z-index: 5;
+    max-width: 60%;
+  }
+  .s-cover .title {
+    font-family: 'Newsreader', Georgia, serif;
+    
+    font-weight: 400;
+    font-size: clamp(100px, min(11vw, 18vh), 200px);
+    line-height: 0.92;
+    letter-spacing: -0.008em;
+    color: var(--ink);
+  }
+  .s-cover .subkicker {
+    margin-top: clamp(20px, 2.2vh, 36px);
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .s-cover .subkicker .l {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: clamp(13px, 1vw, 16px);
+    color: var(--ink);
+  }
+  .s-cover .subkicker .ed {
+    font-family: 'Newsreader', Georgia, serif;
+    
+    font-size: clamp(28px, min(2.8vw, 4.6vh), 50px);
+    line-height: 1.1;
+    color: var(--ink);
+  }
+
+  /* Pixel-glitch column on the right side of the cover */
+  .s-cover .pixel-glitch {
+    top: clamp(60px, 6vh, 120px);
+    right: clamp(36px, 3.6vw, 80px);
+    width: clamp(280px, 32vw, 560px);
+    bottom: clamp(110px, 12vh, 200px);
+  }
+
+  /* QR block top-right */
+  .s-cover .qr-block {
+    top: clamp(60px, 6vh, 120px);
+    right: clamp(120px, 8vw, 200px);
+    width: clamp(58px, 4.2vw, 84px);
+    height: clamp(58px, 4.2vw, 84px);
+  }
+
+  /* Vertical right-side label column (reads as a stack of micro-text,
+     replacing the Korean column in the reference). */
+  .s-cover .vstack {
+    position: absolute;
+    right: clamp(36px, 3.6vw, 60px);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    display: flex; flex-direction: column;
+    gap: clamp(10px, 1.2vh, 18px);
+    align-items: end;
+  }
+  .s-cover .vstack .v-row {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(12px, 0.9vw, 15px);
+    line-height: 1;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  /* Footer row */
+  .s-cover .cfooter {
+    /* Constrained to the left half so it never runs under the right-side
+       pixel-glitch column on any viewport. */
+    position: absolute;
+    left: clamp(36px, 3.6vw, 80px);
+    right: clamp(680px, 40vw, 880px);
+    bottom: clamp(56px, 8vh, 120px);
+    display: flex; justify-content: flex-start; align-items: end;
+    z-index: 5;
+    gap: clamp(28px, 3vw, 56px);
+  }
+  .s-cover .cfooter .colf {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(14px, 0.92vw, 15px);
+    line-height: 1.45;
+    color: var(--ink);
+  }
+  .s-cover .cfooter .colf .ftag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
+    font-size: clamp(11px, 0.78vw, 13px);
+    margin-bottom: 4px;
+    color: var(--ink);
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     SLIDE 2 — MANIFESTO
+     ────────────────────────────────────────────────────────────── */
+  .s-manifesto { background: var(--paper); }
+  .s-manifesto .stmt-wrap {
+    position: absolute;
+    left: clamp(60px, 8vw, 160px);
+    right: clamp(60px, 8vw, 160px);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    text-align: left;
+  }
+  .s-manifesto .stmt {
+    font-family: 'Newsreader', Georgia, serif;
+    
+    font-weight: 400;
+    font-size: clamp(56px, min(6.4vw, 11vh), 120px);
+    line-height: 1.05;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+  .s-manifesto .stmt .roman {
+    font-style: normal;
+    font-weight: 500;
+  }
+  .s-manifesto .attr {
+    margin-top: clamp(28px, 3vh, 50px);
+    display: flex; gap: clamp(14px, 1.4vw, 24px); align-items: center;
+    border-top: 1px solid var(--ink);
+    padding-top: clamp(10px, 1.2vh, 18px);
+  }
+  .s-manifesto .attr .who {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: clamp(12px, 0.85vw, 14px);
+    color: var(--ink);
+  }
+  .s-manifesto .attr .meta-tag {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(12px, 0.82vw, 14px);
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    opacity: 0.78;
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     SLIDE 3 — INDEX (numbered list of trends)
+     ────────────────────────────────────────────────────────────── */
+  .s-index { background: var(--paper); }
+  .s-index .frame {
+    position: absolute;
+    inset: clamp(76px, 8vh, 130px) clamp(36px, 3.6vw, 80px) clamp(100px, 10vh, 150px);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    gap: clamp(20px, 2.2vh, 36px);
+    z-index: 5;
+  }
+  .s-index .topbar {
+    display: flex; align-items: end; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: clamp(12px, 1.4vh, 22px);
+    gap: 30px;
+  }
+  .s-index .topbar .h {
+    font-family: 'Newsreader', Georgia, serif;
+    
+    font-size: clamp(48px, min(5vw, 8.5vh), 100px);
+    line-height: 0.95;
+    color: var(--ink);
+  }
+  .s-index .topbar .lab-tag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
+    font-size: clamp(12px, 0.9vw, 14px);
+    color: var(--ink); text-align: right;
+  }
+  .s-index .list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: clamp(14px, 2vh, 28px) clamp(28px, 3vw, 56px);
+  }
+  .s-index .row { align-self: stretch; }
+  .s-index .row {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: clamp(12px, 1.4vw, 22px);
+    border-bottom: 1px solid rgba(31, 43, 224, 0.18);
+    padding-bottom: clamp(12px, 1.4vh, 20px);
+  }
+  .s-index .row .num-tag {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(13px, 0.9vw, 15px);
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    padding-top: 6px;
+  }
+  .s-index .row h3 {
+    margin: 0 0 6px 0;
+    font-family: 'Newsreader', Georgia, serif;
+    
+    font-weight: 400;
+    font-size: clamp(26px, 2vw, 40px);
+    line-height: 1.05;
+    color: var(--ink);
+  }
+  .s-index .row p {
+    margin: 0;
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(14px, 0.95vw, 15px);
+    line-height: 1.5;
+    color: var(--ink);
+    max-width: 92%;
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     SLIDE 4 — CHAPTER (display + intro on glitch background)
+     ────────────────────────────────────────────────────────────── */
+  .s-chapter { background: var(--paper); }
+  .s-chapter .pixel-glitch {
+    top: clamp(60px, 6vh, 120px);
+    right: clamp(0px, 0vw, 0px);
+    width: clamp(220px, 26vw, 460px);
+    bottom: clamp(110px, 12vh, 200px);
+    opacity: 0.75;
+  }
+  .s-chapter .frame {
+    position: absolute;
+    left: clamp(36px, 3.6vw, 80px);
+    right: clamp(280px, 30vw, 540px);
+    top: clamp(80px, 9vh, 140px);
+    bottom: clamp(110px, 11vh, 170px);
+    display: flex; flex-direction: column;
+    justify-content: center;
+    z-index: 5;
+    gap: clamp(18px, 2vh, 32px);
+  }
+  .s-chapter .nm-tag {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(13px, 0.92vw, 15px);
+    color: var(--ink);
+    letter-spacing: 0.06em;
+  }
+  .s-chapter .ttl {
+    font-family: 'Newsreader', Georgia, serif;
+    
+    font-weight: 400;
+    font-size: clamp(56px, min(6vw, 10vh), 130px);
+    line-height: 1.0;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .s-chapter .lede {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 400;
+    font-size: clamp(15px, 1vw, 18px);
+    line-height: 1.5;
+    color: var(--ink);
+    max-width: 56ch;
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     SLIDE 5 — DATA (vertical pixel-stack bar chart)
+     ────────────────────────────────────────────────────────────── */
+  .s-data { background: var(--paper); }
+  .s-data .frame {
+    position: absolute;
+    inset: clamp(76px, 8vh, 130px) clamp(36px, 3.6vw, 80px) clamp(100px, 10vh, 150px);
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: clamp(20px, 2vh, 36px);
+    z-index: 5;
+  }
+  .s-data .topbar {
+    display: flex; align-items: end; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: clamp(12px, 1.4vh, 22px);
+    gap: 30px;
+  }
+  .s-data .topbar .h {
+    font-family: 'Newsreader', Georgia, serif;
+    
+    font-size: clamp(46px, min(4.8vw, 8.2vh), 92px);
+    line-height: 0.95;
+    color: var(--ink);
+  }
+  .s-data .topbar .lab-tag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
+    font-size: clamp(12px, 0.9vw, 14px);
+    color: var(--ink); text-align: right;
+  }
+  .s-data .body {
+    display: grid;
+    grid-template-columns: 0.8fr 1.6fr;
+    gap: clamp(28px, 3vw, 56px);
+  }
+  .s-data .col-a {
+    display: flex; flex-direction: column; justify-content: center;
+    gap: clamp(20px, 2.4vh, 36px);
+  }
+  .s-data .stat .vbig {
+    font-family: 'Newsreader', Georgia, serif;
+    
+    font-weight: 400;
+    font-size: clamp(110px, min(11vw, 18vh), 240px);
+    line-height: 0.92;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+  }
+  .s-data .stat .lab2 {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: clamp(13px, 0.95vw, 15px);
+    color: var(--ink);
+    margin-top: 6px;
+  }
+  .s-data .stat .desc {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(15px, 1vw, 17px);
+    line-height: 1.5;
+    color: var(--ink);
+    max-width: 30ch;
+    margin-top: 6px;
+  }
+
+  /* The chart itself: a row of vertical "pixel stacks" — each track is
+     a column of small filled cells, with cell count proportional to the
+     value. Visually echoes the reference's pixel-glitch decoration. */
+  .s-data .chart {
+    display: flex; flex-direction: column; justify-content: end;
+    gap: clamp(10px, 1.2vh, 18px);
+  }
+  .s-data .chart .bars {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: clamp(10px, 1vw, 18px);
+    align-items: end;
+    height: 100%;
+    min-height: clamp(280px, 38vh, 540px);
+  }
+  .s-data .chart .stack {
+    display: flex; flex-direction: column-reverse; gap: 3px;
+    height: 100%;
+  }
+  .s-data .chart .stack .cell {
+    flex: 1 1 0;
+    min-height: 6px;
+    background: rgba(31, 43, 224, 0.10);
+  }
+  .s-data .chart .stack .cell.on { background: var(--ink); }
+  .s-data .chart .ticks {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: clamp(10px, 1vw, 18px);
+    border-top: 1.5px solid var(--ink);
+    padding-top: clamp(8px, 1vh, 14px);
+  }
+  .s-data .chart .ticks .ticklab {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(12px, 0.85vw, 14px);
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     SLIDE 6 — QUOTE
+     ────────────────────────────────────────────────────────────── */
+  .s-quote { background: var(--paper); }
+  .s-quote .pixel-glitch {
+    top: clamp(40px, 4vh, 80px);
+    right: clamp(36px, 3.6vw, 80px);
+    width: clamp(160px, 16vw, 280px);
+    bottom: clamp(40px, 4vh, 80px);
+    opacity: 0.6;
+  }
+  .s-quote .qframe {
+    position: absolute;
+    left: clamp(36px, 3.6vw, 80px);
+    right: clamp(220px, 22vw, 380px);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+  }
+  .s-quote .qkicker {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: clamp(12px, 0.9vw, 14px);
+    color: var(--ink);
+    margin-bottom: clamp(16px, 1.8vh, 28px);
+  }
+  .s-quote .qbody {
+    font-family: 'Newsreader', Georgia, serif;
+    
+    font-weight: 400;
+    font-size: clamp(50px, min(5.6vw, 9vh), 110px);
+    line-height: 1.05;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+    max-width: 92%;
+  }
+  .s-quote .qattr {
+    margin-top: clamp(24px, 2.6vh, 40px);
+    display: grid; grid-template-columns: auto 1fr;
+    gap: clamp(14px, 1.4vw, 24px);
+    align-items: end;
+    border-top: 1px solid var(--ink);
+    padding-top: clamp(10px, 1.2vh, 18px);
+  }
+  .s-quote .qattr .who-tag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: clamp(13px, 0.92vw, 15px);
+    color: var(--ink);
+  }
+  .s-quote .qattr .role-meta {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(12px, 0.85vw, 14px);
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    opacity: 0.78;
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     SLIDE 7 — TREND TABLE (dense ledger)
+     ────────────────────────────────────────────────────────────── */
+  .s-table { background: var(--paper); }
+  .s-table .frame {
+    position: absolute;
+    inset: clamp(76px, 8vh, 130px) clamp(36px, 3.6vw, 80px) clamp(100px, 10vh, 150px);
+    display: flex; flex-direction: column;
+    z-index: 5;
+  }
+  .s-table .topbar {
+    display: flex; align-items: end; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: clamp(12px, 1.4vh, 22px);
+    margin-bottom: clamp(14px, 1.6vh, 24px);
+    gap: 30px;
+  }
+  .s-table .topbar .h {
+    font-family: 'Newsreader', Georgia, serif;
+    
+    font-size: clamp(46px, min(4.8vw, 8.2vh), 92px);
+    line-height: 0.95;
+    color: var(--ink);
+  }
+  .s-table .topbar .lab-tag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
+    font-size: clamp(12px, 0.9vw, 14px);
+    color: var(--ink); text-align: right;
+  }
+  .s-table .ledger {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    /* Distribute the rows so they fill the available height.
+       The header row stays at the top, body rows space evenly below. */
+    justify-content: stretch;
+  }
+  .s-table .row {
+    display: grid;
+    grid-template-columns: 76px 0.6fr 1.4fr 0.7fr 0.5fr;
+    gap: clamp(14px, 1.4vw, 28px);
+    align-items: center;
+    padding: 0;
+    flex: 1 1 0;
+    min-height: clamp(46px, 6vh, 80px);
+    border-bottom: 1px solid rgba(31, 43, 224, 0.18);
+  }
+  .s-table .row.headrow {
+    border-bottom: 1.5px solid var(--ink);
+    flex: 0 0 auto;
+    min-height: 0;
+    padding: 8px 0;
+  }
+  .s-table .row.headrow > div {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
+    font-size: clamp(11px, 0.75vw, 12px);
+    color: var(--ink);
+  }
+  .s-table .num-tag {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(13px, 0.95vw, 15px);
+    color: var(--ink);
+    letter-spacing: 0.04em;
+  }
+  .s-table .nm {
+    font-family: 'Newsreader', Georgia, serif;
+    
+    font-size: clamp(20px, 1.6vw, 28px);
+    line-height: 1.15;
+    color: var(--ink);
+  }
+  .s-table .desc {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(14px, 0.95vw, 15px);
+    line-height: 1.4;
+    color: var(--ink);
+  }
+  .s-table .mood-tag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: clamp(13px, 0.92vw, 15px);
+    color: var(--ink);
+  }
+  .s-table .delta-tag {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(13px, 0.92vw, 15px);
+    text-align: right;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+  }
+  .s-table .delta-tag.up::before  { content: '↑ '; }
+  .s-table .delta-tag.down::before { content: '↓ '; opacity: 0.6; }
+  .s-table .delta-tag.flat::before { content: '— '; opacity: 0.6; }
+
+  /* ──────────────────────────────────────────────────────────────
+     SLIDE 8 — COLOPHON / CLOSING
+     ────────────────────────────────────────────────────────────── */
+  .s-colophon { background: var(--paper); }
+  .s-colophon .pixel-glitch {
+    top: clamp(80px, 9vh, 160px);
+    left: clamp(36px, 3.6vw, 80px);
+    width: clamp(220px, 26vw, 460px);
+    bottom: clamp(220px, 22vh, 360px);
+    opacity: 0.75;
+  }
+  .s-colophon .qr-block {
+    top: clamp(80px, 9vh, 160px);
+    right: clamp(36px, 3.6vw, 80px);
+    width: clamp(72px, 5vw, 100px);
+    height: clamp(72px, 5vw, 100px);
+  }
+  .s-colophon .titlewrap {
+    position: absolute;
+    right: clamp(36px, 3.6vw, 80px);
+    top: 28%;
+    z-index: 5;
+    max-width: 56%;
+    text-align: right;
+  }
+  .s-colophon .ktag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: clamp(12px, 0.9vw, 14px);
+    color: var(--ink);
+    margin-bottom: clamp(14px, 1.6vh, 24px);
+  }
+  .s-colophon .ttl {
+    font-family: 'Newsreader', Georgia, serif;
+    
+    font-weight: 400;
+    font-size: clamp(72px, min(8.4vw, 14vh), 180px);
+    line-height: 0.96;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .s-colophon .col-footer {
+    position: absolute;
+    left: clamp(36px, 3.6vw, 80px);
+    right: clamp(36px, 3.6vw, 80px);
+    bottom: clamp(106px, 10.4vh, 160px);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1.2fr;
+    gap: clamp(20px, 2.4vw, 44px);
+    z-index: 5;
+  }
+  .s-colophon .col-footer > div {
+    border-top: 1.5px solid var(--ink);
+    padding-top: clamp(10px, 1.2vh, 16px);
+  }
+  .s-colophon .col-footer .ftag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: clamp(11px, 0.78vw, 13px);
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+  .s-colophon .col-footer .ftxt {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(14px, 0.95vw, 15px);
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  /* ══════════════════════════════════════════════════════════════
+     EXTENSION LAYOUTS — designed within the Cobalt Grid system
+     (same fonts / palette / hairlines / topbar+rule / zero-radius)
+     ══════════════════════════════════════════════════════════════ */
+
+  /* Shared topbar + frame, reused by every extension layout */
+  .s-ext .frame {
+    position: absolute;
+    inset: clamp(76px, 8vh, 130px) clamp(36px, 3.6vw, 80px) clamp(100px, 10vh, 150px);
+    display: flex; flex-direction: column;
+    z-index: 5;
+  }
+  .s-ext .topbar {
+    display: flex; align-items: end; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: clamp(12px, 1.4vh, 22px);
+    margin-bottom: clamp(18px, 2vh, 30px);
+    gap: 30px; flex: 0 0 auto;
+  }
+  .s-ext .topbar .h {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: clamp(38px, min(4vw, 6.6vh), 76px);
+    line-height: 1.02;
+    color: var(--ink);
+  }
+  .s-ext .topbar .h em { font-style: italic; }
+  .s-ext .topbar .lab-tag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
+    font-size: clamp(12px, 0.9vw, 14px);
+    color: var(--ink); text-align: right; white-space: nowrap;
+  }
+  .kicker {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
+    font-size: clamp(11px, 0.8vw, 13px);
+    color: var(--ink); opacity: 0.72;
+  }
+
+  /* ── .s-formula — big equation + plain-language box ─────────── */
+  .s-formula .body {
+    flex: 1; display: grid; grid-template-rows: auto 1fr; gap: clamp(18px, 2.2vh, 32px);
+    min-height: 0;
+  }
+  .s-formula .eqn-stage {
+    border: 1.5px solid var(--ink);
+    padding: clamp(22px, 3.2vh, 48px) clamp(24px, 3vw, 56px);
+    display: flex; align-items: center; justify-content: center;
+    min-height: clamp(120px, 20vh, 260px);
+    background: var(--paper);
+  }
+  .s-formula .eqn-stage .katex { font-size: clamp(22px, 2.1vw, 40px) !important; color: var(--ink); }
+  .s-formula .eqn-note {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(11px, 0.78vw, 13px);
+    color: var(--ink); opacity: 0.6; text-align: center; margin-top: clamp(10px,1.2vh,16px);
+  }
+  .plain-box { border-top: 1.5px solid var(--ink); padding-top: clamp(14px, 1.6vh, 22px); overflow: auto; }
+  .plain-box .kicker { margin-bottom: clamp(8px, 1vh, 14px); display: block; }
+  .plain-box p {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(14px, 0.98vw, 16px);
+    line-height: 1.55;
+    color: var(--ink);
+    max-width: 92ch;
+  }
+  .plain-box p + p { margin-top: 0.8em; }
+  .plain-box b, .plain-box strong { font-weight: 700; }
+  .plain-box em { font-style: italic; }
+
+  /* ── .s-split — text column + diagram column ─────────────────── */
+  .s-split .body {
+    flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(30px, 3.6vw, 64px);
+    min-height: 0; align-items: stretch;
+  }
+  .s-split .body.wide-left { grid-template-columns: 1.3fr 1fr; }
+  .s-split .body.wide-right { grid-template-columns: 1fr 1.3fr; }
+  .s-split .col { display: flex; flex-direction: column; justify-content: center; gap: clamp(12px,1.4vh,20px); min-height: 0; }
+  .s-split .col p {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(14px, 1vw, 17px);
+    line-height: 1.55; color: var(--ink); max-width: 46ch;
+  }
+  .s-split .col ul { list-style: none; display: flex; flex-direction: column; gap: clamp(10px,1.2vh,16px); }
+  .s-split .col ul li {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(14px, 1vw, 16px); line-height: 1.5; color: var(--ink);
+    padding-left: 1.4em; position: relative; max-width: 48ch;
+  }
+  .s-split .col ul li::before { content: '—'; position: absolute; left: 0; opacity: 0.7; }
+  .s-split .col h4 {
+    font-family: 'Newsreader', Georgia, serif; font-weight: 400;
+    font-size: clamp(20px, 1.7vw, 28px); color: var(--ink); line-height: 1.15;
+  }
+  .diagram-frame {
+    border: 1.5px solid var(--ink); position: relative;
+    display: flex; align-items: center; justify-content: center;
+    min-height: clamp(220px, 34vh, 460px); background: var(--paper); overflow: hidden;
+  }
+  .diagram-frame svg { width: 100%; height: 100%; display: block; }
+  .diagram-cap {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(11px, 0.75vw, 12px); color: var(--ink); opacity: 0.6;
+    letter-spacing: 0.04em; margin-top: clamp(8px, 1vh, 12px); text-align: center;
+  }
+
+  /* ── plain-box variant used standalone inside .s-split col ────── */
+  .col .plain-box { margin-top: clamp(6px,0.8vh,10px); }
+
+  /* ── self-check / Q&A block, reused inside s-index & s-split ──── */
+  .qa-block { border-top: 1px solid rgba(31,43,224,0.35); padding-top: clamp(10px,1.2vh,14px); }
+  .qa-block .q {
+    font-family: 'Newsreader', Georgia, serif; font-style: italic;
+    font-size: clamp(15px, 1.05vw, 18px); color: var(--ink); margin-bottom: 6px;
+  }
+  .qa-block .a {
+    font-family: 'Hanken Grotesk', sans-serif; font-size: clamp(13px, 0.9vw, 15px);
+    color: var(--ink); opacity: 0.72; line-height: 1.5;
+  }
+
+  /* ══════════════════════════════════════════════════════════════
+     ANIMATION LIBRARY — subtle, looping, cobalt-only
+     ══════════════════════════════════════════════════════════════ */
+  @keyframes spin90 { 0%,15% { transform: rotate(0deg);} 45%,65% { transform: rotate(90deg);} 95%,100% { transform: rotate(0deg);} }
+  @keyframes drawline { to { stroke-dashoffset: 0; } }
+  @keyframes floatbob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  @keyframes pulseop { 0%,100% { opacity: 0.25; } 50% { opacity: 1; } }
+  @keyframes rolldown { 0% { offset-distance: 0%; } 100% { offset-distance: 100%; } }
+  @keyframes travelx { 0% { transform: translateX(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateX(var(--tx, 100px)); opacity: 0; } }
+  @keyframes ripple { 0% { r: 3; opacity: 0.9; } 100% { r: 34; opacity: 0; } }
+  @keyframes swing { 0%,100% { transform: rotate(-14deg); } 50% { transform: rotate(14deg); } }
+  @keyframes blinkbar { 0%,100% { opacity: 1; } 50% { opacity: 0.15; } }
+  .anim-spin { transform-origin: center; transform-box: fill-box; animation: spin90 4s ease-in-out infinite; }
+  .anim-draw { animation: drawline 2.6s ease-out forwards; }
+  .anim-float { animation: floatbob 3.2s ease-in-out infinite; }
+  .anim-pulse { animation: pulseop 2.4s ease-in-out infinite; }
+  .anim-travel { animation: travelx 2.6s linear infinite; }
+  .anim-swing { transform-origin: top center; animation: swing 3.4s ease-in-out infinite; }
+  .anim-blink { animation: blinkbar 1.6s steps(2) infinite; }
+</style>
+</head>
+<body>
+
+<svg style="display:none" aria-hidden="true">
+  <defs>
+    <pattern id="vstripes" width="3" height="100" patternUnits="userSpaceOnUse">
+      <line x1="0.5" y1="0" x2="0.5" y2="100" stroke="#1F2BE0" stroke-width="1.2" />
+    </pattern>
+  </defs>
+</svg>
+
+<div class="deck">
+  <div class="stage">
+
+    <section class="slide s-cover hairlines active">
+      <div class="titlewrap"><h1 class="title">Học Máy<br/>Lượng Tử</h1><div class="subkicker"><div class="l caption">Trường Lực Phân Tử &middot; PaiNN &amp; siVQLM</div><div class="ed">Từ nền tảng vật lý đến nghiên cứu mở.</div></div></div><div class="pixel-glitch" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><defs><pattern id="vsX1" width="2.4" height="100" patternUnits="userSpaceOnUse"><line x1="0.5" y1="0" x2="0.5" y2="100" stroke="#1F2BE0" stroke-width="1.0" /></pattern></defs><rect x="36" y="0"  width="38" height="14" fill="url(#vsX1)"/><rect x="22" y="14" width="50" height="12" fill="url(#vsX1)"/><rect x="34" y="26" width="46" height="11" fill="url(#vsX1)"/><rect x="16" y="37" width="60" height="13" fill="url(#vsX1)"/><rect x="28" y="50" width="48" height="11" fill="url(#vsX1)"/><rect x="18" y="61" width="62" height="14" fill="url(#vsX1)"/><rect x="34" y="75" width="44" height="12" fill="url(#vsX1)"/><rect x="22" y="87" width="50" height="13" fill="url(#vsX1)"/></svg></div><div class="vstack"><div class="v-row caption">painn.2021</div><div class="v-row caption">sivqlm.2025</div><div class="v-row caption">tu-hoc.qml-ff</div></div><div class="cfooter"><div class="colf"><div class="ftag caption">Biên soạn</div><div>Tr&#432;&#417;ng Tu&#7845;n Nghĩa &middot; T&#224;i li&#7879;u song ng&#7919; EN/VI</div></div><div class="colf"><div class="ftag caption">N&#7897;i dung</div><div>V&#7853;t l&#253; n&#7873;n t&#7843;ng &middot; ki&#7871;n tr&#250;c m&#244; h&#236;nh &middot; c&#226;u h&#7887;i m&#7903;</div></div></div>
+      <div class="pagenum">01 / 60</div>
+    </section>
+    <section class="slide s-manifesto hairlines">
+      <div class="stmt-wrap"><p class="stmt">Vì sao cần <span class="roman">học máy lượng tử</span> cho trường lực phân tử &mdash; và trước đó, người ta đã dùng gì?</p><div class="attr"><div class="who caption">Câu hỏi mở đầu</div><div class="meta-tag caption">Tài liệu tự học · từ cơ học cổ điển đến mạch lượng tử biến phân</div></div></div>
+      <div class="pagenum">02 / 60</div>
+    </section>
+    <section class="slide s-index hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Sẽ học những gì.</div><div class="lab-tag caption">Lộ trình 6 phần · tự học từ dễ đến khó</div></div><div class="list"><div class="row"><div class="num-tag caption">00</div><div><h3>Kiến thức nền tảng</h3><p>Nguyên tử, vector, năng lượng, gradient, mô hình/train, ma trận, xác suất, số phức &mdash; mọi thứ cần trước khi đọc phần sau.</p></div></div><div class="row"><div class="num-tag caption">01</div><div><h3>Bối cảnh lịch sử</h3><p>Từ trường lực cổ điển (Lennard-Jones, AMBER) tới Schrödinger, DFT, kỷ nguyên học máy, và hai cánh cửa lượng tử.</p></div></div><div class="row"><div class="num-tag caption">02</div><div><h3>Nền tảng toán &amp; vật lý</h3><p>Nhóm đối xứng E(3)/SU(2)/S&#8345;, bất biến vs đồng biến, mạng truyền thông điệp (message passing).</p></div></div><div class="row"><div class="num-tag caption">03</div><div><h3>PaiNN chi tiết</h3><p>Hai kênh song song vô hướng/vector, khối interaction, khối mixing, năng lượng &amp; lực.</p></div></div><div class="row"><div class="num-tag caption">04</div><div><h3>siVQLM chi tiết</h3><p>Mạch lượng tử biến phân, data-reuploading, 4 thành phần bất biến, trạng thái singlet, encoding, Heisenberg.</p></div></div><div class="row"><div class="num-tag caption">05</div><div><h3>Kết nối &amp; câu hỏi mở</h3><p>Khoảng cách quy mô giữa hai hướng, 6 câu hỏi nghiên cứu còn bỏ ngỏ, và bước tiếp theo.</p></div></div></div></div>
+      <div class="pagenum">03 / 60</div>
+    </section>
+    <section class="slide s-chapter hairlines">
+      <div class="pixel-glitch" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><defs><pattern id="vsX2" width="2.4" height="100" patternUnits="userSpaceOnUse"><line x1="0.5" y1="0" x2="0.5" y2="100" stroke="#1F2BE0" stroke-width="1.0" /></pattern></defs><rect x="36" y="0"  width="38" height="14" fill="url(#vsX2)"/><rect x="22" y="14" width="50" height="12" fill="url(#vsX2)"/><rect x="34" y="26" width="46" height="11" fill="url(#vsX2)"/><rect x="16" y="37" width="60" height="13" fill="url(#vsX2)"/><rect x="28" y="50" width="48" height="11" fill="url(#vsX2)"/><rect x="18" y="61" width="62" height="14" fill="url(#vsX2)"/><rect x="34" y="75" width="44" height="12" fill="url(#vsX2)"/><rect x="22" y="87" width="50" height="13" fill="url(#vsX2)"/></svg></div><div class="frame"><div class="nm-tag caption">Phần 0 &middot; trước khi bắt đầu</div><h2 class="ttl">Kiến thức nền tảng, cho người mới bắt đầu hoàn toàn.</h2><p class="lede">Tám ý tưởng ngắn, bằng ngôn ngữ đơn giản, đủ để một học sinh cấp 3 theo dõi toàn bộ tài liệu &mdash; không cần biết gì thêm trước khi đọc tiếp.</p></div>
+      <div class="pagenum">04 / 60</div>
+    </section>
+    <section class="slide s-split s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Nguyên tử, phân tử, liên kết.</div><div class="lab-tag caption">0.1 &middot; hoá học</div></div><div class="body wide-left"><div class="col"><p>Một <b>nguyên tử</b> là hạt nhân nhỏ, đặc, bao quanh bởi đám mây <b>electron</b> nhẹ và nhanh hơn nhiều. Một <b>phân tử</b> là các nguyên tử được liên kết hoá học với nhau &mdash; nước (H&#8322;O) là 2 hydro liên kết với 1 oxy.</p><p>Sự sắp xếp 3D của các nguyên tử &mdash; ai liên kết với ai, khoảng cách và góc nào &mdash; gọi là <b>hình học</b> hay <b>cấu hình</b>. Đây chính xác là đầu vào mọi mô hình trong tài liệu này làm việc với.</p></div><div class="col"><div class="diagram-frame"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><circle cx="30" cy="55" r="10" fill="none" stroke="#1F2BE0" stroke-width="2.2"/><circle cx="62" cy="40" r="7" fill="#1F2BE0"/><circle cx="62" cy="72" r="7" fill="#1F2BE0"/><line x1="38" y1="50" x2="56" y2="42" stroke="#1F2BE0" stroke-width="2"/><line x1="38" y1="60" x2="56" y2="70" stroke="#1F2BE0" stroke-width="2"/><text x="30" y="59" text-anchor="middle" font-size="7" fill="#F0EBDE" font-family="DM Mono, monospace">O</text><text x="62" y="43" text-anchor="middle" font-size="6" fill="#F0EBDE" font-family="DM Mono, monospace">H</text><text x="62" y="75" text-anchor="middle" font-size="6" fill="#F0EBDE" font-family="DM Mono, monospace">H</text></svg></div><div class="diagram-cap">H&#8322;O · hình học phân tử = đầu vào của mọi mô hình</div></div></div></div>
+      <div class="pagenum">05 / 60</div>
+    </section>
+    <section class="slide s-split s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Vector: con số có hướng.</div><div class="lab-tag caption">0.2 &middot; vector</div></div><div class="body wide-left"><div class="col"><p>Một số thường (vd. "5 kg") có độ lớn nhưng <i>không hướng</i> &mdash; gọi là <b>vô hướng</b>. Một <b>vector</b> có thêm hướng: "đẩy 5N về bên trái." Vị trí một nguyên tử là vector \(\vec r = (x,y,z)\); lực cũng là vector.</p><p>Hai phép toán hay dùng: <b>độ dài</b> \(\|\vec v\| = \sqrt{v_x^2+v_y^2+v_z^2}\) (luôn &#8805; 0), và <b>tích vô hướng</b> \(\vec u\cdot\vec v\) đo hai vector "cùng hướng" tới đâu.</p></div><div class="col"><div class="diagram-frame"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><line x1="12" y1="88" x2="88" y2="88" stroke="rgba(31,43,224,0.18)" stroke-width="1"/><line x1="20" y1="88" x2="60" y2="20" stroke="rgba(31,43,224,0.18)" stroke-width="1"/><g class="anim-swing" style="transform-origin:20px 88px;"><line x1="20" y1="88" x2="70" y2="34" stroke="#1F2BE0" stroke-width="2.4" marker-end="url(#ah4)"/></g><defs><marker id="ah4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#1F2BE0"/></marker></defs><text x="20" y="96" text-anchor="middle" font-size="6" fill="#1F2BE0" font-family="DM Mono, monospace">gốc</text></svg></div><div class="diagram-cap">\(\vec v = (v_x, v_y, v_z)\) · một mũi tên trong không gian 3D</div></div></div></div>
+      <div class="pagenum">06 / 60</div>
+    </section>
+    <section class="slide s-split s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Năng lượng như một ngọn đồi.</div><div class="lab-tag caption">0.3 &middot; năng lượng</div></div><div class="body wide-left"><div class="col"><p><b>Năng lượng thế</b> U là một con số cho biết một hình học "thoải mái" hay "căng thẳng" tới đâu. Thấp = thung lũng ổn định; cao = sườn đồi căng thẳng. Vẽ U theo khoảng cách r, ta được <b>bề mặt thế năng (PES)</b>.</p><p><b>Lực</b> luôn chỉ hướng "xuống dốc" &mdash; hướng làm giảm năng lượng nhanh nhất, giống quả bóng lăn xuống đồi thật.</p></div><div class="col"><div class="diagram-frame"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><path d="M8,20 L92,20" stroke="rgba(31,43,224,0.18)" stroke-width="1"/><path d="M10,85 C 30,85 34,30 50,30 C 66,30 70,85 90,85" fill="none" stroke="#1F2BE0" stroke-width="2.2"/><circle r="4" fill="#1F2BE0"><animateMotion dur="3.2s" repeatCount="indefinite" path="M10,85 C 30,85 34,30 50,30 C 66,30 70,85 90,85"/></circle><text x="50" y="96" text-anchor="middle" font-size="6" fill="#1F2BE0" font-family="DM Mono, monospace">r</text><text x="6" y="26" text-anchor="middle" font-size="6" fill="#1F2BE0" font-family="DM Mono, monospace">U</text></svg></div><div class="diagram-cap">U(r) · quả bóng lăn trên bề mặt thế năng</div></div></div></div>
+      <div class="pagenum">07 / 60</div>
+    </section>
+    <section class="slide s-formula s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Độ dốc, gradient, và lực.</div><div class="lab-tag caption">0.4 &middot; giải tích</div></div><div class="body"><div class="eqn-stage">\[ \vec F = -\nabla U \]</div><div class="plain-box"><span class="kicker">Nói dễ hiểu</span><p><b>Đạo hàm</b> dU/dr = độ dốc = tốc độ U thay đổi khi nhích nhẹ r. Khi có nhiều chiều (mọi x,y,z của mọi nguyên tử), phiên bản tổng quát là <b>gradient</b> &#8711;U &mdash; một vector chỉ hướng lên dốc nhanh nhất. Lực bằng <i>trừ</i> gradient, vì lực luôn chỉ xuống dốc. Mọi phép tính lực trong tài liệu này &mdash; từ lò xo cổ điển tới đạo hàm tự động của PaiNN tới mạch lượng tử của siVQLM &mdash; cuối cùng chỉ là một cách hiệu quả để tính vector &minus;&#8711;U này.</p></div></div></div>
+      <div class="pagenum">08 / 60</div>
+    </section>
+    <section class="slide s-split s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Mô hình là gì, train nghĩa là gì.</div><div class="lab-tag caption">0.5 &middot; học máy</div></div><div class="body wide-left"><div class="col"><p>Một <b>mô hình</b> f&#920; là công thức toán nhận đầu vào (hình học) và cho đầu ra (năng lượng dự đoán), với &#920; là tập tham số điều chỉnh được. Ban đầu &#920; gần như ngẫu nhiên &mdash; dự đoán vô nghĩa.</p><p><b>Train</b>: cho xem nhiều ví dụ đã biết đáp án đúng, đo sai số, nhích &#920; để giảm sai số, lặp lại hàng triệu lần. "Trọng số" của PaiNN và "góc cổng" của siVQLM đều chính là &#920; này.</p></div><div class="col"><div class="diagram-frame"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><rect x="8" y="40" width="22" height="20" fill="none" stroke="#1F2BE0" stroke-width="2"/><rect x="39" y="40" width="22" height="20" fill="none" stroke="#1F2BE0" stroke-width="2.4"/><rect x="70" y="40" width="22" height="20" fill="none" stroke="#1F2BE0" stroke-width="2"/><text x="19" y="53" text-anchor="middle" font-size="6" fill="#1F2BE0" font-family="DM Mono, monospace">X</text><text x="50" y="53" text-anchor="middle" font-size="6" fill="#1F2BE0" font-family="DM Mono, monospace">f&#920;</text><text x="81" y="53" text-anchor="middle" font-size="6" fill="#1F2BE0" font-family="DM Mono, monospace">E</text><line x1="30" y1="50" x2="38" y2="50" stroke="#1F2BE0" stroke-width="1.6" marker-end="url(#ah3)"/><line x1="61" y1="50" x2="69" y2="50" stroke="#1F2BE0" stroke-width="1.6" marker-end="url(#ah3)"/><path d="M81,60 C81,74 19,74 19,60" fill="none" stroke="#1F2BE0" stroke-width="1.4" stroke-dasharray="3,2" marker-end="url(#ah3)"/><text x="50" y="82" text-anchor="middle" font-size="5.6" fill="#1F2BE0" font-family="Hanken Grotesk">so sánh &amp; nhích &#920;</text><defs><marker id="ah3" markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse" refX="3.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#1F2BE0"/></marker></defs></svg></div><div class="diagram-cap">train: đoán → so đáp án đúng → nhích tham số Θ → lặp lại</div></div></div></div>
+      <div class="pagenum">09 / 60</div>
+    </section>
+    <section class="slide s-formula s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Ma trận và phép quay.</div><div class="lab-tag caption">0.6 &middot; đại số tuyến tính</div></div><div class="body"><div class="eqn-stage">\[ R\vec v \;=\; \text{cùng độ dài, hướng mới} \]</div><div class="plain-box"><span class="kicker">Nói dễ hiểu</span><p>Một <b>ma trận</b> là lưới số biến đổi một vector thành vector khác. Một <b>ma trận quay</b> R chỉ xoay vector quanh một trục, không đổi độ dài. Đây chính là đối tượng toán học đứng sau mọi câu "xoay phân tử" trong Section 2 và 4: nhấc phân tử lên và xoay tương ứng với áp cùng một R lên vị trí mọi nguyên tử cùng lúc.</p></div></div></div>
+      <div class="pagenum">10 / 60</div>
+    </section>
+    <section class="slide s-split s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Hai ý tưởng cuối, ngắn gọn.</div><div class="lab-tag caption">0.7 &middot; xác suất &nbsp;&amp;&nbsp; 0.8 &middot; số phức</div></div><div class="body wide-left"><div class="col"><p><b>Xác suất</b> là số giữa 0 và 1 đo khả năng một sự kiện xảy ra. Cơ học lượng tử nói bằng xác suất: "electron có xác suất này ở đây, xác suất kia ở kia" &mdash; không nói vị trí chắc chắn.</p><p><b>Số phức</b> i=&#8730;&minus;1 mở trục số thành mặt phẳng. exp(&minus;i&phi;) là cách chuẩn biểu diễn "quay góc &phi;" &mdash; đọc nó như một <i>núm vặn</i>: xoay núm, thứ nó tác động lên xoay theo, không đổi độ lớn.</p></div><div class="col"><div class="diagram-frame"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><circle cx="50" cy="50" r="32" fill="none" stroke="rgba(31,43,224,0.18)" stroke-width="1"/><circle cx="50" cy="50" r="1.6" fill="#1F2BE0"/><g class="anim-spin" style="transform-origin:50px 50px;"><line x1="50" y1="50" x2="76" y2="50" stroke="#1F2BE0" stroke-width="2.2"/><circle cx="76" cy="50" r="3.2" fill="#1F2BE0"/></g><text x="50" y="14" text-anchor="middle" font-size="6" fill="#1F2BE0" font-family="DM Mono, monospace">|0&gt;</text><text x="50" y="94" text-anchor="middle" font-size="6" fill="#1F2BE0" font-family="DM Mono, monospace">|1&gt;</text></svg></div><div class="diagram-cap">exp(-i&phi;) · núm vặn xoay trạng thái qubit</div></div></div></div>
+      <div class="pagenum">11 / 60</div>
+    </section>
+    <section class="slide s-index hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Trước khi sang Phần 1.</div><div class="lab-tag caption">Tự kiểm tra nhanh &middot; Phần 0</div></div><div class="list"><div class="row"><div class="num-tag caption">Q1</div><div class="qa-block" style="border-top:none;padding-top:0;"><div class="q">Vì sao lực bằng <i>trừ</i> gradient của năng lượng, không phải cộng?</div><div class="a">Vì gradient chỉ hướng lên dốc (tăng nhanh nhất); lực vật lý luôn đẩy vật xuống dốc &mdash; hướng ngược lại.</div></div></div><div class="row"><div class="num-tag caption">Q2</div><div class="qa-block" style="border-top:none;padding-top:0;"><div class="q">"Train" một mô hình nghĩa là gì, nói một câu?</div><div class="a">Nhích các tham số &#920; hàng triệu lần, mỗi lần một chút, theo hướng làm giảm sai số so với đáp án đã biết.</div></div></div><div class="row"><div class="num-tag caption">Q3</div><div class="qa-block" style="border-top:none;padding-top:0;"><div class="q">Ma trận quay R làm gì với một vector?</div><div class="a">Chỉ xoay hướng của nó quanh một trục &mdash; không bao giờ đổi độ dài.</div></div></div></div></div>
+      <div class="pagenum">12 / 60</div>
+    </section>
+    <section class="slide s-chapter hairlines">
+      <div class="pixel-glitch" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><defs><pattern id="vsX3" width="2.4" height="100" patternUnits="userSpaceOnUse"><line x1="0.5" y1="0" x2="0.5" y2="100" stroke="#1F2BE0" stroke-width="1.0" /></pattern></defs><rect x="36" y="0"  width="38" height="14" fill="url(#vsX3)"/><rect x="22" y="14" width="50" height="12" fill="url(#vsX3)"/><rect x="34" y="26" width="46" height="11" fill="url(#vsX3)"/><rect x="16" y="37" width="60" height="13" fill="url(#vsX3)"/><rect x="28" y="50" width="48" height="11" fill="url(#vsX3)"/><rect x="18" y="61" width="62" height="14" fill="url(#vsX3)"/><rect x="34" y="75" width="44" height="12" fill="url(#vsX3)"/><rect x="22" y="87" width="50" height="13" fill="url(#vsX3)"/></svg></div><div class="frame"><div class="nm-tag caption">Phần 1 &middot; bảy bước lịch sử</div><h2 class="ttl">Vì sao cần QML cho trường lực?</h2><p class="lede">Trường lực thực nghiệm &#8594; hệ vật liệu đòi hỏi chúng &#8594; phương trình lượng tử &#8594; kiểm chứng &#8594; bộ dữ liệu &#8594; học máy &#8594; điện toán lượng tử. Bảy bước, theo đúng mạch lịch sử.</p></div>
+      <div class="pagenum">13 / 60</div>
+    </section>
+    <section class="slide s-formula s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Thế năng Lennard-Jones.</div><div class="lab-tag caption">1.1 &middot; 1924</div></div><div class="body"><div class="eqn-stage">\[ U_{LJ}(r) = 4\varepsilon\left[\left(\frac{\sigma}{r}\right)^{12} - \left(\frac{\sigma}{r}\right)^{6}\right] \]</div><div class="plain-box"><span class="kicker">Nói dễ hiểu</span><p>Số hạng &minus;(&sigma;/r)&#8310; là lực <b>hút</b> nhẹ (van der Waals); số hạng +(&sigma;/r)&sup1;&sup2; là lực <b>đẩy</b> rất mạnh khi quá gần. &sigma; quy định "quá gần" là bao nhiêu; &epsilon; quy định thung lũng sâu ra sao. Đây là số hạng "trường lực" đầu tiên theo nghĩa hiện đại &mdash; vẫn dùng trong mọi trường lực cổ điển ngày nay.</p></div></div></div>
+      <div class="pagenum">14 / 60</div>
+    </section>
+    <section class="slide s-split s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Hình dạng của U(r).</div><div class="lab-tag caption">1.1 &middot; đồ thị</div></div><div class="body wide-left"><div class="col"><p>Vẽ U<sub>LJ</sub>(r) theo r: một đường cong lao xuống thung lũng rồi vọt lên như bức tường. Ví dụ với argon (&epsilon;=0.997 kJ/mol, &sigma;=3.4&nbsp;&Aring;): tại r=2&sigma;, số hạng đẩy co lại 4096 lần trong khi số hạng hút chỉ co 64 lần khi r tăng gấp đôi &mdash; chênh lệch r&#8315;&sup1;&sup2; so với r&#8315;&#8310; hiện rõ bằng số.</p><p>Đáy thung lũng chính là khoảng cách liên kết cân bằng đo được trong phân tử thật.</p></div><div class="col"><div class="diagram-frame"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><path d="M8,20 L92,20" stroke="rgba(31,43,224,0.18)" stroke-width="1"/><path d="M10,85 C 30,85 34,30 50,30 C 66,30 70,85 90,85" fill="none" stroke="#1F2BE0" stroke-width="2.2"/><circle r="4" fill="#1F2BE0"><animateMotion dur="3.2s" repeatCount="indefinite" path="M10,85 C 30,85 34,30 50,30 C 66,30 70,85 90,85"/></circle><text x="50" y="96" text-anchor="middle" font-size="6" fill="#1F2BE0" font-family="DM Mono, monospace">r</text><text x="6" y="26" text-anchor="middle" font-size="6" fill="#1F2BE0" font-family="DM Mono, monospace">U</text></svg></div><div class="diagram-cap">U(r) · quả bóng lăn trên bề mặt thế năng</div></div></div></div>
+      <div class="pagenum">15 / 60</div>
+    </section>
+    <section class="slide s-formula s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Trường lực cơ học phân tử đầy đủ.</div><div class="lab-tag caption">1.1 &middot; 1970&ndash;1990</div></div><div class="body"><div class="eqn-stage">\[ U = \sum_{bonds} k_b(r-r_0)^2 + \sum_{angles} k_\theta(\theta-\theta_0)^2 + \sum_{dih.} k_\phi[1+\cos(n\phi-\delta)] + \sum_{i&lt;j}\Big[U_{LJ}+\tfrac{q_iq_j}{4\pi\epsilon_0 r_{ij}}\Big] \]</div><div class="eqn-note">AMBER (1984) &middot; CHARMM (1983) &middot; OPLS (1988)</div><div class="plain-box"><span class="kicker">Nói dễ hiểu</span><p>Bốn số hạng = bốn loại lò xo + một lực tĩnh điện: liên kết và góc co giãn như lò xo Hooke (k(x&minus;x&#8320;)&sup2;); dihedral mô tả cách phân tử "thích xoắn" quanh một liên kết; số hạng cuối là Lennard-Jones + Coulomb. Không cần giải cơ học lượng tử &mdash; đây là lý do nó tính rất nhanh, scale tới hàng triệu nguyên tử. <b>Nhưng</b>: không có electron, liên kết cố định &#8594; không thể mô tả một phản ứng hoá học.</p></div></div></div>
+      <div class="pagenum">16 / 60</div>
+    </section>
+    <section class="slide s-data hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Vì sao phải chính xác đến vậy.</div><div class="lab-tag caption">1.2 &middot; ứng dụng</div></div><div class="body"><div class="col-a"><div class="stat"><div class="vbig">&times;150</div><div class="lab2 caption">Sai số tốc độ phản ứng</div><div class="desc">khi rào cản năng lượng tính sai chỉ 3 kcal/mol &mdash; theo định luật Arrhenius k=A&middot;exp(&minus;E&#8250;/RT), sai số nhỏ nổ hàm mũ.</div></div><div class="stat"><div class="vbig" style="font-size: clamp(60px, min(6vw, 9vh), 130px);">1</div><div class="lab2 caption">kcal/mol</div><div class="desc">&#8776; ngưỡng "độ chính xác hoá học" mà trường lực cổ điển hiếm khi đạt được cho hoá học có sắp xếp lại liên kết.</div></div></div><div class="chart"><div class="bars"><div class="stack"><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell"></div><div class="cell"></div></div><div class="stack"><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div></div><div class="stack"><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div></div><div class="stack"><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div></div><div class="stack"><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div></div><div class="stack"><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div></div><div class="stack"><div class="cell on"></div><div class="cell on"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div></div><div class="stack"><div class="cell on"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div></div></div><div class="ticks"><div class="ticklab caption">1kcal</div><div class="ticklab caption">2kcal</div><div class="ticklab caption">3kcal</div><div class="ticklab caption">4kcal</div><div class="ticklab caption">5kcal</div><div class="ticklab caption">6kcal</div><div class="ticklab caption">7kcal</div><div class="ticklab caption">8kcal</div></div></div></div></div>
+      <div class="pagenum">17 / 60</div>
+    </section>
+    <section class="slide s-index hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Không phải bài tập học thuật.</div><div class="lab-tag caption">1.2 &middot; mô phỏng dùng để làm gì</div></div><div class="list"><div class="row"><div class="num-tag caption">01</div><div><h3>Thiết kế thuốc</h3><p>Dự đoán cách một phân tử nhỏ gắn vào protein mục tiêu trước khi tổng hợp trong lab.</p></div></div><div class="row"><div class="num-tag caption">02</div><div><h3>Xúc tác</h3><p>Tính rào cản phản ứng trên bề mặt kim loại để thiết kế chất xúc tác hiệu quả hơn.</p></div></div><div class="row"><div class="num-tag caption">03</div><div><h3>Vật liệu pin</h3><p>Rào cản khuếch tán ion trong chất điện phân rắn, cơ chế thoái hoá điện cực.</p></div></div><div class="row"><div class="num-tag caption">04</div><div><h3>Bán dẫn</h3><p>Năng lượng hình thành khuyết tật, hình học liên quan cấu trúc vùng năng lượng.</p></div></div></div></div>
+      <div class="pagenum">18 / 60</div>
+    </section>
+    <section class="slide s-formula s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Phương trình Schr&ouml;dinger.</div><div class="lab-tag caption">1.3 &middot; nền tảng</div></div><div class="body"><div class="eqn-stage">\[ \hat H \Psi = E\,\Psi \]</div><div class="eqn-note">không phụ thuộc thời gian &middot; giải đúng dạng đóng chỉ cho nguyên tử hydro</div><div class="plain-box"><span class="kicker">Nói dễ hiểu</span><p>Đây là phiên bản cơ học lượng tử của "tìm năng lượng vật thể," đóng vai trò như F=ma. &Psi; (hàm sóng) không phải vị trí chắc chắn &mdash; |&Psi;|&sup2; là <i>xác suất</i> tìm hạt ở mỗi vị trí. Mọi phương pháp trong tài liệu này, theo cách này hay cách khác, là một xấp xỉ của phương trình này.</p></div></div></div>
+      <div class="pagenum">19 / 60</div>
+    </section>
+    <section class="slide s-split s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Born&ndash;Oppenheimer: đóng băng hạt nhân.</div><div class="lab-tag caption">1.3 &middot; xấp xỉ</div></div><div class="body wide-left"><div class="col"><p>Hạt nhân nặng hơn electron &#8776;1836 lần &mdash; chuyển động chậm hơn nhiều. Vì vậy: giải electron trước (hạt nhân "đứng yên"), được \(E_{el}(\vec R)\), rồi coi đây là bề mặt thế năng chi phối chuyển động hạt nhân: \(M\ddot{\vec R}=-\nabla E_{el}\).</p><p>PES \(E_{el}(\vec R)\) <i>chính là</i> "trường lực" &mdash; định nghĩa nghiêm ngặt thay vì thực nghiệm. Đây là phương trình mà MD cổ điển, PaiNN, siVQLM đều đang cố tính.</p></div><div class="col"><div class="diagram-frame"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><path d="M8,20 L92,20" stroke="rgba(31,43,224,0.18)" stroke-width="1"/><path d="M10,85 C 30,85 34,30 50,30 C 66,30 70,85 90,85" fill="none" stroke="#1F2BE0" stroke-width="2.2"/><circle r="4" fill="#1F2BE0"><animateMotion dur="3.2s" repeatCount="indefinite" path="M10,85 C 30,85 34,30 50,30 C 66,30 70,85 90,85"/></circle><text x="50" y="96" text-anchor="middle" font-size="6" fill="#1F2BE0" font-family="DM Mono, monospace">r</text><text x="6" y="26" text-anchor="middle" font-size="6" fill="#1F2BE0" font-family="DM Mono, monospace">U</text></svg></div><div class="diagram-cap">U(r) · quả bóng lăn trên bề mặt thế năng</div></div></div></div>
+      <div class="pagenum">20 / 60</div>
+    </section>
+    <section class="slide s-split s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Từ phương trình đúng tới tính được.</div><div class="lab-tag caption">1.3 &middot; HF &amp; DFT</div></div><div class="body wide-left"><div class="col"><p><b>Hartree&ndash;Fock</b>: mỗi electron thấy trường <i>trung bình</i> của các electron khác &mdash; bỏ sót "tương quan electron." Post-HF (CCSD(T)) thêm lại, nhưng scale \(O(N^7)\).</p><p><b>DFT</b>: chỉ theo dõi mật độ electron \(n(\vec r)\) thay vì hàm sóng đầy đủ, giải bằng vòng lặp tự hợp Kohn&ndash;Sham. Scale \(O(N^3)\) &mdash; công cụ chính sinh dữ liệu train cho ML.</p></div><div class="col"><div class="diagram-frame"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><path id="scfpath" d="M50,20 A30,30 0 1 1 49.9,20" fill="none" stroke="#1F2BE0" stroke-width="2"/><polygon points="50,20 45,27 56,25" fill="#1F2BE0"/><circle r="4" fill="#1F2BE0"><animateMotion dur="2.6s" repeatCount="indefinite" path="M50,20 A30,30 0 1 1 49.9,20"/></circle><text x="50" y="53" text-anchor="middle" font-size="7" fill="#1F2BE0" font-family="Hanken Grotesk">đoán</text><text x="50" y="63" text-anchor="middle" font-size="7" fill="#1F2BE0" font-family="Hanken Grotesk">→ tính → cập nhật</text></svg></div><div class="diagram-cap">vòng lặp tự hợp · lặp tới khi hội tụ</div></div></div></div>
+      <div class="pagenum">21 / 60</div>
+    </section>
+    <section class="slide s-split s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Kiểm chứng thực nghiệm vs. "đo lường" tính toán.</div><div class="lab-tag caption">1.4 &middot; đo lường</div></div><div class="body wide-left"><div class="col"><h4>Thực nghiệm</h4><p>Tia X/neutron &#8594; cấu trúc; hồng ngoại/Raman &#8594; tần số dao động; NMR, nhiệt lượng kế. Kiểm chứng DFT/CCSD(T) <i>là phương pháp</i> đáng tin &mdash; nhưng đo đại lượng khối, không phải lực từng nguyên tử.</p></div><div class="col"><h4>Tính toán</h4><p>Sau khi kiểm chứng, chạy trực tiếp để <i>tính</i> năng lượng/lực cho hàng triệu cấu hình. Đầu ra tính toán này &mdash; không phải đo lab &mdash; là nhãn "sự thật nền" của mọi bộ dữ liệu.</p></div></div></div>
+      <div class="pagenum">22 / 60</div>
+    </section>
+    <section class="slide s-table hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Ai học từ đâu.</div><div class="lab-tag caption">1.5 &middot; bộ dữ liệu tham chiếu</div></div><div class="ledger"><div class="row headrow"><div class="caption">STT</div><div class="caption">Bộ dữ liệu</div><div class="caption">Nội dung</div><div class="caption">Mức tham chiếu</div><div class="caption">Dùng cho</div></div><div class="row"><div class="num-tag caption">01</div><div class="nm">QM9</div><div class="desc">&#8776;134k phân tử hữu cơ nhỏ, hình học cân bằng</div><div class="mood-tag">DFT (B3LYP)</div><div class="delta-tag flat caption">Pretrain</div></div><div class="row"><div class="num-tag caption">02</div><div class="nm">MD17 / rMD17</div><div class="desc">Quỹ đạo MD, 9&ndash;21 nguyên tử, năng lượng+lực</div><div class="mood-tag">DFT (PBE+vdW)</div><div class="delta-tag flat caption">PaiNN &middot; siVQLM</div></div><div class="row"><div class="num-tag caption">03</div><div class="nm">ANI-1x</div><div class="desc">Triệu cấu hình không cân bằng, hoá học rộng</div><div class="mood-tag">DFT (&omega;B97X)</div><div class="delta-tag flat caption">Thế năng đa dụng</div></div><div class="row"><div class="num-tag caption">04</div><div class="nm">Open Catalyst</div><div class="desc">Cấu hình adsorbate&ndash;bề mặt xúc tác</div><div class="mood-tag">DFT</div><div class="delta-tag flat caption">Xúc tác</div></div><div class="row"><div class="num-tag caption">05</div><div class="nm">Materials Project</div><div class="desc">&gt;100k tinh thể vô cơ</div><div class="mood-tag">DFT</div><div class="delta-tag flat caption">Khám phá vật liệu</div></div><div class="row"><div class="num-tag caption">06</div><div class="nm">SPICE</div><div class="desc">Phân tử giống thuốc, QM mức cao</div><div class="mood-tag">DFT/CC</div><div class="delta-tag flat caption">Sinh phân tử</div></div></div></div>
+      <div class="pagenum">23 / 60</div>
+    </section>
+    <section class="slide s-index hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Từ đặc trưng thủ công tới equivariant.</div><div class="lab-tag caption">1.6 &middot; dòng thời gian học máy</div></div><div class="list"><div class="row"><div class="num-tag caption">2007</div><div><h3>Behler&ndash;Parrinello</h3><p>Thế năng NN thực tế đầu tiên: đặc trưng "symmetry functions" do người thiết kế, không học được.</p></div></div><div class="row"><div class="num-tag caption">2010</div><div><h3>GAP</h3><p>Hồi quy kernel (Gaussian process) trên đặc trưng bất biến SOAP, tốt khi dữ liệu khan hiếm.</p></div></div><div class="row"><div class="num-tag caption">2017</div><div><h3>SchNet</h3><p>Deep learning đầu tiên dùng rộng rãi &mdash; continuous-filter convolution, vẫn thuần bất biến.</p></div></div><div class="row"><div class="num-tag caption">2021&ndash;22</div><div><h3>PaiNN, NequIP, MACE</h3><p>Làn sóng equivariant: đặc trưng vector/tensor học được, tôn trọng hình học &mdash; SOTA hôm nay.</p></div></div></div></div>
+      <div class="pagenum">24 / 60</div>
+    </section>
+    <section class="slide s-split s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">VQE &mdash; mã hoá electron.</div><div class="lab-tag caption">1.7 &middot; cửa 1</div></div><div class="body wide-left"><div class="col"><p>VQE (Peruzzo 2014) nhắm chính bài toán cấu trúc electron: Hamiltonian \(\hat H_{el}\) ánh xạ sang qubit, mạch tham số hoá chuẩn bị hàm sóng thử, năng lượng tối thiểu hoá biến phân &mdash; thay thế trực tiếp DFT/CCSD(T).</p><p>Một canh cược dài hạn: chỉ thắng khi phần cứng lượng tử "chịu lỗi" đủ tốt &mdash; chưa xảy ra hôm nay.</p></div><div class="col"><h4>Cửa 2 &mdash; QML force field</h4><p>Kiss (2022), siVQLM Le (2025): <b>không</b> giải cấu trúc electron trên lượng tử. Mạch lượng tử chỉ là bộ xấp xỉ hàm \(f_\Theta\): hình học &#8594; năng lượng &mdash; đúng vai trò PaiNN, chỉ thay mạng NN bằng mạch lượng tử. Đây là trọng tâm tài liệu này.</p></div></div></div>
+      <div class="pagenum">25 / 60</div>
+    </section>
+    <section class="slide s-index hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Trước khi sang Phần 2.</div><div class="lab-tag caption">Tự kiểm tra nhanh &middot; Phần 1</div></div><div class="list"><div class="row"><div class="num-tag caption">Q1</div><div class="qa-block" style="border-top:none;padding-top:0;"><div class="q">Vì sao trường lực cổ điển không thể mô tả phản ứng hoá học?</div><div class="a">Topology liên kết và điện tích cố định trước khi mô phỏng &mdash; không có electron để phân bố lại hay phá vỡ liên kết.</div></div></div><div class="row"><div class="num-tag caption">Q2</div><div class="qa-block" style="border-top:none;padding-top:0;"><div class="q">Nhãn "sự thật nền" để train ML force field đến từ đâu?</div><div class="a">Từ một phép tính DFT/CCSD(T) đã kiểm chứng &mdash; không phải đo đạc phòng thí nghiệm trực tiếp.</div></div></div><div class="row"><div class="num-tag caption">Q3</div><div class="qa-block" style="border-top:none;padding-top:0;"><div class="q">Khác biệt cốt lõi giữa Cửa 1 (VQE) và Cửa 2 (QML force field)?</div><div class="a">Cửa 1 thay cả bộ giải cấu trúc electron; Cửa 2 chỉ thay mạng nơ-ron bằng mạch lượng tử, giữ nguyên pipeline học-có-giám-sát.</div></div></div></div></div>
+      <div class="pagenum">26 / 60</div>
+    </section>
+    <section class="slide s-chapter hairlines">
+      <div class="pixel-glitch" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><defs><pattern id="vsX4" width="2.4" height="100" patternUnits="userSpaceOnUse"><line x1="0.5" y1="0" x2="0.5" y2="100" stroke="#1F2BE0" stroke-width="1.0" /></pattern></defs><rect x="36" y="0"  width="38" height="14" fill="url(#vsX4)"/><rect x="22" y="14" width="50" height="12" fill="url(#vsX4)"/><rect x="34" y="26" width="46" height="11" fill="url(#vsX4)"/><rect x="16" y="37" width="60" height="13" fill="url(#vsX4)"/><rect x="28" y="50" width="48" height="11" fill="url(#vsX4)"/><rect x="18" y="61" width="62" height="14" fill="url(#vsX4)"/><rect x="34" y="75" width="44" height="12" fill="url(#vsX4)"/><rect x="22" y="87" width="50" height="13" fill="url(#vsX4)"/></svg></div><div class="frame"><div class="nm-tag caption">Phần 2 &middot; đối xứng</div><h2 class="ttl">Nền tảng toán học và vật lý.</h2><p class="lede">Ba nhóm đối xứng, và hai tính chất &mdash; bất biến và đồng biến &mdash; là ngôn ngữ chung để hiểu mọi kiến trúc trong Phần 3 và 4.</p></div>
+      <div class="pagenum">27 / 60</div>
+    </section>
+    <section class="slide s-index hairlines">
+      <div class="frame"><div class="topbar"><div class="h">E(3), SU(2)/SO(3), S&#8345;.</div><div class="lab-tag caption">2.1 &middot; ba nhóm đối xứng</div></div><div class="list"><div class="row"><div class="num-tag caption">E(3)</div><div><h3>Nhóm Euclid</h3><p>\(g[\vec x]=R\vec x+\vec t\) &mdash; tịnh tiến + quay + phản xạ. Năng lượng phân tử cô lập phải bất biến dưới mọi \(g\in E(3)\).</p></div></div><div class="row"><div class="num-tag caption">02</div><div><h3>SO(3) / SU(2) &mdash; Nhóm quay</h3><p>SO(3): ma trận quay 3&times;3. SU(2) là nhóm phủ kép &mdash; mỗi \(R\in SO(3)\) ứng 2 phần tử \(\pm U\in SU(2)\), tự nhiên cho qubit.</p></div></div><div class="row"><div class="num-tag caption">S&#8345;</div><div><h3>Nhóm hoán vị</h3><p>Hoán đổi n nguyên tử giống hệt nhau (vd. 2 hydro trong nước) phải giữ nguyên năng lượng &mdash; nguyên tử vật lý không thể phân biệt.</p></div></div></div></div>
+      <div class="pagenum">28 / 60</div>
+    </section>
+    <section class="slide s-split s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Xoay một vector bằng ma trận thật.</div><div class="lab-tag caption">2.1 &middot; ví dụ số</div></div><div class="body wide-left"><div class="col"><p>\(R_z(90^\circ)\) áp lên \(\vec v=(1,0,0)\) cho (0,1,0): mũi tên chỉ x nay chỉ y &mdash; đúng một góc phần tư. Kiểm tra: \(\|\vec v\|=1\) và \(\|R\vec v\|=1\) &mdash; không đổi.</p><p>Đây chính xác là phép tính, cho từng nguyên tử, mỗi khi tài liệu nói "xoay phân tử."</p></div><div class="col"><div class="diagram-frame"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><circle cx="50" cy="50" r="34" fill="none" stroke="rgba(31,43,224,0.18)" stroke-width="1"/><line x1="50" y1="50" x2="50" y2="50" x2="50" y2="16" stroke="#1F2BE0" stroke-width="0" /><g class="anim-spin" style="transform-origin:50px 50px;"><line x1="50" y1="50" x2="50" y2="16" stroke="#1F2BE0" stroke-width="2.4"/><polygon points="50,10 45,20 55,20" fill="#1F2BE0"/></g><circle cx="50" cy="50" r="3" fill="#1F2BE0"/></svg></div><div class="diagram-cap">R · vector đang xoay quanh gốc, độ dài không đổi</div></div></div></div>
+      <div class="pagenum">29 / 60</div>
+    </section>
+    <section class="slide s-formula s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Bất biến vs. đồng biến.</div><div class="lab-tag caption">2.2 &middot; định nghĩa</div></div><div class="body"><div class="eqn-stage">\[ f(V_g[v]) = f(v) \qquad\text{so với}\qquad f(V_g[v]) = \mathcal{R}_g(f(v)) \]</div><div class="eqn-note">bất biến (trái) &middot; đồng biến (phải)</div><div class="plain-box"><span class="kicker">Nói dễ hiểu</span><p><b>Bất biến</b> giống <i>trọng lượng</i> &mdash; xoay vật thể, con số trên cân không đổi. <b>Đồng biến</b> giống <i>cái bóng</i> &mdash; xoay vật thể, bóng xoay theo, khớp, đoán trước được. Năng lượng (vô hướng) phải bất biến; lực (vector) phải đồng biến: \(\vec F\to R\vec F\) khi phân tử xoay bởi R.</p></div></div></div>
+      <div class="pagenum">30 / 60</div>
+    </section>
+    <section class="slide s-split s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Vật thể xoay &#8594; bóng xoay theo.</div><div class="lab-tag caption">2.2 &middot; minh hoạ</div></div><div class="body wide-left"><div class="col"><p>Một mô hình chỉ xây từ khoảng cách (bất biến) vẫn dự đoán đúng năng lượng, nhưng khôi phục lực đồng biến đòi hỏi lấy đạo hàm theo tọa độ Cartesian gốc &mdash; đúng cách cả PaiNN lẫn siVQLM làm: \(\vec F=-\nabla E\).</p><p>Hoặc kiến trúc mang theo đặc trưng vector đồng biến nội tại &mdash; kênh &mu; của PaiNN, cấu trúc quay cấp-qubit của siVQLM.</p></div><div class="col"><div class="diagram-frame"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><line x1="10" y1="80" x2="90" y2="80" stroke="rgba(31,43,224,0.18)" stroke-width="1"/><ellipse cx="50" cy="80" rx="22" ry="5" fill="rgba(31,43,224,0.18)" class="anim-pulse"/><g class="anim-spin" style="transform-origin:50px 46px;"><rect x="42" y="30" width="16" height="16" fill="none" stroke="#1F2BE0" stroke-width="2.2"/></g><line x1="50" y1="46" x2="50" y2="80" stroke="rgba(31,43,224,0.18)" stroke-width="1" stroke-dasharray="2,2"/></svg></div><div class="diagram-cap">vật thể xoay → bóng xoay theo (đồng biến)</div></div></div></div>
+      <div class="pagenum">31 / 60</div>
+    </section>
+    <section class="slide s-formula s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Message Passing Neural Network.</div><div class="lab-tag caption">2.3 &middot; tổng quát</div></div><div class="body"><div class="eqn-stage">\[ m_{ij} = \phi_{msg}(q_i, q_j, \vec r_{ij}), \qquad q_i' = \phi_{upd}\Big(q_i, \sum_{j\in\mathcal N(i)} m_{ij}\Big) \]</div><div class="plain-box"><span class="kicker">Nói dễ hiểu</span><p>Mỗi nguyên tử là một học sinh viết "thông điệp" gửi hàng xóm, rồi đọc tất cả thông điệp nhận được để cập nhật hiểu biết của mình. Lặp L lần = thông tin lan L bước nhảy. Chỉ khoảng cách (không hướng) &#8594; bất biến (SchNet). Thêm hướng &#8594; đồng biến (PaiNN).</p></div></div></div>
+      <div class="pagenum">32 / 60</div>
+    </section>
+    <section class="slide s-split s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Thông điệp truyền giữa nguyên tử.</div><div class="lab-tag caption">2.3 &middot; đồ thị</div></div><div class="body wide-left"><div class="col"><p>Vòng 1: mỗi nguyên tử gửi thông điệp cho hàng xóm trong bán kính cutoff. Vòng 2, 3, &#8230;: thông tin về hàng-xóm-của-hàng-xóm lan toả, giống tin đồn lan qua lớp học sau vài vòng thì thầm.</p><p>Section 3 cho thấy chính xác cách PaiNN xây "thông điệp mang hướng" mà không phá vỡ quy tắc phép quay.</p></div><div class="col"><div class="diagram-frame"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><circle cx="20" cy="50" r="7" fill="none" stroke="#1F2BE0" stroke-width="2"/><circle cx="50" cy="30" r="7" fill="none" stroke="#1F2BE0" stroke-width="2"/><circle cx="80" cy="50" r="7" fill="none" stroke="#1F2BE0" stroke-width="2"/><line x1="26" y1="47" x2="44" y2="33" stroke="rgba(31,43,224,0.18)" stroke-width="1.5"/><line x1="56" y1="33" x2="74" y2="47" stroke="rgba(31,43,224,0.18)" stroke-width="1.5"/><circle r="2.6" fill="#1F2BE0"><animateMotion dur="1.8s" repeatCount="indefinite" path="M26,47 L44,33"/></circle><circle r="2.6" fill="#1F2BE0"><animateMotion dur="1.8s" begin="0.4s" repeatCount="indefinite" path="M74,47 L56,33"/></circle><text x="20" y="68" text-anchor="middle" font-size="6" fill="#1F2BE0" font-family="DM Mono, monospace">1</text><text x="50" y="20" text-anchor="middle" font-size="6" fill="#1F2BE0" font-family="DM Mono, monospace">2</text><text x="80" y="68" text-anchor="middle" font-size="6" fill="#1F2BE0" font-family="DM Mono, monospace">3</text></svg></div><div class="diagram-cap">message passing · thông điệp truyền giữa nguyên tử lân cận</div></div></div></div>
+      <div class="pagenum">33 / 60</div>
+    </section>
+    <section class="slide s-formula s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Kiểm tra đồng biến của một quy tắc toy.</div><div class="lab-tag caption">2.3 &middot; ví dụ số</div></div><div class="body"><div class="eqn-stage">\[ \vec\mu_i'' = \sum_j c_{ij}(R\vec r_{ij}) = R\Big(\sum_j c_{ij}\vec r_{ij}\Big) = R\,\vec\mu_i' \]</div><div class="eqn-note">\(c_{ij}\) chỉ phụ thuộc \(\|\vec r_{ij}\|\) (bất biến)</div><div class="plain-box"><span class="kicker">Nói dễ hiểu</span><p>Nếu hệ số \(c_{ij}\) chỉ phụ thuộc khoảng cách (bất biến), thì cập nhật vector \(\vec\mu_i'\) biến đổi đúng như \(R\vec\mu_i'\) khi xoay &mdash; đồng biến. Đây chính xác là cơ chế bên trong <code>PaiNNInteraction</code>: nhân một vector đã đồng biến với một hệ số bất biến, không bao giờ bẻ trực tiếp thành phần vector.</p></div></div></div>
+      <div class="pagenum">34 / 60</div>
+    </section>
+    <section class="slide s-index hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Trước khi sang Phần 3.</div><div class="lab-tag caption">Tự kiểm tra nhanh &middot; Phần 2</div></div><div class="list"><div class="row"><div class="num-tag caption">Q1</div><div class="qa-block" style="border-top:none;padding-top:0;"><div class="q">Nếu f(Rv)=f(v) với mọi phép quay R, f là bất biến hay đồng biến?</div><div class="a">Bất biến &mdash; đầu ra hoàn toàn không đổi.</div></div></div><div class="row"><div class="num-tag caption">Q2</div><div class="qa-block" style="border-top:none;padding-top:0;"><div class="q">Vì sao lực nguyên tử phải đồng biến, không phải bất biến?</div><div class="a">Lực là đại lượng hướng-và-độ-lớn; xoay phân tử phải xoay vector lực theo, một lực đứng yên sẽ sai vật lý.</div></div></div><div class="row"><div class="num-tag caption">Q3</div><div class="qa-block" style="border-top:none;padding-top:0;"><div class="q">Khác biệt giữa SchNet và PaiNN trong một câu?</div><div class="a">Thông điệp của SchNet chỉ chứa khoảng cách (bất biến); thông điệp của PaiNN thêm thông tin vector đồng biến.</div></div></div></div></div>
+      <div class="pagenum">35 / 60</div>
+    </section>
+    <section class="slide s-chapter hairlines">
+      <div class="pixel-glitch" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><defs><pattern id="vsX5" width="2.4" height="100" patternUnits="userSpaceOnUse"><line x1="0.5" y1="0" x2="0.5" y2="100" stroke="#1F2BE0" stroke-width="1.0" /></pattern></defs><rect x="36" y="0"  width="38" height="14" fill="url(#vsX5)"/><rect x="22" y="14" width="50" height="12" fill="url(#vsX5)"/><rect x="34" y="26" width="46" height="11" fill="url(#vsX5)"/><rect x="16" y="37" width="60" height="13" fill="url(#vsX5)"/><rect x="28" y="50" width="48" height="11" fill="url(#vsX5)"/><rect x="18" y="61" width="62" height="14" fill="url(#vsX5)"/><rect x="34" y="75" width="44" height="12" fill="url(#vsX5)"/><rect x="22" y="87" width="50" height="13" fill="url(#vsX5)"/></svg></div><div class="frame"><div class="nm-tag caption">Phần 3 &middot; Sch&uuml;tt et al. 2021</div><h2 class="ttl">Đi sâu vào PaiNN.</h2><p class="lede">arXiv:2102.03150. Mỗi nguyên tử mang hai mô tả song song: một "thẻ tên" vô hướng và một "mũi tên" vector &mdash; và không bao giờ để phi tuyến chạm trực tiếp vào mũi tên.</p></div>
+      <div class="pagenum">36 / 60</div>
+    </section>
+    <section class="slide s-split s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Vô hướng \(q_i\) và vector \(\vec\mu_i\).</div><div class="lab-tag caption">3.1 &middot; hai kênh</div></div><div class="body wide-left"><div class="col"><ul><li>\(q_i\in\mathbb R^C\) &mdash; <b>bất biến</b> quay, "thẻ tên" mang loại nguyên tử &amp; những gì đã học.</li><li>\(\vec\mu_i\in\mathbb R^{3\times C}\) &mdash; <b>đồng biến</b> quay, C mũi tên trong \(\mathbb R^3\).</li><li>Khởi tạo: \(q^{(0)}=\)embedding(Z); \(\vec\mu^{(0)}=\vec 0\) &mdash; vector <i>duy nhất</i> bất biến dưới mọi phép quay.</li></ul></div><div class="col"><div class="diagram-frame"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><rect x="10" y="20" width="34" height="60" fill="none" stroke="#1F2BE0" stroke-width="2"/><text x="27" y="46" text-anchor="middle" font-size="6" fill="#1F2BE0" font-family="DM Mono, monospace">q(i)</text><text x="27" y="58" text-anchor="middle" font-size="5" fill="#1F2BE0" font-family="Hanken Grotesk">th&#7867; t&#234;n</text><line x1="70" y1="70" x2="70" y2="30" stroke="#1F2BE0" stroke-width="2.6" class="anim-swing" style="transform-origin:70px 70px;" marker-end="url(#ah5)"/><defs><marker id="ah5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#1F2BE0"/></marker></defs><text x="70" y="90" text-anchor="middle" font-size="6" fill="#1F2BE0" font-family="DM Mono, monospace">&mu;(i)</text></svg></div><div class="diagram-cap">hai kênh song song: vô hướng (trái) + vector (phải)</div></div></div></div>
+      <div class="pagenum">37 / 60</div>
+    </section>
+    <section class="slide s-formula s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Biến hình học vô hướng thành message.</div><div class="lab-tag caption">3.2 &middot; interaction</div></div><div class="body"><div class="eqn-stage">\[ x_j = W_{ij}\odot\phi_{ctx}(q_j), \qquad d\vec\mu_i = \sum_{j} \big[dm_R\odot\hat{\vec r}_{ij} + dm_\mu\odot\vec\mu_j\big] \]</div><div class="eqn-note">\(W_{ij}\) chỉ phụ thuộc \(\|\vec r_{ij}\|\) qua radial basis + cutoff</div><div class="plain-box"><span class="kicker">Nói dễ hiểu</span><p>Lấy hướng tới hàng xóm (\(\hat{\vec r}_{ij}\), đã đồng biến) và mũi tên của hàng xóm (\(\vec\mu_j\)), scale bởi hệ số <i>bất biến</i> (\(dm_R\), \(dm_\mu\)) chỉ phụ thuộc khoảng cách. Nhân "mũi-tên-hướng" &times; "số không quan tâm phép quay" luôn cho ra mũi tên hợp lệ &mdash; như co giãn độ dài kim la bàn mà không đụng hướng nó chỉ.</p></div></div></div>
+      <div class="pagenum">38 / 60</div>
+    </section>
+    <section class="slide s-split s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">3 nguyên tử, tính bằng tay.</div><div class="lab-tag caption">3.2 &middot; ví dụ số</div></div><div class="body wide-left"><div class="col"><p>Nguyên tử 1 tại (0,0,0), 2 tại (1,0,0), 3 tại (3,0,0). Filter cho \(dm_R\)=0.8 (gần, cách 1&Aring;) và 0.3 (xa, cách 2&Aring;). Với \(\vec\mu_1=\vec\mu_3=\vec 0\):</p><p>\(d\vec\mu_2\) = 0.8&middot;(&minus;1,0,0) + 0.3&middot;(1,0,0) = (&minus;0.5,0,0) &mdash; nguyên tử 2 nhận một mũi tên nhỏ chỉ về phía nguyên tử 1 (gần hơn) &mdash; thông tin <i>hướng</i> mà SchNet hoàn toàn không có cách biểu diễn.</p></div><div class="col"><div class="diagram-frame"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><circle cx="20" cy="50" r="5" fill="#1F2BE0"/><circle cx="42" cy="50" r="5" fill="none" stroke="#1F2BE0" stroke-width="2.4"/><circle cx="80" cy="50" r="5" fill="#1F2BE0"/><line x1="20" y1="50" x2="42" y2="50" stroke="rgba(31,43,224,0.18)" stroke-width="1.4"/><line x1="42" y1="50" x2="80" y2="50" stroke="rgba(31,43,224,0.18)" stroke-width="1.4"/><g class="anim-float"><line x1="42" y1="50" x2="26" y2="50" stroke="#1F2BE0" stroke-width="2.6" marker-end="url(#ah1)"/></g><defs><marker id="ah1" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#1F2BE0"/></marker></defs><text x="20" y="66" text-anchor="middle" font-size="6" fill="#1F2BE0" font-family="DM Mono, monospace">1</text><text x="42" y="66" text-anchor="middle" font-size="6" fill="#1F2BE0" font-family="DM Mono, monospace">2</text><text x="80" y="66" text-anchor="middle" font-size="6" fill="#1F2BE0" font-family="DM Mono, monospace">3</text><text x="30" y="38" text-anchor="middle" font-size="6" fill="#1F2BE0" font-family="DM Mono, monospace">d&mu;&#8322;</text></svg></div><div class="diagram-cap">nguyên tử 2 nhận vector chỉ về phía nguyên tử 1 (gần hơn)</div></div></div></div>
+      <div class="pagenum">39 / 60</div>
+    </section>
+    <section class="slide s-formula s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Biến vector về vô hướng an toàn.</div><div class="lab-tag caption">3.3 &middot; mixing</div></div><div class="body"><div class="eqn-stage">\[ \|\mu_V\|_i = \sqrt{\textstyle\sum_{xyz}\mu_{V,i}^2+\epsilon} \]</div><div class="eqn-note">độ dài luôn bất biến: \(\|R\vec v\|=\|\vec v\|\)</div><div class="plain-box"><span class="kicker">Nói dễ hiểu</span><p>Không thể áp ReLU trực tiếp lên (x,y,z) &mdash; sẽ phá đồng biến. Thay vào đó: đo <b>độ dài</b> mũi tên (luôn bất biến, vd. (3,0,4)&#8594;5 dù xoay thế nào), đưa qua MLP phi tuyến bất kỳ, rồi nhân kết quả trở lại vào một vector khác \(\vec\mu_W\) &mdash; cùng mẹo "số an toàn nhân mũi tên xoay đúng."</p></div></div></div>
+      <div class="pagenum">40 / 60</div>
+    </section>
+    <section class="slide s-formula s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Từ biểu diễn tới năng lượng và lực.</div><div class="lab-tag caption">3.4 &middot; đầu ra</div></div><div class="body"><div class="eqn-stage">\[ E = \sum_i E_i(q_i), \qquad \vec F_i = -\nabla_{\vec x_i} E \]</div><div class="eqn-note">sau ~3 lần lặp interaction &#8594; mixing</div><div class="plain-box"><span class="kicker">Nói dễ hiểu</span><p>\(q_i\) cuối cùng qua một MLP head theo từng nguyên tử rồi cộng lại thành E. Vì toàn bộ đồ thị tính toán khả vi, lực gần như "miễn phí" qua đạo hàm tự động &mdash; chỉ một lượt backward, không cần tính lại từ đầu.</p></div></div></div>
+      <div class="pagenum">41 / 60</div>
+    </section>
+    <section class="slide s-index hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Trước khi sang Phần 4.</div><div class="lab-tag caption">Tự kiểm tra nhanh &middot; Phần 3</div></div><div class="list"><div class="row"><div class="num-tag caption">Q1</div><div class="qa-block" style="border-top:none;padding-top:0;"><div class="q">Vì sao \(\vec\mu^{(0)}=\vec 0\) là lựa chọn bắt buộc cho vector khởi đầu?</div><div class="a">\(\vec 0\) là vector duy nhất giữ nguyên dưới mọi phép quay &mdash; bất kỳ lựa chọn khác sẽ âm thầm phá đồng biến từ lớp đầu.</div></div></div><div class="row"><div class="num-tag caption">Q2</div><div class="qa-block" style="border-top:none;padding-top:0;"><div class="q">PaiNN xử lý phi tuyến cho kênh vector bằng cách nào?</div><div class="a">Trích độ dài (một số bất biến), đưa qua MLP, rồi nhân kết quả trở lại vào một vector khác &mdash; không bao giờ bẻ trực tiếp thành phần x,y,z.</div></div></div><div class="row"><div class="num-tag caption">Q3</div><div class="qa-block" style="border-top:none;padding-top:0;"><div class="q">Vì sao lực "gần như miễn phí" trong PaiNN?</div><div class="a">Toàn bộ pipeline khả vi &mdash; một lượt đạo hàm tự động (backward) tính tất cả thành phần lực cùng lúc.</div></div></div></div></div>
+      <div class="pagenum">42 / 60</div>
+    </section>
+    <section class="slide s-chapter hairlines">
+      <div class="pixel-glitch" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><defs><pattern id="vsX6" width="2.4" height="100" patternUnits="userSpaceOnUse"><line x1="0.5" y1="0" x2="0.5" y2="100" stroke="#1F2BE0" stroke-width="1.0" /></pattern></defs><rect x="36" y="0"  width="38" height="14" fill="url(#vsX6)"/><rect x="22" y="14" width="50" height="12" fill="url(#vsX6)"/><rect x="34" y="26" width="46" height="11" fill="url(#vsX6)"/><rect x="16" y="37" width="60" height="13" fill="url(#vsX6)"/><rect x="28" y="50" width="48" height="11" fill="url(#vsX6)"/><rect x="18" y="61" width="62" height="14" fill="url(#vsX6)"/><rect x="34" y="75" width="44" height="12" fill="url(#vsX6)"/><rect x="22" y="87" width="50" height="13" fill="url(#vsX6)"/></svg></div><div class="frame"><div class="nm-tag caption">Phần 4 &middot; Le et al. 2025</div><h2 class="ttl">Đi sâu vào siVQLM.</h2><p class="lede">arXiv:2311.11362 &mdash; Symmetry-Invariant Quantum Learning Model. Thay mạng nơ-ron bằng mạch lượng tử, giữ nguyên toàn bộ ý tưởng học-có-giám-sát từ Phần 3.</p></div>
+      <div class="pagenum">43 / 60</div>
+    </section>
+    <section class="slide s-split s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Qubit, cổng, và "núm vặn".</div><div class="lab-tag caption">4.0 &middot; nhập môn tốc hành</div></div><div class="body wide-left"><div class="col"><p>Một <b>qubit</b> có thể ở trạng thái "pha trộn" 0 và 1 (chồng chập), mô tả bằng vector số phức. Một <b>cổng lượng tử</b> biến đổi vector này &mdash; luôn là ma trận <i>unita</i> (bảo toàn tổng xác suất).</p><p>exp(&minus;i&times;&#8230;) là "núm vặn": xoay núm, qubit xoay theo. <b>Đo</b> một observable O cho lại một số thường &mdash; đây chính là năng lượng dự đoán.</p></div><div class="col"><div class="diagram-frame"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><circle cx="50" cy="50" r="32" fill="none" stroke="rgba(31,43,224,0.18)" stroke-width="1"/><circle cx="50" cy="50" r="1.6" fill="#1F2BE0"/><g class="anim-spin" style="transform-origin:50px 50px;"><line x1="50" y1="50" x2="76" y2="50" stroke="#1F2BE0" stroke-width="2.2"/><circle cx="76" cy="50" r="3.2" fill="#1F2BE0"/></g><text x="50" y="14" text-anchor="middle" font-size="6" fill="#1F2BE0" font-family="DM Mono, monospace">|0&gt;</text><text x="50" y="94" text-anchor="middle" font-size="6" fill="#1F2BE0" font-family="DM Mono, monospace">|1&gt;</text></svg></div><div class="diagram-cap">exp(-i&phi;) · núm vặn xoay trạng thái qubit</div></div></div></div>
+      <div class="pagenum">44 / 60</div>
+    </section>
+    <section class="slide s-formula s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Data-reuploading.</div><div class="lab-tag caption">4.1 &middot; VQLM</div></div><div class="body"><div class="eqn-stage">\[ M_\Theta(\mathcal X) = \Big[\prod_{d=D}^{1}\Phi(\mathcal X)U_d(\vec\theta_d)\Big]\Phi(\mathcal X), \quad f_\Theta = \langle\psi_0|M_\Theta^\dagger O M_\Theta|\psi_0\rangle \]</div><div class="eqn-note">\(\Phi\): lớp mã hoá (không train) &middot; \(U_d\): lớp trainable</div><div class="plain-box"><span class="kicker">Nói dễ hiểu</span><p>Một chiếc bánh nhiều lớp xen kẽ: lớp "mã hoá" (nạp tọa độ, luôn giống nhau) và lớp "trainable" (núm điều chỉnh \(\vec\theta_d\)). "Re-uploading" = nạp lại dữ liệu ở <i>mỗi</i> lớp, không chỉ lúc đầu &mdash; về mặt toán học biến mạch thành một <b>chuỗi Fourier</b> train được, xấp xỉ phổ quát khi đủ lớp D.</p></div></div></div>
+      <div class="pagenum">45 / 60</div>
+    </section>
+    <section class="slide s-index hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Bốn thành phần, như một đội chạy tiếp sức.</div><div class="lab-tag caption">4.2 &middot; công thức bất biến G</div></div><div class="list"><div class="row"><div class="num-tag caption">1</div><div><h3>Trạng thái khởi tạo bất biến</h3><p>\(R_g|\psi_0\rangle=|\psi_0\rangle\) &mdash; bắt đầu từ một trạng thái đã trông giống nhau từ mọi góc.</p></div></div><div class="row"><div class="num-tag caption">2</div><div><h3>Lớp encoding đồng biến</h3><p>\(\Phi(V_g[X])=R_g\Phi(X)R_g^\dagger\) &mdash; nạp tọa độ phải "xoay theo" nhất quán.</p></div></div><div class="row"><div class="num-tag caption">3</div><div><h3>Lớp trainable đồng biến</h3><p>\([U_d(\vec\theta_d),R_g]=0\) &mdash; mọi cổng train được cũng phải xoay theo.</p></div></div><div class="row"><div class="num-tag caption">4</div><div><h3>Observable bất biến</h3><p>\(R_gOR_g^\dagger=O\) &mdash; thứ đo để lấy năng lượng phải trông giống mọi góc.</p></div></div></div></div>
+      <div class="pagenum">46 / 60</div>
+    </section>
+    <section class="slide s-formula s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Singlet &mdash; bất biến SU(2) và hoán vị.</div><div class="lab-tag caption">4.3 &middot; trạng thái</div></div><div class="body"><div class="eqn-stage">\[ |S\rangle = \tfrac{1}{\sqrt2}\big(|01\rangle - |10\rangle\big) \]</div><div class="eqn-note">P(01)=P(10)=50% &middot; P(00)=P(11)=0%</div><div class="plain-box"><span class="kicker">Nói dễ hiểu</span><p>Hai qubit "vướng víu": bạn không thể mô tả riêng từng qubit, chỉ mô tả được cặp. Xoay góc nhìn bất kỳ, hay đổi "cái nào là thứ nhất" &mdash; trạng thái này vẫn giống hệt. Khớp hoàn hảo với 2 nguyên tử H không thể phân biệt trong nước &mdash; đối xứng cài sẵn từ bước số 0.</p></div></div></div>
+      <div class="pagenum">47 / 60</div>
+    </section>
+    <section class="slide s-split s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Mã hoá đồng biến SU(2).</div><div class="lab-tag caption">4.4 &middot; encoding</div></div><div class="body wide-left"><div class="col"><p>\(\Phi(\vec x)=\exp(-i\alpha\vec x\cdot\vec\sigma)\) với \(\vec\sigma=(X,Y,Z)\) ma trận Pauli. "Xoay phân tử rồi mã hoá" cho <i>đúng cùng</i> kết quả với "mã hoá rồi xoay không gian qubit" &mdash; định nghĩa đồng biến, đảm bảo theo thiết kế chứ không phải học từ đầu.</p></div><div class="col"><div class="diagram-frame"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><text x="24" y="18" text-anchor="middle" font-size="6.5" fill="#1F2BE0" font-family="Hanken Grotesk">x</text><text x="76" y="18" text-anchor="middle" font-size="6.5" fill="#1F2BE0" font-family="Hanken Grotesk">Rx</text><text x="24" y="88" text-anchor="middle" font-size="6.5" fill="#1F2BE0" font-family="Hanken Grotesk">&#934;(x)</text><text x="76" y="88" text-anchor="middle" font-size="6.5" fill="#1F2BE0" font-family="Hanken Grotesk">R&#934;(x)R&#8224;</text><line x1="30" y1="14" x2="68" y2="14" stroke="#1F2BE0" stroke-width="1.6" marker-end="url(#ah2)"/><line x1="30" y1="84" x2="68" y2="84" stroke="#1F2BE0" stroke-width="1.6" marker-end="url(#ah2)"/><line x1="24" y1="24" x2="24" y2="78" stroke="#1F2BE0" stroke-width="1.6" marker-end="url(#ah2)"/><line x1="76" y1="24" x2="76" y2="78" stroke="#1F2BE0" stroke-width="1.6" marker-end="url(#ah2)"/><defs><marker id="ah2" markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse" refX="3.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#1F2BE0"/></marker></defs><circle cx="24" cy="14" r="2" fill="#1F2BE0" class="anim-pulse"/><circle cx="76" cy="84" r="2" fill="#1F2BE0" class="anim-pulse"/></svg></div><div class="diagram-cap">quay rồi mã hoá = mã hoá rồi quay (giao hoán)</div></div></div></div>
+      <div class="pagenum">48 / 60</div>
+    </section>
+    <section class="slide s-formula s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Lớp trainable &amp; observable, cùng một công thức.</div><div class="lab-tag caption">4.5 &middot; Heisenberg</div></div><div class="body"><div class="eqn-stage">\[ H^{(i,j)}(J) = J\,\vec\sigma^{(i)}\cdot\vec\sigma^{(j)}, \qquad O = X^{(0)}X^{(1)}+Y^{(0)}Y^{(1)}+Z^{(0)}Z^{(1)} \]</div><div class="eqn-note">cùng dạng dùng làm cổng train &middot; và làm observable đo</div><div class="plain-box"><span class="kicker">Nói dễ hiểu</span><p>\(\vec\sigma^{(i)}\cdot\vec\sigma^{(j)}\) đo "hai qubit thẳng hàng tới đâu" &mdash; không quan tâm góc nhìn hay thứ tự &mdash; nên tự động thoả cả 2 yêu cầu còn lại (thành phần 3 &amp; 4). Bọc trong exp(&minus;iJ&times;&#8230;) thành cổng trainable; dùng nguyên công thức làm phép đo &#8594; năng lượng.</p></div></div></div>
+      <div class="pagenum">49 / 60</div>
+    </section>
+    <section class="slide s-data hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Số qubit = active atoms &times; rep.</div><div class="lab-tag caption">4.6 &middot; ví dụ số</div></div><div class="body"><div class="col-a"><div class="stat"><div class="vbig">4</div><div class="lab2 caption">qubit cho H&#8322;O</div><div class="desc">2 hydro active &times; rep=2. Oxy cố định tại gốc tọa độ, loại tịnh tiến.</div></div><div class="stat"><div class="vbig" style="font-size: clamp(60px, min(6vw, 9vh), 130px);">2</div><div class="lab2 caption">qubit cho LiH</div><div class="desc">Chỉ 1 active atom (phân tử 2 nguyên tử) &times; rep=1.</div></div></div><div class="chart"><div class="bars"><div class="stack"><div class="cell on"></div><div class="cell on"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div></div><div class="stack"><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div></div><div class="stack"><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div></div><div class="stack"><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div></div><div class="stack"><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div></div><div class="stack"><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell"></div><div class="cell"></div></div><div class="stack"><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell"></div><div class="cell"></div></div><div class="stack"><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell"></div></div></div><div class="ticks"><div class="ticklab caption">LiH</div><div class="ticklab caption">H2O</div><div class="ticklab caption">H2O</div><div class="ticklab caption">dimer</div><div class="ticklab caption">dimer</div><div class="ticklab caption">MeOH?</div><div class="ticklab caption">MeOH?</div><div class="ticklab caption">aspirin?</div></div></div></div></div>
+      <div class="pagenum">50 / 60</div>
+    </section>
+    <section class="slide s-split s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Symmetry-breaking &amp; barren plateau.</div><div class="lab-tag caption">4.7 &middot; huấn luyện</div></div><div class="body wide-left"><div class="col"><p><b>Barren plateau</b>: phương sai gradient co lại theo hàm mũ theo số qubit/độ sâu &mdash; huấn luyện gần bất khả thi. siVQLM báo cáo <i>không</i> gặp hiện tượng này ở độ sâu nông đã thử: ràng buộc đồng biến thu hẹp không gian tham số, giúp trainability (Nguyen et al. 2024).</p><p>Một lớp noise tuỳ chọn (R<sub>Z</sub> ngẫu nhiên nhỏ) hỗ trợ hội tụ ở hệ lớn hơn.</p></div><div class="col"><div class="diagram-frame"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><rect x="8" y="10" width="10" height="78" fill="#1F2BE0"/><rect x="23" y="28" width="10" height="60" fill="#1F2BE0"/><rect x="38" y="48" width="10" height="40" fill="#1F2BE0"/><rect x="53" y="64" width="10" height="24" fill="#1F2BE0"/><rect x="68" y="76" width="10" height="12" fill="#1F2BE0" class="anim-blink"/><rect x="83" y="82" width="10" height="6" fill="#1F2BE0" class="anim-blink"/><line x1="4" y1="88" x2="96" y2="88" stroke="#1F2BE0" stroke-width="1.4"/><text x="50" y="97" text-anchor="middle" font-size="6" fill="#1F2BE0" font-family="DM Mono, monospace">số qubit &#8594;</text></svg></div><div class="diagram-cap">phương sai gradient co lại theo hàm mũ (barren plateau)</div></div></div></div>
+      <div class="pagenum">51 / 60</div>
+    </section>
+    <section class="slide s-index hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Trước khi sang Phần 5.</div><div class="lab-tag caption">Tự kiểm tra nhanh &middot; Phần 4</div></div><div class="list"><div class="row"><div class="num-tag caption">Q1</div><div class="qa-block" style="border-top:none;padding-top:0;"><div class="q">"Data re-uploading" nghĩa là gì?</div><div class="a">Nạp lại cùng dữ liệu cổ điển vào mạch ở mỗi lớp, không chỉ một lần &mdash; cho phép mạch biểu diễn chuỗi Fourier phong phú.</div></div></div><div class="row"><div class="num-tag caption">Q2</div><div class="qa-block" style="border-top:none;padding-top:0;"><div class="q">Kể tên 4 thành phần cho VQLM bất biến E(3)?</div><div class="a">Trạng thái khởi tạo bất biến, encoding đồng biến, lớp trainable đồng biến, observable bất biến.</div></div></div><div class="row"><div class="num-tag caption">Q3</div><div class="qa-block" style="border-top:none;padding-top:0;"><div class="q">Vì sao trạng thái singlet phù hợp cho 2 hydro trong nước?</div><div class="a">Nó đồng thời bất biến quay và bất biến hoán vị &mdash; khớp đúng sự không thể phân biệt vật lý của 2 nguyên tử H.</div></div></div></div></div>
+      <div class="pagenum">52 / 60</div>
+    </section>
+    <section class="slide s-chapter hairlines">
+      <div class="pixel-glitch" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><defs><pattern id="vsX7" width="2.4" height="100" patternUnits="userSpaceOnUse"><line x1="0.5" y1="0" x2="0.5" y2="100" stroke="#1F2BE0" stroke-width="1.0" /></pattern></defs><rect x="36" y="0"  width="38" height="14" fill="url(#vsX7)"/><rect x="22" y="14" width="50" height="12" fill="url(#vsX7)"/><rect x="34" y="26" width="46" height="11" fill="url(#vsX7)"/><rect x="16" y="37" width="60" height="13" fill="url(#vsX7)"/><rect x="28" y="50" width="48" height="11" fill="url(#vsX7)"/><rect x="18" y="61" width="62" height="14" fill="url(#vsX7)"/><rect x="34" y="75" width="44" height="12" fill="url(#vsX7)"/><rect x="22" y="87" width="50" height="13" fill="url(#vsX7)"/></svg></div><div class="frame"><div class="nm-tag caption">Phần 5 &middot; khoảng cách quy mô</div><h2 class="ttl">Kết nối hai hướng.</h2><p class="lede">PaiNN/NequIP/MACE đã hoạt động tốt trên phân tử vài chục nguyên tử. siVQLM mới chứng minh trên phân tử đồ chơi 2&ndash;6 nguyên tử &mdash; một hướng nghiên cứu trẻ hơn nhiều, đang giải bài toán khó hơn cho phần cứng hôm nay.</p></div>
+      <div class="pagenum">53 / 60</div>
+    </section>
+    <section class="slide s-split s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Quy mô và trục thiết kế.</div><div class="lab-tag caption">5.1 &middot; so sánh</div></div><div class="body wide-left"><div class="col"><h4>PaiNN / NequIP / MACE</h4><ul><li>Hệ lớn nhất: MD17 (9&ndash;21 nguyên tử), vật liệu</li><li>Đối xứng: kênh vector đồng biến <i>học được</i></li><li>Lực: autograd (rẻ)</li><li>Loss: năng lượng + lực có trọng số</li></ul></div><div class="col"><h4>siVQLM</h4><ul><li>Hệ lớn nhất: dimer nước (6 nguyên tử)</li><li>Đối xứng: thiết kế cổng theo lý thuyết nhóm <i>tường minh</i></li><li>Lực: autodiff (mô phỏng) / parameter-shift (phần cứng, đắt)</li><li>Loss: chỉ năng lượng (demo đơn giản hoá)</li></ul></div></div></div>
+      <div class="pagenum">54 / 60</div>
+    </section>
+    <section class="slide s-index hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Chưa ai công bố đáp án.</div><div class="lab-tag caption">5.2 &middot; sáu câu hỏi nghiên cứu mở</div></div><div class="list"><div class="row"><div class="num-tag caption">01</div><div><h3>Khoảng cách quy mô</h3><p>Cần bao nhiêu qubit để mở rộng lên malonaldehyde (9 ng.tử)? Tuyến tính (~16 qubit) hay bậc hai (~64, theo cặp Heisenberg)?</p></div></div><div class="row"><div class="num-tag caption">02</div><div><h3>Hệ trung gian</h3><p>Methanol (6 ng.tử, có trong MD17) hay cluster nước lớn hơn là benchmark tiếp theo khả thi hơn?</p></div></div><div class="row"><div class="num-tag caption">03</div><div><h3>Scale theo hoán vị</h3><p>Cấu trúc encoding có xử lý được S&#8345; với n=8 hydro đồng loại (aspirin) không nổ số cổng?</p></div></div><div class="row"><div class="num-tag caption">04</div><div><h3>Mức lý thuyết tham chiếu</h3><p>Khoảng cách chính xác giữa nhãn DFT (MD17) và ab initio bậc cao (LiH/H&#8322;O) đổi độ khó bài toán không?</p></div></div><div class="row"><div class="num-tag caption">05</div><div><h3>Hình học phi tuyến</h3><p>Encoding tuyến tính có biểu diễn được bức tường Lennard-Jones (~1/r&sup1;&sup2;) mà không cần tiền xử lý phi tuyến?</p></div></div><div class="row"><div class="num-tag caption">06</div><div><h3>Chi phí lấy lực</h3><p>Parameter-shift tốn 2 lần chạy mạch/tham số/thành phần lực &mdash; so với autograd gần miễn phí của PaiNN ở quy mô thực tế?</p></div></div></div></div>
+      <div class="pagenum">55 / 60</div>
+    </section>
+    <section class="slide s-formula s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Chi phí parameter-shift thực sự tới đâu.</div><div class="lab-tag caption">5.2 &middot; ví dụ số</div></div><div class="body"><div class="eqn-stage">\[ 2 \times 60\ \text{tham số} \times 27\ \text{thành phần lực} = 3{,}240\ \text{lần chạy mạch} \]</div><div class="eqn-note">cho MỘT phân tử 9 nguyên tử, MỘT ví dụ train</div><div class="plain-box"><span class="kicker">Nói dễ hiểu</span><p>So với PaiNN: một lượt backward đạo hàm tự động tính <i>cả 27</i> thành phần lực trong khoảng thời gian một lượt forward &mdash; chỉ 2&ndash;3&times; chi phí năng lượng. Khoảng cách chi phí vài nghìn lần này là rào cản thực tế, cụ thể nhất giữa demo lượng tử nhỏ hôm nay và triển khai quy mô MD17.</p></div></div></div>
+      <div class="pagenum">56 / 60</div>
+    </section>
+    <section class="slide s-manifesto hairlines">
+      <div class="stmt-wrap"><p class="stmt">Câu hỏi không phải để chiêm nghiệm &mdash; chúng là <span class="roman">lời mời đọc code thật, chạy lại thí nghiệm thật, và viết ra câu trả lời.</span></p><div class="attr"><div class="who caption">Suy nghĩ kết</div><div class="meta-tag caption">Source_Code/reading_notes.md &middot; Source_Code/practical_runs.md</div></div></div>
+      <div class="pagenum">57 / 60</div>
+    </section>
+    <section class="slide s-table hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Ký hiệu.</div><div class="lab-tag caption">Bảng chú giải &middot; 1/2</div></div><div class="ledger"><div class="row headrow" style="grid-template-columns:70px 260px 1fr 0px 0px"><div class="caption">No.</div><div class="caption">Ký hiệu</div><div class="caption">Ý nghĩa</div><div class="caption"></div><div class="caption"></div></div><div class="row" style="grid-template-columns:70px 260px 1fr 0px 0px"><div class="num-tag caption">01</div><div class="nm">\(\vec r, \vec x\)</div><div class="desc">Vị trí (vector 3D) của một nguyên tử</div><div class="mood-tag"></div><div class="delta-tag caption"></div></div><div class="row" style="grid-template-columns:70px 260px 1fr 0px 0px"><div class="num-tag caption">02</div><div class="nm">U, E</div><div class="desc">Năng lượng thế (một số vô hướng)</div><div class="mood-tag"></div><div class="delta-tag caption"></div></div><div class="row" style="grid-template-columns:70px 260px 1fr 0px 0px"><div class="num-tag caption">03</div><div class="nm">\(\vec F\)</div><div class="desc">Lực = \(-\nabla U\) (một vector 3D)</div><div class="mood-tag"></div><div class="delta-tag caption"></div></div><div class="row" style="grid-template-columns:70px 260px 1fr 0px 0px"><div class="num-tag caption">04</div><div class="nm">\(q_i, \vec\mu_i\)</div><div class="desc">Đặc trưng vô hướng / vector của PaiNN</div><div class="mood-tag"></div><div class="delta-tag caption"></div></div><div class="row" style="grid-template-columns:70px 260px 1fr 0px 0px"><div class="num-tag caption">05</div><div class="nm">E(3), SO(3), SU(2), \(S_n\)</div><div class="desc">Các nhóm đối xứng (Section 2)</div><div class="mood-tag"></div><div class="delta-tag caption"></div></div><div class="row" style="grid-template-columns:70px 260px 1fr 0px 0px"><div class="num-tag caption">06</div><div class="nm">\(\Theta, f_\Theta\)</div><div class="desc">Tham số train được &middot; chính mô hình</div><div class="mood-tag"></div><div class="delta-tag caption"></div></div><div class="row" style="grid-template-columns:70px 260px 1fr 0px 0px"><div class="num-tag caption">07</div><div class="nm">\(|\psi\rangle, |0\rangle, |1\rangle\)</div><div class="desc">Trạng thái lượng tử &middot; hai kết quả đọc qubit</div><div class="mood-tag"></div><div class="delta-tag caption"></div></div><div class="row" style="grid-template-columns:70px 260px 1fr 0px 0px"><div class="num-tag caption">08</div><div class="nm">\(\Phi(X), U_d(\vec\theta_d)\)</div><div class="desc">Lớp encoding &middot; lớp trainable của siVQLM</div><div class="mood-tag"></div><div class="delta-tag caption"></div></div></div></div>
+      <div class="pagenum">58 / 60</div>
+    </section>
+    <section class="slide s-table hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Thuật ngữ.</div><div class="lab-tag caption">Bảng chú giải &middot; 2/2</div></div><div class="ledger"><div class="row headrow" style="grid-template-columns:70px 260px 1fr 0px 0px"><div class="caption">No.</div><div class="caption">Thuật ngữ</div><div class="caption">Ý nghĩa</div><div class="caption"></div><div class="caption"></div></div><div class="row" style="grid-template-columns:70px 260px 1fr 0px 0px"><div class="num-tag caption">01</div><div class="nm">Bất biến</div><div class="desc">Đầu ra không đổi khi đối xứng tác động lên đầu vào</div><div class="mood-tag"></div><div class="delta-tag caption"></div></div><div class="row" style="grid-template-columns:70px 260px 1fr 0px 0px"><div class="num-tag caption">02</div><div class="nm">Đồng biến</div><div class="desc">Đầu ra biến đổi đồng bộ với đầu vào</div><div class="mood-tag"></div><div class="delta-tag caption"></div></div><div class="row" style="grid-template-columns:70px 260px 1fr 0px 0px"><div class="num-tag caption">03</div><div class="nm">Message passing</div><div class="desc">Nguyên tử lặp lại trao đổi thông tin với hàng xóm</div><div class="mood-tag"></div><div class="delta-tag caption"></div></div><div class="row" style="grid-template-columns:70px 260px 1fr 0px 0px"><div class="num-tag caption">04</div><div class="nm">Qubit</div><div class="desc">Tương đương lượng tử của bit, có thể chồng chập</div><div class="mood-tag"></div><div class="delta-tag caption"></div></div><div class="row" style="grid-template-columns:70px 260px 1fr 0px 0px"><div class="num-tag caption">05</div><div class="nm">Data re-uploading</div><div class="desc">Nạp lại đầu vào cổ điển ở nhiều lớp mạch</div><div class="mood-tag"></div><div class="delta-tag caption"></div></div><div class="row" style="grid-template-columns:70px 260px 1fr 0px 0px"><div class="num-tag caption">06</div><div class="nm">Barren plateau</div><div class="desc">Gradient biến mất theo hàm mũ &mdash; khó train</div><div class="mood-tag"></div><div class="delta-tag caption"></div></div><div class="row" style="grid-template-columns:70px 260px 1fr 0px 0px"><div class="num-tag caption">07</div><div class="nm">NISQ</div><div class="desc">Noisy Intermediate-Scale Quantum &mdash; phần cứng hiện nay</div><div class="mood-tag"></div><div class="delta-tag caption"></div></div><div class="row" style="grid-template-columns:70px 260px 1fr 0px 0px"><div class="num-tag caption">08</div><div class="nm">DFT</div><div class="desc">Density Functional Theory &mdash; nguồn nhãn train chính</div><div class="mood-tag"></div><div class="delta-tag caption"></div></div></div></div>
+      <div class="pagenum">59 / 60</div>
+    </section>
+    <section class="slide s-colophon hairlines">
+      <div class="pixel-glitch" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><defs><pattern id="vsX8" width="2.4" height="100" patternUnits="userSpaceOnUse"><line x1="0.5" y1="0" x2="0.5" y2="100" stroke="#1F2BE0" stroke-width="1.0" /></pattern></defs><rect x="36" y="0"  width="38" height="14" fill="url(#vsX8)"/><rect x="22" y="14" width="50" height="12" fill="url(#vsX8)"/><rect x="34" y="26" width="46" height="11" fill="url(#vsX8)"/><rect x="16" y="37" width="60" height="13" fill="url(#vsX8)"/><rect x="28" y="50" width="48" height="11" fill="url(#vsX8)"/><rect x="18" y="61" width="62" height="14" fill="url(#vsX8)"/><rect x="34" y="75" width="44" height="12" fill="url(#vsX8)"/><rect x="22" y="87" width="50" height="13" fill="url(#vsX8)"/></svg></div><div class="qr-block" aria-hidden="true"><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span></div><div class="titlewrap"><div class="ktag caption">Colophon &middot; Học Máy Lượng Tử cho Trường Lực</div><h2 class="ttl">Cảm ơn đã<br/>học cùng.</h2></div><div class="col-footer"><div><div class="ftag caption">Biên soạn</div><div class="ftxt">Trương Tuấn Nghĩa<br/>tài liệu tự học song ngữ EN/VI</div></div><div><div class="ftag caption">Nguồn đầy đủ</div><div class="ftxt">Study_Materials/*_Full_VN.tex<br/>Exam_Practice/*_MCQ_296.tex</div></div><div><div class="ftag caption">Luyện tập</div><div class="ftxt"><a href="../index.html" style="color:inherit" target="_blank" rel="noopener">Website QML-for-Force-Field &rarr;</a><br/>296 câu hỏi &middot; bài tập tương tác</div></div><div><div class="ftag caption">Tiếp theo</div><div class="ftxt">Chọn 1 trong 6 câu hỏi mở<br/>và thử trả lời bằng tính toán thật.</div></div></div>
+      <div class="pagenum">60 / 60</div>
+    </section>
+
+  </div>
+</div>
+
+<div class="caption nav-hint">&larr; / &rarr; &middot; space</div>
+
+<script>
+  // Plain vanilla navigation: arrows, space, home/end, swipe.
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let current = 0;
+  function show(i) {
+    if (i < 0) i = 0;
+    if (i > slides.length - 1) i = slides.length - 1;
+    slides[current].classList.remove('active');
+    slides[i].classList.add('active');
+    current = i;
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); show(current + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp')               { e.preventDefault(); show(current - 1); }
+    else if (e.key === 'Home')                                            { e.preventDefault(); show(0); }
+    else if (e.key === 'End')                                             { e.preventDefault(); show(slides.length - 1); }
+  });
+  let tx = null;
+  document.addEventListener('touchstart', (e) => { tx = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', (e) => {
+    if (tx == null) return;
+    const dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 40) show(current + (dx < 0 ? 1 : -1));
+    tx = null;
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Render every display-formula stage directly and reliably: strip the
+    // \[ ... \] wrapper and call katex.render() on the exact element,
+    // rather than relying on auto-render's text-node delimiter scanning
+    // (which can silently skip a node in a large, deeply-nested deck).
+    if (window.katex) {
+      document.querySelectorAll(".eqn-stage").forEach(function (el) {
+        var src = el.textContent.trim().replace(/^\\\[/, "").replace(/\\\]$/, "").trim();
+        try {
+          katex.render(src, el, { displayMode: true, throwOnError: false, strict: false });
+        } catch (e) {
+          console.error("KaTeX render failed for:", src, e);
+        }
+      });
+    }
+    // Everything else (inline vectors/subscripts inside prose text) still
+    // goes through the regular auto-render delimiter scan.
+    if (window.renderMathInElement) {
+      renderMathInElement(document.body, {
+        delimiters: [
+          {left: "\\(", right: "\\)", display: false}
+        ],
+        throwOnError: false,
+        strict: false,
+        ignoredClasses: ["eqn-stage"]
+      });
+    }
+  });
+</script>
+
+</body>
+</html>
