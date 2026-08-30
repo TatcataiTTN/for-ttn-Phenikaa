@@ -1,0 +1,74 @@
+:root {
+  --bg: #f7f8fb;
+  --panel: #ffffff;
+  --ink: #1c2430;
+  --ink-soft: #566072;
+  --line: #e1e5ee;
+  --accent: #3457d5;
+  --accent-soft: #eaefff;
+  --good: #1a8a52;
+  --bad: #c0392b;
+  --warn: #b8860b;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg); color: var(--ink); line-height: 1.5;
+}
+header.topbar { background: var(--panel); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 5; }
+.topbar-inner { max-width: 980px; margin: 0 auto; padding: 14px 16px 4px; display: flex; justify-content: space-between; align-items: center; }
+h1 { font-size: 1.25rem; margin: 0; }
+.lang-toggle { display: flex; gap: 4px; }
+.lang-btn { border: 1px solid var(--line); background: var(--panel); padding: 4px 10px; border-radius: 6px; cursor: pointer; font-weight: 600; color: var(--ink-soft); }
+.lang-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+nav.tabs { max-width: 980px; margin: 0 auto; display: flex; gap: 4px; padding: 8px 16px 0; overflow-x: auto; }
+.tab-btn { border: none; background: transparent; padding: 8px 12px; cursor: pointer; font-size: 0.92rem; color: var(--ink-soft); border-bottom: 2px solid transparent; white-space: nowrap; }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+main { max-width: 980px; margin: 0 auto; padding: 20px 16px 60px; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.hint { color: var(--ink-soft); font-size: 0.92rem; margin-bottom: 18px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; margin-bottom: 18px; }
+.card h2 { margin-top: 0; font-size: 1.05rem; }
+code { background: var(--accent-soft); padding: 1px 5px; border-radius: 4px; font-size: 0.92em; }
+
+.group-card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; margin-bottom: 14px; overflow: hidden; }
+.group-head { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; cursor: pointer; background: #fbfcff; }
+.group-head h3 { margin: 0; font-size: 0.98rem; }
+.group-score { font-size: 0.85rem; color: var(--ink-soft); font-weight: 600; }
+.group-body { padding: 0 16px 16px; display: none; }
+.group-body.open { display: block; }
+
+.question { padding: 14px 0; border-top: 1px solid var(--line); }
+.question:first-child { border-top: none; }
+.q-stem { font-weight: 600; margin-bottom: 8px; font-size: 0.94rem; }
+.q-opt { display: block; padding: 6px 10px; border: 1px solid var(--line); border-radius: 7px; margin-bottom: 6px; cursor: pointer; font-size: 0.92rem; }
+.q-opt:hover { background: var(--accent-soft); }
+.q-opt input { margin-right: 8px; }
+.q-opt.correct { border-color: var(--good); background: #eafaf1; }
+.q-opt.wrong { border-color: var(--bad); background: #fdecea; }
+
+.btn { background: var(--accent); color: #fff; border: none; padding: 8px 16px; border-radius: 7px; cursor: pointer; font-weight: 600; font-size: 0.92rem; }
+.btn:hover { opacity: 0.9; }
+.btn.secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+
+.result-box { margin-top: 10px; padding: 10px 14px; border-radius: 8px; font-size: 0.92rem; display: none; }
+.result-box.show { display: block; }
+.result-box.good { background: #eafaf1; color: var(--good); border: 1px solid var(--good); }
+.result-box.bad { background: #fdecea; color: var(--bad); border: 1px solid var(--bad); }
+
+.form-row { margin: 12px 0; display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.form-row label { display: block; margin-bottom: 4px; }
+.form-row input[type=number] { width: 70px; padding: 4px 6px; margin-left: 6px; border: 1px solid var(--line); border-radius: 6px; }
+
+.ref-table, .compare-table { border-collapse: collapse; width: 100%; margin-top: 14px; font-size: 0.88rem; }
+.ref-table th, .ref-table td, .compare-table th, .compare-table td {
+  border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top;
+}
+.ref-table th, .compare-table th { background: var(--accent-soft); }
+.table-scroll { overflow-x: auto; }
+
+footer { text-align: center; color: var(--ink-soft); font-size: 0.82rem; padding: 20px; }
+
+.summary-bar { display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+.summary-chip { background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 14px; font-size: 0.85rem; font-weight: 600; }

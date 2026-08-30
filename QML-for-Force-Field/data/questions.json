@@ -1,0 +1,1042 @@
+[
+  {
+    "id": 1,
+    "group": 1,
+    "group_name": "Symmetry groups (E(3), SU(2)/SO(3), Sn)",
+    "stem": "Which group is the semidirect product of translations and the orthogonal group $O(3)$?",
+    "options": [
+      "$SU(2)$",
+      "$E(3)$",
+      "$S_n$",
+      "$SO(3)$"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 2,
+    "group": 1,
+    "group_name": "Symmetry groups (E(3), SU(2)/SO(3), Sn)",
+    "stem": "$SU(2)$ is the double cover of which group?",
+    "options": [
+      "$SO(3)$",
+      "$S_n$",
+      "$E(3)$",
+      "$O(3)$"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 3,
+    "group": 1,
+    "group_name": "Symmetry groups (E(3), SU(2)/SO(3), Sn)",
+    "stem": "A molecule with 8 identical hydrogen atoms has which relevant permutation symmetry?",
+    "options": [
+      "$S_2$",
+      "$S_4$",
+      "$S_8$",
+      "$S_{16}$"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 4,
+    "group": 1,
+    "group_name": "Symmetry groups (E(3), SU(2)/SO(3), Sn)",
+    "stem": "$O(3)$ differs from $SO(3)$ by additionally including:",
+    "options": [
+      "reflections",
+      "permutations",
+      "translations",
+      "time reversal"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 5,
+    "group": 1,
+    "group_name": "Symmetry groups (E(3), SU(2)/SO(3), Sn)",
+    "stem": "In siVQLM, translational symmetry for H$_2$O is handled by:",
+    "options": [
+      "a dedicated quantum gate",
+      "a classical neural network",
+      "fixing the oxygen atom at the coordinate origin",
+      "it is not handled"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 6,
+    "group": 1,
+    "group_name": "Symmetry groups (E(3), SU(2)/SO(3), Sn)",
+    "stem": "Every rotation $R \\in SO(3)$ corresponds to how many elements $\\pm U \\in SU(2)$?",
+    "options": [
+      "2",
+      "infinitely many",
+      "1",
+      "3"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 7,
+    "group": 1,
+    "group_name": "Symmetry groups (E(3), SU(2)/SO(3), Sn)",
+    "stem": "Which statement about $E(3)$ acting on energy is correct?",
+    "options": [
+      "$E(g[\\mathcal X]) = E(\\mathcal X)$ for all $g\\in E(3)$",
+      "only true for $g\\in SO(3)$, not translations",
+      "$E$ is undefined under $E(3)$",
+      "$E(g[\\mathcal X]) = -E(\\mathcal X)$"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 8,
+    "group": 1,
+    "group_name": "Symmetry groups (E(3), SU(2)/SO(3), Sn)",
+    "stem": "A general reflection in the siVQLM paper is decomposed as:",
+    "options": [
+      "a permutation only",
+      "two rotations",
+      "a translation, a rotation, and a reflection along a fixed plane",
+      "a pure translation"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 9,
+    "group": 1,
+    "group_name": "Symmetry groups (E(3), SU(2)/SO(3), Sn)",
+    "stem": "The plane chosen for the reflection decomposition in the siVQLM paper is:",
+    "options": [
+      "$(1,1,1)^\\top$",
+      "$(1,-1,0)^\\top$",
+      "$(1,0,0)^\\top$",
+      "$(0,1,0)^\\top$"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 10,
+    "group": 1,
+    "group_name": "Symmetry groups (E(3), SU(2)/SO(3), Sn)",
+    "stem": "Why must atomic forces be equivariant rather than invariant?",
+    "options": [
+      "forces are always zero at equilibrium",
+      "forces are scalars",
+      "forces do not depend on geometry",
+      "forces are vectors that must rotate consistently with the molecule"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 11,
+    "group": 2,
+    "group_name": "Invariance vs equivariance, MPNN tong quat",
+    "stem": "The formal definition of invariance is:",
+    "options": [
+      "$V_g = \\mathcal{R}_g$",
+      "$f(V_g[v]) = \\mathcal{R}_g(f(v))$",
+      "$f(V_g[v]) = f(v)$",
+      "$f(v) = 0$"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 12,
+    "group": 2,
+    "group_name": "Invariance vs equivariance, MPNN tong quat",
+    "stem": "The formal definition of equivariance is:",
+    "options": [
+      "$f(V_g[v]) = \\mathcal{R}_g(f(v))$",
+      "$\\mathcal{R}_g = 0$",
+      "$f(V_g[v]) = f(v)$",
+      "$f(v) = V_g$"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 13,
+    "group": 2,
+    "group_name": "Invariance vs equivariance, MPNN tong quat",
+    "stem": "Is invariance a special case of equivariance?",
+    "options": [
+      "Only for $S_n$",
+      "No, unrelated concepts",
+      "Yes, when $\\mathcal{R}_g$ is the identity representation",
+      "Only for continuous groups"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 14,
+    "group": 2,
+    "group_name": "Invariance vs equivariance, MPNN tong quat",
+    "stem": "In a message passing neural network, $m_{ij}$ denotes:",
+    "options": [
+      "the mixing weight",
+      "the message computed between atoms $i$ and $j$",
+      "the cutoff radius",
+      "atom mass"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 15,
+    "group": 2,
+    "group_name": "Invariance vs equivariance, MPNN tong quat",
+    "stem": "Stacking $L$ message-passing layers propagates information up to:",
+    "options": [
+      "only 1 hop, always",
+      "the whole molecule instantly regardless of $L$",
+      "$L^2$ atoms",
+      "$L$ hops on the molecular graph"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 16,
+    "group": 2,
+    "group_name": "Invariance vs equivariance, MPNN tong quat",
+    "stem": "The original SchNet model is best described as:",
+    "options": [
+      "equivariant MPNN",
+      "invariant MPNN using pairwise distances",
+      "a transformer",
+      "a quantum circuit"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 17,
+    "group": 2,
+    "group_name": "Invariance vs equivariance, MPNN tong quat",
+    "stem": "In the worked toy example, $\\vec\\mu_i' = \\sum_j c_{ij}\\vec r_{ij}$ is equivariant because:",
+    "options": [
+      "$c_{ij}$ depends on direction",
+      "$c_{ij}$ is an invariant scalar and $\\vec r_{ij}$ transforms correctly",
+      "it is always zero",
+      "it does not depend on rotation at all"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 18,
+    "group": 2,
+    "group_name": "Invariance vs equivariance, MPNN tong quat",
+    "stem": "Applying a rotation $R$ to $\\vec r_{ij}$ leaves which quantity unchanged?",
+    "options": [
+      "$\\vec r_{ij}$ itself",
+      "$\\|\\vec r_{ij}\\|$",
+      "the direction of $\\vec r_{ij}$",
+      "nothing is unchanged"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 19,
+    "group": 2,
+    "group_name": "Invariance vs equivariance, MPNN tong quat",
+    "stem": "Which operation, applied directly and component-wise to a vector feature, generally breaks equivariance?",
+    "options": [
+      "vector addition",
+      "multiplying by zero",
+      "a generic nonlinearity like ReLU/SiLU",
+      "scalar multiplication by an invariant coefficient"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 20,
+    "group": 2,
+    "group_name": "Invariance vs equivariance, MPNN tong quat",
+    "stem": "$\\mathcal{N}(i)$ in the MPNN formula denotes:",
+    "options": [
+      "a normalization constant",
+      "the neighbourhood (neighbours within cutoff) of atom $i$",
+      "the number of layers",
+      "the atomic number of atom $i$"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 21,
+    "group": 3,
+    "group_name": "PaiNN: kien truc va kenh scalar/vector",
+    "stem": "PaiNN represents each atom with:",
+    "options": [
+      "tensor features of arbitrary rank",
+      "only scalar features",
+      "scalar features $q_i$ and vector features $\\vec\\mu_i$ simultaneously",
+      "only vector features"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 22,
+    "group": 3,
+    "group_name": "PaiNN: kien truc va kenh scalar/vector",
+    "stem": "The initial vector feature $\\vec\\mu^{(0)}$ in PaiNN is set to:",
+    "options": [
+      "random values",
+      "zero",
+      "the identity matrix",
+      "the atomic position"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 23,
+    "group": 3,
+    "group_name": "PaiNN: kien truc va kenh scalar/vector",
+    "stem": "Why is $\\vec\\mu^{(0)} = \\vec 0$ the required choice?",
+    "options": [
+      "it saves memory",
+      "the zero vector is the only vector invariant under every rotation",
+      "PyTorch requires it",
+      "it has no reason, arbitrary choice"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 24,
+    "group": 3,
+    "group_name": "PaiNN: kien truc va kenh scalar/vector",
+    "stem": "In \\texttt{PaiNNInteraction}, the filter $W_{ij}$ depends on:",
+    "options": [
+      "$\\vec\\mu_j$",
+      "the training epoch",
+      "$\\|\\vec r_{ij}\\|$ via a radial basis expansion and cutoff",
+      "atomic number only"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 25,
+    "group": 3,
+    "group_name": "PaiNN: kien truc va kenh scalar/vector",
+    "stem": "After \\texttt{interatomic\\_context\\_net}, the tensor $x$ is split into:",
+    "options": [
+      "energy and force",
+      "real and imaginary parts",
+      "$q$ and $\\mu$",
+      "$dq$, $dm_R$, $dm_\\mu$"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 26,
+    "group": 3,
+    "group_name": "PaiNN: kien truc va kenh scalar/vector",
+    "stem": "The update $d\\vec\\mu_i$ in PaiNNInteraction is a sum of:",
+    "options": [
+      "the atomic number times identity",
+      "a random vector",
+      "two scalar terms only",
+      "$dm_R \\odot \\widehat{\\vec r}_{ij}$ and $dm_\\mu \\odot \\vec\\mu_j$"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 27,
+    "group": 3,
+    "group_name": "PaiNN: kien truc va kenh scalar/vector",
+    "stem": "$\\text{scatter\\_add}$ in PaiNNInteraction aggregates messages according to:",
+    "options": [
+      "\\texttt{idx\\_i} (center atom index)",
+      "atomic number",
+      "alphabetical atom name",
+      "\\texttt{idx\\_j} (neighbour index)"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 28,
+    "group": 3,
+    "group_name": "PaiNN: kien truc va kenh scalar/vector",
+    "stem": "What does \\texttt{PaiNNMixing} compute that requires no neighbour information?",
+    "options": [
+      "the radial basis expansion",
+      "intra-atomic mixing",
+      "the cutoff function",
+      "the embedding lookup"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 29,
+    "group": 3,
+    "group_name": "PaiNN: kien truc va kenh scalar/vector",
+    "stem": "The quantity $\\|\\mu_V\\|_i$ in PaiNNMixing is:",
+    "options": [
+      "a genuine invariant scalar",
+      "a vector, still equivariant",
+      "undefined",
+      "always exactly 1"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 30,
+    "group": 3,
+    "group_name": "PaiNN: kien truc va kenh scalar/vector",
+    "stem": "Why is $\\|\\mu_V\\|_i$ \"safe\" to feed into an arbitrary MLP?",
+    "options": [
+      "it is always zero",
+      "MLPs ignore their input",
+      "it is invariant, so a generic nonlinearity applied to it stays consistent with the symmetry",
+      "MLPs can handle vectors directly"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 31,
+    "group": 4,
+    "group_name": "PaiNN: chi tiet tinh toan va energy/force head",
+    "stem": "In PaiNNMixing, the update $dmu_i$ is multiplied by:",
+    "options": [
+      "$q_i$ directly",
+      "$\\mu_W$",
+      "nothing, added raw",
+      "$\\mu_V$"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 32,
+    "group": 4,
+    "group_name": "PaiNN: chi tiet tinh toan va energy/force head",
+    "stem": "$dqmu_i$ in PaiNNMixing is proportional to:",
+    "options": [
+      "$\\sum(\\mu_V \\cdot \\mu_W)$",
+      "$q_i^2$",
+      "the atomic number",
+      "a random constant"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 33,
+    "group": 4,
+    "group_name": "PaiNN: chi tiet tinh toan va energy/force head",
+    "stem": "How many interaction blocks (\\texttt{n\\_interactions}) are typically used for MD17-scale systems?",
+    "options": [
+      "1",
+      "1000",
+      "50",
+      "about 3"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 34,
+    "group": 4,
+    "group_name": "PaiNN: chi tiet tinh toan va energy/force head",
+    "stem": "A typical value of \\texttt{n\\_atom\\_basis} $C$ in PaiNN is:",
+    "options": [
+      "8",
+      "100000",
+      "around 128",
+      "2"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 35,
+    "group": 4,
+    "group_name": "PaiNN: chi tiet tinh toan va energy/force head",
+    "stem": "After the final interaction block, \\texttt{scalar\\_representation} has shape:",
+    "options": [
+      "$[3, C]$",
+      "$[n_{atoms}, 3, C]$",
+      "$[n_{atoms}, C]$",
+      "$[1]$"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 36,
+    "group": 4,
+    "group_name": "PaiNN: chi tiet tinh toan va energy/force head",
+    "stem": "The atomwise energy is computed as:",
+    "options": [
+      "$E = \\sum_i E_i(q_i)$",
+      "$E = \\max_i E_i$",
+      "$E = q_1$",
+      "$E$ is not computed from $q$"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 37,
+    "group": 4,
+    "group_name": "PaiNN: chi tiet tinh toan va energy/force head",
+    "stem": "Force in PaiNN is obtained via:",
+    "options": [
+      "a separate untrained network",
+      "finite differences only",
+      "autograd: $\\vec F = -\\nabla_{\\mathcal X} E$",
+      "parameter-shift rule"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 38,
+    "group": 4,
+    "group_name": "PaiNN: chi tiet tinh toan va energy/force head",
+    "stem": "Why is PaiNN's force computation considered \"cheap\"?",
+    "options": [
+      "it uses a lookup table",
+      "one backward pass gives all force components via automatic differentiation",
+      "forces are approximated randomly",
+      "it needs no computation"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 39,
+    "group": 4,
+    "group_name": "PaiNN: chi tiet tinh toan va energy/force head",
+    "stem": "\\texttt{vector\\_representation} (i.e. $\\vec\\mu$) can additionally be used to predict:",
+    "options": [
+      "nothing further",
+      "atomic number",
+      "only energy",
+      "tensorial properties like dipole moment or polarizability"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 40,
+    "group": 4,
+    "group_name": "PaiNN: chi tiet tinh toan va energy/force head",
+    "stem": "If \\texttt{shared\\_interactions=False}, each interaction block has:",
+    "options": [
+      "its own independent set of weights",
+      "random fixed weights, never trained",
+      "identical shared weights",
+      "no weights"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 41,
+    "group": 5,
+    "group_name": "siVQLM: VQLM va data-reuploading",
+    "stem": "In the data-reuploading VQLM formula, $\\Phi(\\mathcal X)$ denotes:",
+    "options": [
+      "the observable",
+      "the data-encoding layer, not trained",
+      "a trainable layer",
+      "the initial state"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 42,
+    "group": 5,
+    "group_name": "siVQLM: VQLM va data-reuploading",
+    "stem": "$U_d(\\vec\\theta_d)$ denotes:",
+    "options": [
+      "the measurement",
+      "the molecule's energy",
+      "a fixed encoding gate",
+      "a trainable parametrized layer"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 43,
+    "group": 5,
+    "group_name": "siVQLM: VQLM va data-reuploading",
+    "stem": "$f_\\Theta(\\mathcal X)$ is computed as:",
+    "options": [
+      "$\\langle \\psi_0|M_\\Theta(\\mathcal X)^\\dagger O M_\\Theta(\\mathcal X)|\\psi_0\\rangle$",
+      "a random number",
+      "$M_\\Theta(\\mathcal X)$ directly",
+      "$O$ alone"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 44,
+    "group": 5,
+    "group_name": "siVQLM: VQLM va data-reuploading",
+    "stem": "Data-reuploading circuits realize which mathematical structure in the input data?",
+    "options": [
+      "a truncated Fourier series",
+      "a random walk",
+      "a Markov chain",
+      "a Taylor series only"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 45,
+    "group": 5,
+    "group_name": "siVQLM: VQLM va data-reuploading",
+    "stem": "The set of accessible Fourier frequencies in a reuploading model is fixed by:",
+    "options": [
+      "the optimizer",
+      "the encoding layers $\\Phi$",
+      "the observable $O$",
+      "the trainable layers $U_d$"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 46,
+    "group": 5,
+    "group_name": "siVQLM: VQLM va data-reuploading",
+    "stem": "The four ingredients required for a $G$-invariant VQLM are: invariant initial state, equivariant encoding, equivariant trainable layers, and:",
+    "options": [
+      "a random observable",
+      "an invariant observable",
+      "an equivariant observable",
+      "no observable at all"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 47,
+    "group": 5,
+    "group_name": "siVQLM: VQLM va data-reuploading",
+    "stem": "The condition for an equivariant trainable layer is:",
+    "options": [
+      "$U_d$ depends on $g$ explicitly",
+      "$U_d(\\vec\\theta_d)^2 = I$",
+      "$U_d(\\vec\\theta_d) = R_g$",
+      "$[U_d(\\vec\\theta_d), R_g] = 0$"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 48,
+    "group": 5,
+    "group_name": "siVQLM: VQLM va data-reuploading",
+    "stem": "The condition for an invariant observable $O$ is:",
+    "options": [
+      "$O$ is Hermitian only (any Hermitian works)",
+      "$O = 0$",
+      "$R_g\\, O\\, R_g^\\dagger = O$",
+      "$O$ commutes with $\\Phi$ only"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 49,
+    "group": 5,
+    "group_name": "siVQLM: VQLM va data-reuploading",
+    "stem": "In the demo, weights are initialised mostly at zero except one, to:",
+    "options": [
+      "keep the circuit close to identity, reducing barren plateau risk",
+      "satisfy a hardware constraint",
+      "speed up compilation",
+      "match classical PaiNN initialisation exactly"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 50,
+    "group": 5,
+    "group_name": "siVQLM: VQLM va data-reuploading",
+    "stem": "What role does $\\alpha_{\\text{enc}}$ play in the encoding $\\Phi^{(i)}(\\vec x;\\alpha_{\\text{enc}})$?",
+    "options": [
+      "it is fixed at 1, never trained",
+      "a trainable scale factor increasing expressivity",
+      "the number of layers",
+      "the qubit index"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 51,
+    "group": 6,
+    "group_name": "siVQLM: mach cho H2O, singlet, Heisenberg, observable",
+    "stem": "The singlet state $|S\\rangle$ equals:",
+    "options": [
+      "$\\frac{1}{\\sqrt2}(|01\\rangle-|10\\rangle)$",
+      "$|11\\rangle$",
+      "$|00\\rangle$",
+      "$\\frac{1}{\\sqrt2}(|00\\rangle+|11\\rangle)$"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 52,
+    "group": 6,
+    "group_name": "siVQLM: mach cho H2O, singlet, Heisenberg, observable",
+    "stem": "Swapping the two qubits of $|S\\rangle$:",
+    "options": [
+      "is undefined",
+      "changes the state completely",
+      "destroys entanglement",
+      "leaves it unchanged up to an overall phase"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 53,
+    "group": 6,
+    "group_name": "siVQLM: mach cho H2O, singlet, Heisenberg, observable",
+    "stem": "For H$_2$O in the demo, \\texttt{active\\_atoms} equals:",
+    "options": [
+      "1",
+      "4",
+      "2",
+      "3"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 54,
+    "group": 6,
+    "group_name": "siVQLM: mach cho H2O, singlet, Heisenberg, observable",
+    "stem": "With \\texttt{rep=2} and \\texttt{active\\_atoms=2}, the total number of qubits is:",
+    "options": [
+      "3",
+      "8",
+      "4",
+      "2"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 55,
+    "group": 6,
+    "group_name": "siVQLM: mach cho H2O, singlet, Heisenberg, observable",
+    "stem": "The Heisenberg two-qubit operator is defined as:",
+    "options": [
+      "$H^{(i,j)}(J) = 0$ always",
+      "$H^{(i,j)}(J) = J\\,\\sigma^{(i)}_x$ only",
+      "$H^{(i,j)}(J) = J\\,\\vec x_i$",
+      "$H^{(i,j)}(J) = J\\,\\vec\\sigma^{(i)}\\cdot\\vec\\sigma^{(j)}$"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 56,
+    "group": 6,
+    "group_name": "siVQLM: mach cho H2O, singlet, Heisenberg, observable",
+    "stem": "The trainable layer $RH^{(i,j)}(J)$ is constructed as:",
+    "options": [
+      "$H^{(i,j)}(J)^{-1}$",
+      "$\\exp(-i H^{(i,j)}(J))$",
+      "a random unitary",
+      "$H^{(i,j)}(J)$ directly, no exponential"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 57,
+    "group": 6,
+    "group_name": "siVQLM: mach cho H2O, singlet, Heisenberg, observable",
+    "stem": "The measurement observable $O$ used in the demo is:",
+    "options": [
+      "$X^{(0)}$ alone",
+      "the identity",
+      "$Z^{(0)} \\otimes Z^{(1)} \\otimes Z^{(2)} \\otimes Z^{(3)}$",
+      "$X^{(0)}X^{(1)} + Y^{(0)}Y^{(1)} + Z^{(0)}Z^{(1)}$"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 58,
+    "group": 6,
+    "group_name": "siVQLM: mach cho H2O, singlet, Heisenberg, observable",
+    "stem": "Why can the same Heisenberg-type operator serve as both trainable layer generator and invariant observable?",
+    "options": [
+      "both are built from the same SU(2)- and swap-invariant algebraic structure",
+      "coincidence, no deep reason",
+      "the observable is actually different in practice",
+      "they are unrelated formulas that happen to look similar"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 59,
+    "group": 6,
+    "group_name": "siVQLM: mach cho H2O, singlet, Heisenberg, observable",
+    "stem": "In the demo's ring topology (1-2-3-4-1) for the trainable layer, qubit pairs are coupled:",
+    "options": [
+      "as neighbours around a 4-qubit ring, even/odd layered",
+      "all-to-all always",
+      "never coupled",
+      "only diagonally"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 60,
+    "group": 6,
+    "group_name": "siVQLM: mach cho H2O, singlet, Heisenberg, observable",
+    "stem": "The oxygen atom's force in the demo dataset is:",
+    "options": [
+      "irrelevant, discarded entirely",
+      "always zero by definition",
+      "predicted directly by the model",
+      "not learned; only H1, H2 forces are learned (oxygen force inferred by momentum conservation)"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 61,
+    "group": 7,
+    "group_name": "Barren plateau, train/eval, force extraction cost",
+    "stem": "A barren plateau refers to:",
+    "options": [
+      "a type of quantum error correction",
+      "exponentially vanishing gradient variance with qubit count/depth",
+      "a plateau in classical GPU memory",
+      "a dataset with no variance"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 62,
+    "group": 7,
+    "group_name": "Barren plateau, train/eval, force extraction cost",
+    "stem": "The siVQLM paper's barren-plateau finding is:",
+    "options": [
+      "barren plateaus only affect classical models",
+      "the symmetry-constrained ansatz shows no barren plateau in the shallow-depth regime tested",
+      "not studied at all in the paper",
+      "barren plateaus always occur regardless of ansatz"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 63,
+    "group": 7,
+    "group_name": "Barren plateau, train/eval, force extraction cost",
+    "stem": "The theoretical basis for building siVQLM's equivariant layers (Twirling / Null space / Choi operator methods) comes from:",
+    "options": [
+      "Christensen \\& von Lilienfeld 2020",
+      "the SchNetPack documentation",
+      "Kiss et al. 2022",
+      "Nguyen et al. 2024, \"Theory for Equivariant Quantum Neural Networks\""
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 64,
+    "group": 7,
+    "group_name": "Barren plateau, train/eval, force extraction cost",
+    "stem": "The loss function actually implemented in the PennyLane siVQLM demo uses:",
+    "options": [
+      "neither energy nor force",
+      "energy and force jointly, weighted",
+      "force only",
+      "energy only; \\texttt{F\\_target} is unused inside \\texttt{cost()}"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 65,
+    "group": 7,
+    "group_name": "Barren plateau, train/eval, force extraction cost",
+    "stem": "PaiNN's standard loss function typically uses:",
+    "options": [
+      "a weighted sum of energy and force error, with force usually weighted more heavily",
+      "no loss function, unsupervised",
+      "force only",
+      "energy only"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 66,
+    "group": 7,
+    "group_name": "Barren plateau, train/eval, force extraction cost",
+    "stem": "Force extraction via the parameter-shift rule costs, per trainable parameter and force component, approximately:",
+    "options": [
+      "0 circuit evaluations (free)",
+      "2 circuit evaluations",
+      "$10^6$ circuit evaluations always",
+      "exactly 1 evaluation, same as autograd"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 67,
+    "group": 7,
+    "group_name": "Barren plateau, train/eval, force extraction cost",
+    "stem": "In the PennyLane demo, forces are computed (in simulation) via:",
+    "options": [
+      "they are not computed in the demo",
+      "finite differences with $h=0.1$",
+      "autodiff (JAX jacobian) on the simulated statevector",
+      "parameter-shift rule on real hardware"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 68,
+    "group": 7,
+    "group_name": "Barren plateau, train/eval, force extraction cost",
+    "stem": "Christensen \\& von Lilienfeld (2020) found that including force labels during training helps most when:",
+    "options": [
+      "it never helps in any setting",
+      "training on a large diverse set of different molecules in varied conformations",
+      "training and predicting on the same single molecule across geometries",
+      "only for quantum models, never classical"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 69,
+    "group": 7,
+    "group_name": "Barren plateau, train/eval, force extraction cost",
+    "stem": "According to Christensen \\& von Lilienfeld (2020), for models trained on many different molecules, including forces in training:",
+    "options": [
+      "does not reliably improve predicted energies of unseen molecules in new conformations",
+      "always improves energy prediction on unseen molecules",
+      "doubles the dataset size automatically",
+      "is mathematically impossible"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 70,
+    "group": 7,
+    "group_name": "Barren plateau, train/eval, force extraction cost",
+    "stem": "Quantum Extreme Learning (Lo Monaco et al. 2024) avoids barren plateaus entirely by:",
+    "options": [
+      "using a fixed, untrained quantum reservoir with only classical linear regression on top",
+      "using a very deep trainable ansatz",
+      "training on classical data only",
+      "avoiding quantum computers altogether"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 71,
+    "group": 8,
+    "group_name": "Khoang cach quy mo va cau hoi nghien cuu mo",
+    "stem": "The largest molecular system demonstrated by siVQLM (2025 paper) is:",
+    "options": [
+      "bulk silicon",
+      "a full protein",
+      "a water dimer (6 atoms)",
+      "aspirin (21 atoms)"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 72,
+    "group": 8,
+    "group_name": "Khoang cach quy mo va cau hoi nghien cuu mo",
+    "stem": "The smallest MD17 molecule (malonaldehyde) has how many atoms?",
+    "options": [
+      "9",
+      "3",
+      "6",
+      "21"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 73,
+    "group": 8,
+    "group_name": "Khoang cach quy mo va cau hoi nghien cuu mo",
+    "stem": "Which classical model uses higher body-order (4-body) messages to reduce the number of message-passing layers needed?",
+    "options": [
+      "PaiNN",
+      "SchNet",
+      "siVQLM",
+      "MACE"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 74,
+    "group": 8,
+    "group_name": "Khoang cach quy mo va cau hoi nghien cuu mo",
+    "stem": "NequIP extends PaiNN mainly by:",
+    "options": [
+      "discarding equivariance",
+      "removing all vector channels",
+      "using tensor features of arbitrary angular order $l$, not just $l\\le1$",
+      "using only invariant descriptors"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 75,
+    "group": 8,
+    "group_name": "Khoang cach quy mo va cau hoi nghien cuu mo",
+    "stem": "Formamide (7 atoms), the largest system in Lo Monaco et al. 2024, was tested using:",
+    "options": [
+      "both noiseless simulation and real IBM quantum hardware",
+      "classical hardware only",
+      "noiseless simulation only",
+      "it was never actually tested, only proposed"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 76,
+    "group": 8,
+    "group_name": "Khoang cach quy mo va cau hoi nghien cuu mo",
+    "stem": "A candidate \"bridging system\" suggested to connect siVQLM's demonstrated scale to MD17 is:",
+    "options": [
+      "methanol or a larger water cluster (trimer/tetramer)",
+      "liquid helium",
+      "bulk graphene",
+      "a full protein chain"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 77,
+    "group": 8,
+    "group_name": "Khoang cach quy mo va cau hoi nghien cuu mo",
+    "stem": "The equivariant encoding $\\Phi(\\vec x)\\propto \\exp(-i\\alpha\\vec x\\cdot\\vec\\sigma)$ is, in terms of $\\vec x$:",
+    "options": [
+      "exponential in $\\|\\vec x\\|$ only",
+      "linear",
+      "independent of $\\vec x$",
+      "quadratic"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 78,
+    "group": 8,
+    "group_name": "Khoang cach quy mo va cau hoi nghien cuu mo",
+    "stem": "PaiNN introduces nonlinearity in the interatomic distance dependence mainly through:",
+    "options": [
+      "the singlet state",
+      "a radial basis expansion of $\\|\\vec r_{ij}\\|$",
+      "it does not use any nonlinearity in distance",
+      "the embedding lookup table"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 79,
+    "group": 8,
+    "group_name": "Khoang cach quy mo va cau hoi nghien cuu mo",
+    "stem": "Which open question specifically concerns the number of entangling gates needed for $S_n$ permutation symmetry among identical atoms?",
+    "options": [
+      "permutation scaling for e.g. 8 identical hydrogens (question 3)",
+      "cost of parameter-shift at scale (question 6)",
+      "reference level of theory (question 4 in the roadmap)",
+      "qubit-count scaling for the bridging system (question 2)"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 80,
+    "group": 8,
+    "group_name": "Khoang cach quy mo va cau hoi nghien cuu mo",
+    "stem": "Overall, which statement best summarizes the current state connecting the two research directions?",
+    "options": [
+      "QML force fields already outperform PaiNN/NequIP/MACE on MD17",
+      "no published equivariant-QML force field has yet reached MD17-scale benchmarks; this is an open gap",
+      "classical equivariant GNNs have been fully replaced by QML methods",
+      "there is no meaningful connection between the two directions"
+    ],
+    "correct_index": 1
+  }
+]

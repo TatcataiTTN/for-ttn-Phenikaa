@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QML Force Fields — Luyện tập</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%9B%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="vendor/katex/dist/katex.min.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <h1><span data-i18n="site_title">Luyện tập: Quantum Machine Learning Force Fields</span></h1>
+    <div class="lang-toggle">
+      <button id="btn-vi" class="lang-btn active" data-lang="vi">VI</button>
+      <button id="btn-en" class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </div>
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="quiz" data-i18n="nav_quiz">Trắc nghiệm (80 câu)</button>
+    <button class="tab-btn" data-tab="exercises" data-i18n="nav_exercises">Bài tập tương tác</button>
+    <button class="tab-btn" data-tab="compare" data-i18n="nav_compare">So sánh PaiNN vs siVQLM</button>
+    <button class="tab-btn" data-tab="about" data-i18n="nav_about">Giới thiệu</button>
+  </nav>
+</header>
+
+<main>
+  <!-- ===================== QUIZ TAB ===================== -->
+  <section id="tab-quiz" class="tab-panel active">
+    <p class="hint" data-i18n="quiz_hint">
+      80 câu hỏi trắc nghiệm chia làm 8 nhóm chủ đề, trích từ tài liệu tự học đã kiểm chứng
+      (Exam_Practice/QML_Force_Fields_MCQ_80.tex). Chấm điểm ngay tại trình duyệt, tiến độ lưu ở
+      localStorage của máy bạn (không gửi lên server nào).
+    </p>
+    <div id="quiz-groups"></div>
+  </section>
+
+  <!-- ===================== EXERCISES TAB ===================== -->
+  <section id="tab-exercises" class="tab-panel">
+    <div class="card">
+      <h2 data-i18n="ex1_title">Bài tập 1 — Kiểm tra tính đồng biến (equivariance check)</h2>
+      <p data-i18n="ex1_desc">
+        Xét quy tắc cập nhật vector cho nguyên tử <code>i</code>:
+        <code>μ_i' = Σ_j c_ij · r_ij</code>, tổng theo các nguyên tử lân cận <code>j</code>.
+        Hệ số vô hướng <code>c_ij</code> có thể phụ thuộc vào các đại lượng khác nhau. Chọn một
+        lựa chọn cho <code>c_ij</code> rồi bấm Kiểm tra để xem quy tắc có đồng biến (equivariant)
+        dưới phép quay hay không.
+      </p>
+      <div class="form-row">
+        <label><input type="radio" name="cij" value="dist" checked>
+          <span data-i18n="ex1_opt_dist">c_ij chỉ phụ thuộc khoảng cách ‖r_ij‖ (đại lượng bất biến)</span>
+        </label><br>
+        <label><input type="radio" name="cij" value="component">
+          <span data-i18n="ex1_opt_component">c_ij phụ thuộc trực tiếp 1 thành phần tọa độ, ví dụ x_ij (không bất biến)</span>
+        </label><br>
+        <label><input type="radio" name="cij" value="atomicnum">
+          <span data-i18n="ex1_opt_atomicnum">c_ij chỉ phụ thuộc số hiệu nguyên tử Z_i, Z_j (đại lượng bất biến)</span>
+        </label><br>
+        <label><input type="radio" name="cij" value="random">
+          <span data-i18n="ex1_opt_random">c_ij là một hằng số ngẫu nhiên cố định, không phụ thuộc gì vào hình học</span>
+        </label>
+      </div>
+      <button id="btn-check-ex1" class="btn" data-i18n="btn_check">Kiểm tra</button>
+      <div id="ex1-result" class="result-box"></div>
+    </div>
+
+    <div class="card">
+      <h2 data-i18n="ex2_title">Bài tập 2 — Tính số qubit của siVQLM</h2>
+      <p data-i18n="ex2_desc">
+        Theo demo PennyLane chính thức: <code>num_qubits = active_atoms × rep</code>. Nhập số
+        "active atom" (nguyên tử không bị cố định làm gốc tọa độ) và hệ số lặp mã hoá
+        <code>rep</code> để tính số qubit cần dùng.
+      </p>
+      <div class="form-row">
+        <label data-i18n="ex2_lbl_active">Số active atom:
+          <input type="number" id="ex2-active" min="1" max="20" value="2">
+        </label>
+        <label data-i18n="ex2_lbl_rep">Hệ số rep:
+          <input type="number" id="ex2-rep" min="1" max="8" value="2">
+        </label>
+        <button id="btn-check-ex2" class="btn" data-i18n="btn_calc">Tính</button>
+      </div>
+      <div id="ex2-result" class="result-box"></div>
+      <table class="ref-table">
+        <thead><tr>
+          <th data-i18n="ex2_th_mol">Hệ phân tử</th><th>active_atoms</th><th>rep</th>
+          <th data-i18n="ex2_th_qubits">Số qubit (tham khảo, paper siVQLM)</th>
+        </tr></thead>
+        <tbody>
+          <tr><td>LiH</td><td>1</td><td>1</td><td>2</td></tr>
+          <tr><td>H<sub>2</sub>O (đơn)</td><td>2</td><td>2</td><td>4</td></tr>
+          <tr><td>H<sub>2</sub>O dimer</td><td>4–5</td><td>1–2</td><td>≥8 (mở rộng, chưa cố định trong demo công khai)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===================== COMPARE TAB ===================== -->
+  <section id="tab-compare" class="tab-panel">
+    <p class="hint" data-i18n="compare_hint">
+      Tóm tắt từ Sơ đồ 4 (Reference Drawio Latex/qml_ff_04_train_eval_comparison.drawio) và
+      Section 4 của tài liệu tự học.
+    </p>
+    <div class="table-scroll">
+    <table class="compare-table">
+      <thead><tr>
+        <th data-i18n="cmp_th_aspect">Khía cạnh</th>
+        <th>PaiNN / SchNetPack</th>
+        <th>siVQLM / PennyLane demo</th>
+      </tr></thead>
+      <tbody id="compare-tbody"></tbody>
+    </table>
+    </div>
+  </section>
+
+  <!-- ===================== ABOUT TAB ===================== -->
+  <section id="tab-about" class="tab-panel">
+    <div class="card">
+      <h2 data-i18n="about_title">Về trang này</h2>
+      <p data-i18n="about_p1">
+        Trang luyện tập tĩnh, chạy hoàn toàn trong trình duyệt, không có backend/server chấm bài.
+        Nội dung bám sát pipeline nghiên cứu: 2 paper hạt giống (PaiNN — Schütt et al. 2021;
+        siVQLM — Le et al. 2025), 8 paper mở rộng đã tải và xác minh, đọc source code gốc
+        (SchNetPack + demo PennyLane chính thức), 4 sơ đồ kiến trúc drawio, và tài liệu tự học
+        song ngữ EN-VI.
+      </p>
+      <p data-i18n="about_p2">
+        Đáp án trắc nghiệm được trích xuất tự động từ file LaTeX gốc đã kiểm chứng thủ công
+        (không gõ tay lại), sau đó thứ tự 4 lựa chọn A/B/C/D được xáo trộn có kiểm soát (seed cố
+        định theo từng câu) để loại bỏ thiên lệch vị trí đáp án đúng.
+      </p>
+      <p data-i18n="about_p3">
+        Tiến độ làm bài lưu trong <code>localStorage</code> của trình duyệt bạn đang dùng — sẽ
+        mất nếu xoá dữ liệu trình duyệt hoặc dùng chế độ ẩn danh, và không đồng bộ giữa các thiết
+        bị.
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p data-i18n="footer_text">QML Force Fields self-study — static site, no backend.</p>
+</footer>
+
+<script src="vendor/katex/dist/katex.min.js"></script>
+<script src="vendor/katex/dist/auto-render.min.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/compare_data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
