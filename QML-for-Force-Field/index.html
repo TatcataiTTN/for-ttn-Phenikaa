@@ -18,7 +18,8 @@
     </div>
   </div>
   <nav class="tabs">
-    <button class="tab-btn active" data-tab="quiz" data-i18n="nav_quiz">Trắc nghiệm (80 câu)</button>
+    <button class="tab-btn" data-tab="history" data-i18n="nav_history">Lịch sử &amp; Động lực</button>
+    <button class="tab-btn active" data-tab="quiz" data-i18n="nav_quiz">Trắc nghiệm (240 câu)</button>
     <button class="tab-btn" data-tab="exercises" data-i18n="nav_exercises">Bài tập tương tác</button>
     <button class="tab-btn" data-tab="compare" data-i18n="nav_compare">So sánh PaiNN vs siVQLM</button>
     <button class="tab-btn" data-tab="about" data-i18n="nav_about">Giới thiệu</button>
@@ -26,13 +27,25 @@
 </header>
 
 <main>
+  <!-- ===================== HISTORY TAB ===================== -->
+  <section id="tab-history" class="tab-panel">
+    <p class="hint" data-i18n="history_hint">
+      Dòng thời gian tương tác: bấm vào một mốc để xem chi tiết. Nội dung khớp Section 1 của tài
+      liệu tự học (Study_Materials/QML_Force_Fields_Full_VN.tex).
+    </p>
+    <div id="timeline-track"></div>
+    <div id="timeline-detail" class="card"></div>
+  </section>
+
   <!-- ===================== QUIZ TAB ===================== -->
   <section id="tab-quiz" class="tab-panel active">
     <p class="hint" data-i18n="quiz_hint">
-      80 câu hỏi trắc nghiệm chia làm 8 nhóm chủ đề, trích từ tài liệu tự học đã kiểm chứng
-      (Exam_Practice/QML_Force_Fields_MCQ_80.tex). Chấm điểm ngay tại trình duyệt, tiến độ lưu ở
+      240 câu hỏi trắc nghiệm chia làm 24 nhóm chủ đề (Phần 1: kiến trúc PaiNN/siVQLM — nhóm 1–8;
+      Phần 2: bối cảnh lịch sử/khoa học — nhóm 9–24), trích từ tài liệu tự học đã kiểm chứng
+      (Exam_Practice/QML_Force_Fields_MCQ_240.tex). Chấm điểm ngay tại trình duyệt, tiến độ lưu ở
       localStorage của máy bạn (không gửi lên server nào).
     </p>
+    <div class="summary-bar" id="quiz-summary"></div>
     <div id="quiz-groups"></div>
   </section>
 
@@ -147,6 +160,7 @@
 <script src="vendor/katex/dist/auto-render.min.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/compare_data.js"></script>
+<script src="js/timeline_data.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

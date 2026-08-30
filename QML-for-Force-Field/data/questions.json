@@ -6,11 +6,11 @@
     "stem": "Which group is the semidirect product of translations and the orthogonal group $O(3)$?",
     "options": [
       "$SU(2)$",
-      "$E(3)$",
       "$S_n$",
-      "$SO(3)$"
+      "$SO(3)$",
+      "$E(3)$"
     ],
-    "correct_index": 1
+    "correct_index": 3
   },
   {
     "id": 2,
@@ -18,12 +18,12 @@
     "group_name": "Symmetry groups (E(3), SU(2)/SO(3), Sn)",
     "stem": "$SU(2)$ is the double cover of which group?",
     "options": [
-      "$SO(3)$",
-      "$S_n$",
+      "$O(3)$",
       "$E(3)$",
-      "$O(3)$"
+      "$S_n$",
+      "$SO(3)$"
     ],
-    "correct_index": 0
+    "correct_index": 3
   },
   {
     "id": 3,
@@ -32,11 +32,11 @@
     "stem": "A molecule with 8 identical hydrogen atoms has which relevant permutation symmetry?",
     "options": [
       "$S_2$",
+      "$S_{16}$",
       "$S_4$",
-      "$S_8$",
-      "$S_{16}$"
+      "$S_8$"
     ],
-    "correct_index": 2
+    "correct_index": 3
   },
   {
     "id": 4,
@@ -44,12 +44,12 @@
     "group_name": "Symmetry groups (E(3), SU(2)/SO(3), Sn)",
     "stem": "$O(3)$ differs from $SO(3)$ by additionally including:",
     "options": [
-      "reflections",
-      "permutations",
       "translations",
-      "time reversal"
+      "time reversal",
+      "permutations",
+      "reflections"
     ],
-    "correct_index": 0
+    "correct_index": 3
   },
   {
     "id": 5,
@@ -70,12 +70,12 @@
     "group_name": "Symmetry groups (E(3), SU(2)/SO(3), Sn)",
     "stem": "Every rotation $R \\in SO(3)$ corresponds to how many elements $\\pm U \\in SU(2)$?",
     "options": [
-      "2",
-      "infinitely many",
       "1",
-      "3"
+      "3",
+      "2",
+      "infinitely many"
     ],
-    "correct_index": 0
+    "correct_index": 2
   },
   {
     "id": 7,
@@ -83,12 +83,12 @@
     "group_name": "Symmetry groups (E(3), SU(2)/SO(3), Sn)",
     "stem": "Which statement about $E(3)$ acting on energy is correct?",
     "options": [
-      "$E(g[\\mathcal X]) = E(\\mathcal X)$ for all $g\\in E(3)$",
       "only true for $g\\in SO(3)$, not translations",
+      "$E(g[\\mathcal X]) = E(\\mathcal X)$ for all $g\\in E(3)$",
       "$E$ is undefined under $E(3)$",
       "$E(g[\\mathcal X]) = -E(\\mathcal X)$"
     ],
-    "correct_index": 0
+    "correct_index": 1
   },
   {
     "id": 8,
@@ -96,12 +96,12 @@
     "group_name": "Symmetry groups (E(3), SU(2)/SO(3), Sn)",
     "stem": "A general reflection in the siVQLM paper is decomposed as:",
     "options": [
-      "a permutation only",
-      "two rotations",
       "a translation, a rotation, and a reflection along a fixed plane",
-      "a pure translation"
+      "a pure translation",
+      "a permutation only",
+      "two rotations"
     ],
-    "correct_index": 2
+    "correct_index": 0
   },
   {
     "id": 9,
@@ -109,12 +109,12 @@
     "group_name": "Symmetry groups (E(3), SU(2)/SO(3), Sn)",
     "stem": "The plane chosen for the reflection decomposition in the siVQLM paper is:",
     "options": [
+      "$(1,0,0)^\\top$",
       "$(1,1,1)^\\top$",
       "$(1,-1,0)^\\top$",
-      "$(1,0,0)^\\top$",
       "$(0,1,0)^\\top$"
     ],
-    "correct_index": 0
+    "correct_index": 1
   },
   {
     "id": 10,
@@ -122,12 +122,12 @@
     "group_name": "Symmetry groups (E(3), SU(2)/SO(3), Sn)",
     "stem": "Why must atomic forces be equivariant rather than invariant?",
     "options": [
-      "forces are always zero at equilibrium",
-      "forces are scalars",
+      "forces are vectors that must rotate consistently with the molecule",
       "forces do not depend on geometry",
-      "forces are vectors that must rotate consistently with the molecule"
+      "forces are always zero at equilibrium",
+      "forces are scalars"
     ],
-    "correct_index": 3
+    "correct_index": 0
   },
   {
     "id": 11,
@@ -135,12 +135,12 @@
     "group_name": "Invariance vs equivariance, MPNN tong quat",
     "stem": "The formal definition of invariance is:",
     "options": [
-      "$V_g = \\mathcal{R}_g$",
-      "$f(V_g[v]) = \\mathcal{R}_g(f(v))$",
+      "$f(v) = 0$",
       "$f(V_g[v]) = f(v)$",
-      "$f(v) = 0$"
+      "$V_g = \\mathcal{R}_g$",
+      "$f(V_g[v]) = \\mathcal{R}_g(f(v))$"
     ],
-    "correct_index": 2
+    "correct_index": 1
   },
   {
     "id": 12,
@@ -148,12 +148,12 @@
     "group_name": "Invariance vs equivariance, MPNN tong quat",
     "stem": "The formal definition of equivariance is:",
     "options": [
-      "$f(V_g[v]) = \\mathcal{R}_g(f(v))$",
       "$\\mathcal{R}_g = 0$",
+      "$f(v) = V_g$",
       "$f(V_g[v]) = f(v)$",
-      "$f(v) = V_g$"
+      "$f(V_g[v]) = \\mathcal{R}_g(f(v))$"
     ],
-    "correct_index": 0
+    "correct_index": 3
   },
   {
     "id": 13,
@@ -174,12 +174,12 @@
     "group_name": "Invariance vs equivariance, MPNN tong quat",
     "stem": "In a message passing neural network, $m_{ij}$ denotes:",
     "options": [
-      "the mixing weight",
       "the message computed between atoms $i$ and $j$",
+      "atom mass",
       "the cutoff radius",
-      "atom mass"
+      "the mixing weight"
     ],
-    "correct_index": 1
+    "correct_index": 0
   },
   {
     "id": 15,
@@ -187,9 +187,9 @@
     "group_name": "Invariance vs equivariance, MPNN tong quat",
     "stem": "Stacking $L$ message-passing layers propagates information up to:",
     "options": [
+      "$L^2$ atoms",
       "only 1 hop, always",
       "the whole molecule instantly regardless of $L$",
-      "$L^2$ atoms",
       "$L$ hops on the molecular graph"
     ],
     "correct_index": 3
@@ -200,12 +200,12 @@
     "group_name": "Invariance vs equivariance, MPNN tong quat",
     "stem": "The original SchNet model is best described as:",
     "options": [
-      "equivariant MPNN",
       "invariant MPNN using pairwise distances",
-      "a transformer",
-      "a quantum circuit"
+      "equivariant MPNN",
+      "a quantum circuit",
+      "a transformer"
     ],
-    "correct_index": 1
+    "correct_index": 0
   },
   {
     "id": 17,
@@ -213,12 +213,12 @@
     "group_name": "Invariance vs equivariance, MPNN tong quat",
     "stem": "In the worked toy example, $\\vec\\mu_i' = \\sum_j c_{ij}\\vec r_{ij}$ is equivariant because:",
     "options": [
-      "$c_{ij}$ depends on direction",
       "$c_{ij}$ is an invariant scalar and $\\vec r_{ij}$ transforms correctly",
       "it is always zero",
-      "it does not depend on rotation at all"
+      "it does not depend on rotation at all",
+      "$c_{ij}$ depends on direction"
     ],
-    "correct_index": 1
+    "correct_index": 0
   },
   {
     "id": 18,
@@ -226,12 +226,12 @@
     "group_name": "Invariance vs equivariance, MPNN tong quat",
     "stem": "Applying a rotation $R$ to $\\vec r_{ij}$ leaves which quantity unchanged?",
     "options": [
-      "$\\vec r_{ij}$ itself",
-      "$\\|\\vec r_{ij}\\|$",
       "the direction of $\\vec r_{ij}$",
-      "nothing is unchanged"
+      "nothing is unchanged",
+      "$\\|\\vec r_{ij}\\|$",
+      "$\\vec r_{ij}$ itself"
     ],
-    "correct_index": 1
+    "correct_index": 2
   },
   {
     "id": 19,
@@ -252,12 +252,12 @@
     "group_name": "Invariance vs equivariance, MPNN tong quat",
     "stem": "$\\mathcal{N}(i)$ in the MPNN formula denotes:",
     "options": [
-      "a normalization constant",
       "the neighbourhood (neighbours within cutoff) of atom $i$",
       "the number of layers",
+      "a normalization constant",
       "the atomic number of atom $i$"
     ],
-    "correct_index": 1
+    "correct_index": 0
   },
   {
     "id": 21,
@@ -265,12 +265,12 @@
     "group_name": "PaiNN: kien truc va kenh scalar/vector",
     "stem": "PaiNN represents each atom with:",
     "options": [
-      "tensor features of arbitrary rank",
-      "only scalar features",
       "scalar features $q_i$ and vector features $\\vec\\mu_i$ simultaneously",
-      "only vector features"
+      "only scalar features",
+      "only vector features",
+      "tensor features of arbitrary rank"
     ],
-    "correct_index": 2
+    "correct_index": 0
   },
   {
     "id": 22,
@@ -278,12 +278,12 @@
     "group_name": "PaiNN: kien truc va kenh scalar/vector",
     "stem": "The initial vector feature $\\vec\\mu^{(0)}$ in PaiNN is set to:",
     "options": [
-      "random values",
       "zero",
       "the identity matrix",
+      "random values",
       "the atomic position"
     ],
-    "correct_index": 1
+    "correct_index": 0
   },
   {
     "id": 23,
@@ -291,12 +291,12 @@
     "group_name": "PaiNN: kien truc va kenh scalar/vector",
     "stem": "Why is $\\vec\\mu^{(0)} = \\vec 0$ the required choice?",
     "options": [
-      "it saves memory",
       "the zero vector is the only vector invariant under every rotation",
+      "it saves memory",
       "PyTorch requires it",
       "it has no reason, arbitrary choice"
     ],
-    "correct_index": 1
+    "correct_index": 0
   },
   {
     "id": 24,
@@ -304,10 +304,10 @@
     "group_name": "PaiNN: kien truc va kenh scalar/vector",
     "stem": "In \\texttt{PaiNNInteraction}, the filter $W_{ij}$ depends on:",
     "options": [
-      "$\\vec\\mu_j$",
       "the training epoch",
+      "atomic number only",
       "$\\|\\vec r_{ij}\\|$ via a radial basis expansion and cutoff",
-      "atomic number only"
+      "$\\vec\\mu_j$"
     ],
     "correct_index": 2
   },
@@ -318,8 +318,8 @@
     "stem": "After \\texttt{interatomic\\_context\\_net}, the tensor $x$ is split into:",
     "options": [
       "energy and force",
-      "real and imaginary parts",
       "$q$ and $\\mu$",
+      "real and imaginary parts",
       "$dq$, $dm_R$, $dm_\\mu$"
     ],
     "correct_index": 3
@@ -330,8 +330,8 @@
     "group_name": "PaiNN: kien truc va kenh scalar/vector",
     "stem": "The update $d\\vec\\mu_i$ in PaiNNInteraction is a sum of:",
     "options": [
-      "the atomic number times identity",
       "a random vector",
+      "the atomic number times identity",
       "two scalar terms only",
       "$dm_R \\odot \\widehat{\\vec r}_{ij}$ and $dm_\\mu \\odot \\vec\\mu_j$"
     ],
@@ -343,12 +343,12 @@
     "group_name": "PaiNN: kien truc va kenh scalar/vector",
     "stem": "$\\text{scatter\\_add}$ in PaiNNInteraction aggregates messages according to:",
     "options": [
-      "\\texttt{idx\\_i} (center atom index)",
       "atomic number",
       "alphabetical atom name",
-      "\\texttt{idx\\_j} (neighbour index)"
+      "\\texttt{idx\\_j} (neighbour index)",
+      "\\texttt{idx\\_i} (center atom index)"
     ],
-    "correct_index": 0
+    "correct_index": 3
   },
   {
     "id": 28,
@@ -357,11 +357,11 @@
     "stem": "What does \\texttt{PaiNNMixing} compute that requires no neighbour information?",
     "options": [
       "the radial basis expansion",
+      "the embedding lookup",
       "intra-atomic mixing",
-      "the cutoff function",
-      "the embedding lookup"
+      "the cutoff function"
     ],
-    "correct_index": 1
+    "correct_index": 2
   },
   {
     "id": 29,
@@ -369,12 +369,12 @@
     "group_name": "PaiNN: kien truc va kenh scalar/vector",
     "stem": "The quantity $\\|\\mu_V\\|_i$ in PaiNNMixing is:",
     "options": [
+      "always exactly 1",
       "a genuine invariant scalar",
       "a vector, still equivariant",
-      "undefined",
-      "always exactly 1"
+      "undefined"
     ],
-    "correct_index": 0
+    "correct_index": 1
   },
   {
     "id": 30,
@@ -382,12 +382,12 @@
     "group_name": "PaiNN: kien truc va kenh scalar/vector",
     "stem": "Why is $\\|\\mu_V\\|_i$ \"safe\" to feed into an arbitrary MLP?",
     "options": [
-      "it is always zero",
-      "MLPs ignore their input",
       "it is invariant, so a generic nonlinearity applied to it stays consistent with the symmetry",
-      "MLPs can handle vectors directly"
+      "MLPs ignore their input",
+      "MLPs can handle vectors directly",
+      "it is always zero"
     ],
-    "correct_index": 2
+    "correct_index": 0
   },
   {
     "id": 31,
@@ -395,12 +395,12 @@
     "group_name": "PaiNN: chi tiet tinh toan va energy/force head",
     "stem": "In PaiNNMixing, the update $dmu_i$ is multiplied by:",
     "options": [
-      "$q_i$ directly",
       "$\\mu_W$",
+      "$q_i$ directly",
       "nothing, added raw",
       "$\\mu_V$"
     ],
-    "correct_index": 1
+    "correct_index": 0
   },
   {
     "id": 32,
@@ -408,12 +408,12 @@
     "group_name": "PaiNN: chi tiet tinh toan va energy/force head",
     "stem": "$dqmu_i$ in PaiNNMixing is proportional to:",
     "options": [
-      "$\\sum(\\mu_V \\cdot \\mu_W)$",
+      "a random constant",
       "$q_i^2$",
       "the atomic number",
-      "a random constant"
+      "$\\sum(\\mu_V \\cdot \\mu_W)$"
     ],
-    "correct_index": 0
+    "correct_index": 3
   },
   {
     "id": 33,
@@ -422,11 +422,11 @@
     "stem": "How many interaction blocks (\\texttt{n\\_interactions}) are typically used for MD17-scale systems?",
     "options": [
       "1",
-      "1000",
       "50",
-      "about 3"
+      "about 3",
+      "1000"
     ],
-    "correct_index": 3
+    "correct_index": 2
   },
   {
     "id": 34,
@@ -434,12 +434,12 @@
     "group_name": "PaiNN: chi tiet tinh toan va energy/force head",
     "stem": "A typical value of \\texttt{n\\_atom\\_basis} $C$ in PaiNN is:",
     "options": [
-      "8",
       "100000",
-      "around 128",
-      "2"
+      "8",
+      "2",
+      "around 128"
     ],
-    "correct_index": 2
+    "correct_index": 3
   },
   {
     "id": 35,
@@ -447,10 +447,10 @@
     "group_name": "PaiNN: chi tiet tinh toan va energy/force head",
     "stem": "After the final interaction block, \\texttt{scalar\\_representation} has shape:",
     "options": [
-      "$[3, C]$",
       "$[n_{atoms}, 3, C]$",
+      "$[1]$",
       "$[n_{atoms}, C]$",
-      "$[1]$"
+      "$[3, C]$"
     ],
     "correct_index": 2
   },
@@ -460,12 +460,12 @@
     "group_name": "PaiNN: chi tiet tinh toan va energy/force head",
     "stem": "The atomwise energy is computed as:",
     "options": [
-      "$E = \\sum_i E_i(q_i)$",
+      "$E$ is not computed from $q$",
       "$E = \\max_i E_i$",
       "$E = q_1$",
-      "$E$ is not computed from $q$"
+      "$E = \\sum_i E_i(q_i)$"
     ],
-    "correct_index": 0
+    "correct_index": 3
   },
   {
     "id": 37,
@@ -473,12 +473,12 @@
     "group_name": "PaiNN: chi tiet tinh toan va energy/force head",
     "stem": "Force in PaiNN is obtained via:",
     "options": [
-      "a separate untrained network",
-      "finite differences only",
+      "parameter-shift rule",
       "autograd: $\\vec F = -\\nabla_{\\mathcal X} E$",
-      "parameter-shift rule"
+      "a separate untrained network",
+      "finite differences only"
     ],
-    "correct_index": 2
+    "correct_index": 1
   },
   {
     "id": 38,
@@ -487,11 +487,11 @@
     "stem": "Why is PaiNN's force computation considered \"cheap\"?",
     "options": [
       "it uses a lookup table",
-      "one backward pass gives all force components via automatic differentiation",
       "forces are approximated randomly",
-      "it needs no computation"
+      "it needs no computation",
+      "one backward pass gives all force components via automatic differentiation"
     ],
-    "correct_index": 1
+    "correct_index": 3
   },
   {
     "id": 39,
@@ -499,12 +499,12 @@
     "group_name": "PaiNN: chi tiet tinh toan va energy/force head",
     "stem": "\\texttt{vector\\_representation} (i.e. $\\vec\\mu$) can additionally be used to predict:",
     "options": [
-      "nothing further",
-      "atomic number",
       "only energy",
-      "tensorial properties like dipole moment or polarizability"
+      "tensorial properties like dipole moment or polarizability",
+      "atomic number",
+      "nothing further"
     ],
-    "correct_index": 3
+    "correct_index": 1
   },
   {
     "id": 40,
@@ -513,9 +513,9 @@
     "stem": "If \\texttt{shared\\_interactions=False}, each interaction block has:",
     "options": [
       "its own independent set of weights",
-      "random fixed weights, never trained",
       "identical shared weights",
-      "no weights"
+      "no weights",
+      "random fixed weights, never trained"
     ],
     "correct_index": 0
   },
@@ -525,12 +525,12 @@
     "group_name": "siVQLM: VQLM va data-reuploading",
     "stem": "In the data-reuploading VQLM formula, $\\Phi(\\mathcal X)$ denotes:",
     "options": [
+      "the initial state",
       "the observable",
-      "the data-encoding layer, not trained",
       "a trainable layer",
-      "the initial state"
+      "the data-encoding layer, not trained"
     ],
-    "correct_index": 1
+    "correct_index": 3
   },
   {
     "id": 42,
@@ -538,12 +538,12 @@
     "group_name": "siVQLM: VQLM va data-reuploading",
     "stem": "$U_d(\\vec\\theta_d)$ denotes:",
     "options": [
-      "the measurement",
-      "the molecule's energy",
       "a fixed encoding gate",
-      "a trainable parametrized layer"
+      "a trainable parametrized layer",
+      "the molecule's energy",
+      "the measurement"
     ],
-    "correct_index": 3
+    "correct_index": 1
   },
   {
     "id": 43,
@@ -551,12 +551,12 @@
     "group_name": "siVQLM: VQLM va data-reuploading",
     "stem": "$f_\\Theta(\\mathcal X)$ is computed as:",
     "options": [
-      "$\\langle \\psi_0|M_\\Theta(\\mathcal X)^\\dagger O M_\\Theta(\\mathcal X)|\\psi_0\\rangle$",
-      "a random number",
       "$M_\\Theta(\\mathcal X)$ directly",
-      "$O$ alone"
+      "$\\langle \\psi_0|M_\\Theta(\\mathcal X)^\\dagger O M_\\Theta(\\mathcal X)|\\psi_0\\rangle$",
+      "$O$ alone",
+      "a random number"
     ],
-    "correct_index": 0
+    "correct_index": 1
   },
   {
     "id": 44,
@@ -564,12 +564,12 @@
     "group_name": "siVQLM: VQLM va data-reuploading",
     "stem": "Data-reuploading circuits realize which mathematical structure in the input data?",
     "options": [
-      "a truncated Fourier series",
-      "a random walk",
       "a Markov chain",
-      "a Taylor series only"
+      "a Taylor series only",
+      "a random walk",
+      "a truncated Fourier series"
     ],
-    "correct_index": 0
+    "correct_index": 3
   },
   {
     "id": 45,
@@ -577,9 +577,9 @@
     "group_name": "siVQLM: VQLM va data-reuploading",
     "stem": "The set of accessible Fourier frequencies in a reuploading model is fixed by:",
     "options": [
-      "the optimizer",
-      "the encoding layers $\\Phi$",
       "the observable $O$",
+      "the encoding layers $\\Phi$",
+      "the optimizer",
       "the trainable layers $U_d$"
     ],
     "correct_index": 1
@@ -590,12 +590,12 @@
     "group_name": "siVQLM: VQLM va data-reuploading",
     "stem": "The four ingredients required for a $G$-invariant VQLM are: invariant initial state, equivariant encoding, equivariant trainable layers, and:",
     "options": [
-      "a random observable",
       "an invariant observable",
+      "a random observable",
       "an equivariant observable",
       "no observable at all"
     ],
-    "correct_index": 1
+    "correct_index": 0
   },
   {
     "id": 47,
@@ -603,12 +603,12 @@
     "group_name": "siVQLM: VQLM va data-reuploading",
     "stem": "The condition for an equivariant trainable layer is:",
     "options": [
-      "$U_d$ depends on $g$ explicitly",
       "$U_d(\\vec\\theta_d)^2 = I$",
-      "$U_d(\\vec\\theta_d) = R_g$",
-      "$[U_d(\\vec\\theta_d), R_g] = 0$"
+      "$[U_d(\\vec\\theta_d), R_g] = 0$",
+      "$U_d$ depends on $g$ explicitly",
+      "$U_d(\\vec\\theta_d) = R_g$"
     ],
-    "correct_index": 3
+    "correct_index": 1
   },
   {
     "id": 48,
@@ -616,12 +616,12 @@
     "group_name": "siVQLM: VQLM va data-reuploading",
     "stem": "The condition for an invariant observable $O$ is:",
     "options": [
+      "$R_g\\, O\\, R_g^\\dagger = O$",
       "$O$ is Hermitian only (any Hermitian works)",
       "$O = 0$",
-      "$R_g\\, O\\, R_g^\\dagger = O$",
       "$O$ commutes with $\\Phi$ only"
     ],
-    "correct_index": 2
+    "correct_index": 0
   },
   {
     "id": 49,
@@ -629,12 +629,12 @@
     "group_name": "siVQLM: VQLM va data-reuploading",
     "stem": "In the demo, weights are initialised mostly at zero except one, to:",
     "options": [
-      "keep the circuit close to identity, reducing barren plateau risk",
-      "satisfy a hardware constraint",
+      "match classical PaiNN initialisation exactly",
       "speed up compilation",
-      "match classical PaiNN initialisation exactly"
+      "keep the circuit close to identity, reducing barren plateau risk",
+      "satisfy a hardware constraint"
     ],
-    "correct_index": 0
+    "correct_index": 2
   },
   {
     "id": 50,
@@ -642,12 +642,12 @@
     "group_name": "siVQLM: VQLM va data-reuploading",
     "stem": "What role does $\\alpha_{\\text{enc}}$ play in the encoding $\\Phi^{(i)}(\\vec x;\\alpha_{\\text{enc}})$?",
     "options": [
+      "the number of layers",
       "it is fixed at 1, never trained",
       "a trainable scale factor increasing expressivity",
-      "the number of layers",
       "the qubit index"
     ],
-    "correct_index": 1
+    "correct_index": 2
   },
   {
     "id": 51,
@@ -656,8 +656,8 @@
     "stem": "The singlet state $|S\\rangle$ equals:",
     "options": [
       "$\\frac{1}{\\sqrt2}(|01\\rangle-|10\\rangle)$",
-      "$|11\\rangle$",
       "$|00\\rangle$",
+      "$|11\\rangle$",
       "$\\frac{1}{\\sqrt2}(|00\\rangle+|11\\rangle)$"
     ],
     "correct_index": 0
@@ -668,12 +668,12 @@
     "group_name": "siVQLM: mach cho H2O, singlet, Heisenberg, observable",
     "stem": "Swapping the two qubits of $|S\\rangle$:",
     "options": [
-      "is undefined",
+      "leaves it unchanged up to an overall phase",
       "changes the state completely",
-      "destroys entanglement",
-      "leaves it unchanged up to an overall phase"
+      "is undefined",
+      "destroys entanglement"
     ],
-    "correct_index": 3
+    "correct_index": 0
   },
   {
     "id": 53,
@@ -681,12 +681,12 @@
     "group_name": "siVQLM: mach cho H2O, singlet, Heisenberg, observable",
     "stem": "For H$_2$O in the demo, \\texttt{active\\_atoms} equals:",
     "options": [
+      "2",
       "1",
       "4",
-      "2",
       "3"
     ],
-    "correct_index": 2
+    "correct_index": 0
   },
   {
     "id": 54,
@@ -694,12 +694,12 @@
     "group_name": "siVQLM: mach cho H2O, singlet, Heisenberg, observable",
     "stem": "With \\texttt{rep=2} and \\texttt{active\\_atoms=2}, the total number of qubits is:",
     "options": [
-      "3",
       "8",
       "4",
+      "3",
       "2"
     ],
-    "correct_index": 2
+    "correct_index": 1
   },
   {
     "id": 55,
@@ -708,11 +708,11 @@
     "stem": "The Heisenberg two-qubit operator is defined as:",
     "options": [
       "$H^{(i,j)}(J) = 0$ always",
-      "$H^{(i,j)}(J) = J\\,\\sigma^{(i)}_x$ only",
+      "$H^{(i,j)}(J) = J\\,\\vec\\sigma^{(i)}\\cdot\\vec\\sigma^{(j)}$",
       "$H^{(i,j)}(J) = J\\,\\vec x_i$",
-      "$H^{(i,j)}(J) = J\\,\\vec\\sigma^{(i)}\\cdot\\vec\\sigma^{(j)}$"
+      "$H^{(i,j)}(J) = J\\,\\sigma^{(i)}_x$ only"
     ],
-    "correct_index": 3
+    "correct_index": 1
   },
   {
     "id": 56,
@@ -720,12 +720,12 @@
     "group_name": "siVQLM: mach cho H2O, singlet, Heisenberg, observable",
     "stem": "The trainable layer $RH^{(i,j)}(J)$ is constructed as:",
     "options": [
-      "$H^{(i,j)}(J)^{-1}$",
       "$\\exp(-i H^{(i,j)}(J))$",
+      "$H^{(i,j)}(J)$ directly, no exponential",
       "a random unitary",
-      "$H^{(i,j)}(J)$ directly, no exponential"
+      "$H^{(i,j)}(J)^{-1}$"
     ],
-    "correct_index": 1
+    "correct_index": 0
   },
   {
     "id": 57,
@@ -733,12 +733,12 @@
     "group_name": "siVQLM: mach cho H2O, singlet, Heisenberg, observable",
     "stem": "The measurement observable $O$ used in the demo is:",
     "options": [
-      "$X^{(0)}$ alone",
       "the identity",
-      "$Z^{(0)} \\otimes Z^{(1)} \\otimes Z^{(2)} \\otimes Z^{(3)}$",
-      "$X^{(0)}X^{(1)} + Y^{(0)}Y^{(1)} + Z^{(0)}Z^{(1)}$"
+      "$X^{(0)}X^{(1)} + Y^{(0)}Y^{(1)} + Z^{(0)}Z^{(1)}$",
+      "$X^{(0)}$ alone",
+      "$Z^{(0)} \\otimes Z^{(1)} \\otimes Z^{(2)} \\otimes Z^{(3)}$"
     ],
-    "correct_index": 3
+    "correct_index": 1
   },
   {
     "id": 58,
@@ -746,12 +746,12 @@
     "group_name": "siVQLM: mach cho H2O, singlet, Heisenberg, observable",
     "stem": "Why can the same Heisenberg-type operator serve as both trainable layer generator and invariant observable?",
     "options": [
-      "both are built from the same SU(2)- and swap-invariant algebraic structure",
-      "coincidence, no deep reason",
       "the observable is actually different in practice",
-      "they are unrelated formulas that happen to look similar"
+      "they are unrelated formulas that happen to look similar",
+      "both are built from the same SU(2)- and swap-invariant algebraic structure",
+      "coincidence, no deep reason"
     ],
-    "correct_index": 0
+    "correct_index": 2
   },
   {
     "id": 59,
@@ -759,12 +759,12 @@
     "group_name": "siVQLM: mach cho H2O, singlet, Heisenberg, observable",
     "stem": "In the demo's ring topology (1-2-3-4-1) for the trainable layer, qubit pairs are coupled:",
     "options": [
-      "as neighbours around a 4-qubit ring, even/odd layered",
       "all-to-all always",
-      "never coupled",
-      "only diagonally"
+      "only diagonally",
+      "as neighbours around a 4-qubit ring, even/odd layered",
+      "never coupled"
     ],
-    "correct_index": 0
+    "correct_index": 2
   },
   {
     "id": 60,
@@ -773,11 +773,11 @@
     "stem": "The oxygen atom's force in the demo dataset is:",
     "options": [
       "irrelevant, discarded entirely",
-      "always zero by definition",
+      "not learned; only H1, H2 forces are learned (oxygen force inferred by momentum conservation)",
       "predicted directly by the model",
-      "not learned; only H1, H2 forces are learned (oxygen force inferred by momentum conservation)"
+      "always zero by definition"
     ],
-    "correct_index": 3
+    "correct_index": 1
   },
   {
     "id": 61,
@@ -785,12 +785,12 @@
     "group_name": "Barren plateau, train/eval, force extraction cost",
     "stem": "A barren plateau refers to:",
     "options": [
-      "a type of quantum error correction",
       "exponentially vanishing gradient variance with qubit count/depth",
       "a plateau in classical GPU memory",
+      "a type of quantum error correction",
       "a dataset with no variance"
     ],
-    "correct_index": 1
+    "correct_index": 0
   },
   {
     "id": 62,
@@ -798,12 +798,12 @@
     "group_name": "Barren plateau, train/eval, force extraction cost",
     "stem": "The siVQLM paper's barren-plateau finding is:",
     "options": [
-      "barren plateaus only affect classical models",
       "the symmetry-constrained ansatz shows no barren plateau in the shallow-depth regime tested",
+      "barren plateaus always occur regardless of ansatz",
       "not studied at all in the paper",
-      "barren plateaus always occur regardless of ansatz"
+      "barren plateaus only affect classical models"
     ],
-    "correct_index": 1
+    "correct_index": 0
   },
   {
     "id": 63,
@@ -813,10 +813,10 @@
     "options": [
       "Christensen \\& von Lilienfeld 2020",
       "the SchNetPack documentation",
-      "Kiss et al. 2022",
-      "Nguyen et al. 2024, \"Theory for Equivariant Quantum Neural Networks\""
+      "Nguyen et al. 2024, \"Theory for Equivariant Quantum Neural Networks\"",
+      "Kiss et al. 2022"
     ],
-    "correct_index": 3
+    "correct_index": 2
   },
   {
     "id": 64,
@@ -824,12 +824,12 @@
     "group_name": "Barren plateau, train/eval, force extraction cost",
     "stem": "The loss function actually implemented in the PennyLane siVQLM demo uses:",
     "options": [
-      "neither energy nor force",
       "energy and force jointly, weighted",
-      "force only",
-      "energy only; \\texttt{F\\_target} is unused inside \\texttt{cost()}"
+      "energy only; \\texttt{F\\_target} is unused inside \\texttt{cost()}",
+      "neither energy nor force",
+      "force only"
     ],
-    "correct_index": 3
+    "correct_index": 1
   },
   {
     "id": 65,
@@ -837,12 +837,12 @@
     "group_name": "Barren plateau, train/eval, force extraction cost",
     "stem": "PaiNN's standard loss function typically uses:",
     "options": [
-      "a weighted sum of energy and force error, with force usually weighted more heavily",
+      "energy only",
       "no loss function, unsupervised",
-      "force only",
-      "energy only"
+      "a weighted sum of energy and force error, with force usually weighted more heavily",
+      "force only"
     ],
-    "correct_index": 0
+    "correct_index": 2
   },
   {
     "id": 66,
@@ -850,12 +850,12 @@
     "group_name": "Barren plateau, train/eval, force extraction cost",
     "stem": "Force extraction via the parameter-shift rule costs, per trainable parameter and force component, approximately:",
     "options": [
-      "0 circuit evaluations (free)",
-      "2 circuit evaluations",
       "$10^6$ circuit evaluations always",
-      "exactly 1 evaluation, same as autograd"
+      "exactly 1 evaluation, same as autograd",
+      "0 circuit evaluations (free)",
+      "2 circuit evaluations"
     ],
-    "correct_index": 1
+    "correct_index": 3
   },
   {
     "id": 67,
@@ -863,12 +863,12 @@
     "group_name": "Barren plateau, train/eval, force extraction cost",
     "stem": "In the PennyLane demo, forces are computed (in simulation) via:",
     "options": [
+      "parameter-shift rule on real hardware",
       "they are not computed in the demo",
       "finite differences with $h=0.1$",
-      "autodiff (JAX jacobian) on the simulated statevector",
-      "parameter-shift rule on real hardware"
+      "autodiff (JAX jacobian) on the simulated statevector"
     ],
-    "correct_index": 2
+    "correct_index": 3
   },
   {
     "id": 68,
@@ -876,12 +876,12 @@
     "group_name": "Barren plateau, train/eval, force extraction cost",
     "stem": "Christensen \\& von Lilienfeld (2020) found that including force labels during training helps most when:",
     "options": [
+      "only for quantum models, never classical",
       "it never helps in any setting",
       "training on a large diverse set of different molecules in varied conformations",
-      "training and predicting on the same single molecule across geometries",
-      "only for quantum models, never classical"
+      "training and predicting on the same single molecule across geometries"
     ],
-    "correct_index": 2
+    "correct_index": 3
   },
   {
     "id": 69,
@@ -902,12 +902,12 @@
     "group_name": "Barren plateau, train/eval, force extraction cost",
     "stem": "Quantum Extreme Learning (Lo Monaco et al. 2024) avoids barren plateaus entirely by:",
     "options": [
-      "using a fixed, untrained quantum reservoir with only classical linear regression on top",
       "using a very deep trainable ansatz",
-      "training on classical data only",
-      "avoiding quantum computers altogether"
+      "avoiding quantum computers altogether",
+      "using a fixed, untrained quantum reservoir with only classical linear regression on top",
+      "training on classical data only"
     ],
-    "correct_index": 0
+    "correct_index": 2
   },
   {
     "id": 71,
@@ -915,12 +915,12 @@
     "group_name": "Khoang cach quy mo va cau hoi nghien cuu mo",
     "stem": "The largest molecular system demonstrated by siVQLM (2025 paper) is:",
     "options": [
-      "bulk silicon",
+      "aspirin (21 atoms)",
       "a full protein",
-      "a water dimer (6 atoms)",
-      "aspirin (21 atoms)"
+      "bulk silicon",
+      "a water dimer (6 atoms)"
     ],
-    "correct_index": 2
+    "correct_index": 3
   },
   {
     "id": 72,
@@ -928,12 +928,12 @@
     "group_name": "Khoang cach quy mo va cau hoi nghien cuu mo",
     "stem": "The smallest MD17 molecule (malonaldehyde) has how many atoms?",
     "options": [
-      "9",
+      "21",
       "3",
-      "6",
-      "21"
+      "9",
+      "6"
     ],
-    "correct_index": 0
+    "correct_index": 2
   },
   {
     "id": 73,
@@ -941,12 +941,12 @@
     "group_name": "Khoang cach quy mo va cau hoi nghien cuu mo",
     "stem": "Which classical model uses higher body-order (4-body) messages to reduce the number of message-passing layers needed?",
     "options": [
-      "PaiNN",
-      "SchNet",
       "siVQLM",
-      "MACE"
+      "MACE",
+      "PaiNN",
+      "SchNet"
     ],
-    "correct_index": 3
+    "correct_index": 1
   },
   {
     "id": 74,
@@ -954,10 +954,10 @@
     "group_name": "Khoang cach quy mo va cau hoi nghien cuu mo",
     "stem": "NequIP extends PaiNN mainly by:",
     "options": [
-      "discarding equivariance",
       "removing all vector channels",
+      "using only invariant descriptors",
       "using tensor features of arbitrary angular order $l$, not just $l\\le1$",
-      "using only invariant descriptors"
+      "discarding equivariance"
     ],
     "correct_index": 2
   },
@@ -968,9 +968,9 @@
     "stem": "Formamide (7 atoms), the largest system in Lo Monaco et al. 2024, was tested using:",
     "options": [
       "both noiseless simulation and real IBM quantum hardware",
-      "classical hardware only",
+      "it was never actually tested, only proposed",
       "noiseless simulation only",
-      "it was never actually tested, only proposed"
+      "classical hardware only"
     ],
     "correct_index": 0
   },
@@ -980,12 +980,12 @@
     "group_name": "Khoang cach quy mo va cau hoi nghien cuu mo",
     "stem": "A candidate \"bridging system\" suggested to connect siVQLM's demonstrated scale to MD17 is:",
     "options": [
-      "methanol or a larger water cluster (trimer/tetramer)",
       "liquid helium",
-      "bulk graphene",
-      "a full protein chain"
+      "methanol or a larger water cluster (trimer/tetramer)",
+      "a full protein chain",
+      "bulk graphene"
     ],
-    "correct_index": 0
+    "correct_index": 1
   },
   {
     "id": 77,
@@ -993,10 +993,10 @@
     "group_name": "Khoang cach quy mo va cau hoi nghien cuu mo",
     "stem": "The equivariant encoding $\\Phi(\\vec x)\\propto \\exp(-i\\alpha\\vec x\\cdot\\vec\\sigma)$ is, in terms of $\\vec x$:",
     "options": [
-      "exponential in $\\|\\vec x\\|$ only",
-      "linear",
       "independent of $\\vec x$",
-      "quadratic"
+      "linear",
+      "quadratic",
+      "exponential in $\\|\\vec x\\|$ only"
     ],
     "correct_index": 1
   },
@@ -1006,12 +1006,12 @@
     "group_name": "Khoang cach quy mo va cau hoi nghien cuu mo",
     "stem": "PaiNN introduces nonlinearity in the interatomic distance dependence mainly through:",
     "options": [
+      "the embedding lookup table",
       "the singlet state",
-      "a radial basis expansion of $\\|\\vec r_{ij}\\|$",
       "it does not use any nonlinearity in distance",
-      "the embedding lookup table"
+      "a radial basis expansion of $\\|\\vec r_{ij}\\|$"
     ],
-    "correct_index": 1
+    "correct_index": 3
   },
   {
     "id": 79,
@@ -1019,12 +1019,12 @@
     "group_name": "Khoang cach quy mo va cau hoi nghien cuu mo",
     "stem": "Which open question specifically concerns the number of entangling gates needed for $S_n$ permutation symmetry among identical atoms?",
     "options": [
-      "permutation scaling for e.g. 8 identical hydrogens (question 3)",
-      "cost of parameter-shift at scale (question 6)",
       "reference level of theory (question 4 in the roadmap)",
+      "cost of parameter-shift at scale (question 6)",
+      "permutation scaling for e.g. 8 identical hydrogens (question 3)",
       "qubit-count scaling for the bridging system (question 2)"
     ],
-    "correct_index": 0
+    "correct_index": 2
   },
   {
     "id": 80,
@@ -1032,11 +1032,2091 @@
     "group_name": "Khoang cach quy mo va cau hoi nghien cuu mo",
     "stem": "Overall, which statement best summarizes the current state connecting the two research directions?",
     "options": [
-      "QML force fields already outperform PaiNN/NequIP/MACE on MD17",
-      "no published equivariant-QML force field has yet reached MD17-scale benchmarks; this is an open gap",
+      "there is no meaningful connection between the two directions",
       "classical equivariant GNNs have been fully replaced by QML methods",
-      "there is no meaningful connection between the two directions"
+      "QML force fields already outperform PaiNN/NequIP/MACE on MD17",
+      "no published equivariant-QML force field has yet reached MD17-scale benchmarks; this is an open gap"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 81,
+    "group": 9,
+    "group_name": "Classical MD basics (Newton's equations)",
+    "stem": "Classical molecular dynamics integrates which fundamental equation?",
+    "options": [
+      "The Schrodinger equation directly for nuclei",
+      "Maxwell's equations",
+      "Newton's second law, $m_i\\ddot{\\vec r}_i = \\vec F_i$",
+      "The heat equation"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 82,
+    "group": 9,
+    "group_name": "Classical MD basics (Newton's equations)",
+    "stem": "In MD, the force on atom $i$ is obtained from the potential energy $U$ as:",
+    "options": [
+      "$\\vec F_i = U^2$",
+      "$\\vec F_i = \\nabla_{\\vec r_i} U$",
+      "$\\vec F_i$ is independent of $U$",
+      "$\\vec F_i = -\\nabla_{\\vec r_i} U$"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 83,
+    "group": 9,
+    "group_name": "Classical MD basics (Newton's equations)",
+    "stem": "What does the potential energy function $U(\\vec r_1,\\ldots,\\vec r_N)$ depend on?",
+    "options": [
+      "Only the temperature",
+      "Only the simulation time step",
+      "Only the total mass",
+      "The positions of all atoms in the system"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 84,
+    "group": 9,
+    "group_name": "Classical MD basics (Newton's equations)",
+    "stem": "Why is $U$ described as the central object that 'everything hinges on' in MD?",
+    "options": [
+      "Because both the energy and every force (via its gradient) come from a single function $U$",
+      "Because $U$ has no effect on the trajectory",
+      "Because $U$ is measured directly by experiment",
+      "Because $U$ is only used for visualization"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 85,
+    "group": 9,
+    "group_name": "Classical MD basics (Newton's equations)",
+    "stem": "Before quantum-chemical or machine-learned models existed, how was $U$ constructed?",
+    "options": [
+      "By solving the Schrodinger equation exactly",
+      "By training a neural network on lab data",
+      "It was not possible to define $U$ at all",
+      "By hand, from simple physically-motivated analytic terms"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 86,
+    "group": 9,
+    "group_name": "Classical MD basics (Newton's equations)",
+    "stem": "A trajectory produced by classical MD consists of:",
+    "options": [
+      "A single static equilibrium geometry only",
+      "A sequence of atomic positions (and velocities) over time",
+      "A set of qubit measurement outcomes",
+      "A wavefunction evolving in Hilbert space"
     ],
     "correct_index": 1
+  },
+  {
+    "id": 87,
+    "group": 9,
+    "group_name": "Classical MD basics (Newton's equations)",
+    "stem": "Which quantity does MD NOT require in order to integrate the equations of motion?",
+    "options": [
+      "Initial positions and velocities",
+      "Interatomic forces $\\vec F_i$",
+      "The electronic wavefunction, if using a classical force field",
+      "Atomic masses $m_i$"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 88,
+    "group": 9,
+    "group_name": "Classical MD basics (Newton's equations)",
+    "stem": "The role of a 'force field' in MD, in the most general sense, is:",
+    "options": [
+      "A literal physical field applied externally to the simulation box",
+      "Any model (empirical or learned) that supplies $U$ or $\\vec F$ given atomic positions",
+      "A synonym for temperature control",
+      "A type of quantum circuit only"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 89,
+    "group": 9,
+    "group_name": "Classical MD basics (Newton's equations)",
+    "stem": "PaiNN, NequIP, MACE, and siVQLM are all, in this general sense, examples of:",
+    "options": [
+      "Experimental spectroscopy techniques",
+      "Crystallography refinement algorithms",
+      "Force fields (models that predict energy/forces from atomic configuration)",
+      "Classical thermostats"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 90,
+    "group": 9,
+    "group_name": "Classical MD basics (Newton's equations)",
+    "stem": "What ultimately connects Newton's second law to the topic of this whole self-study document?",
+    "options": [
+      "Every method studied here (classical FF, DFT, PaiNN, siVQLM) is a different way of computing $U$/$\\vec F$ for that same equation",
+      "Newton's law was replaced entirely by quantum mechanics for all purposes",
+      "Newton's law only applies to electrons, not nuclei",
+      "Newton's law is unrelated to quantum chemistry"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 91,
+    "group": 10,
+    "group_name": "Lennard-Jones potential and empirical terms",
+    "stem": "The Lennard-Jones potential was proposed by John Lennard-Jones in:",
+    "options": [
+      "1984",
+      "1924",
+      "1900",
+      "1950"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 92,
+    "group": 10,
+    "group_name": "Lennard-Jones potential and empirical terms",
+    "stem": "The Lennard-Jones formula is:",
+    "options": [
+      "$U_{LJ}(r) = -q_1q_2/r$",
+      "$U_{LJ}(r) = 4\\varepsilon[(\\sigma/r)^{12} - (\\sigma/r)^{6}]$",
+      "$U_{LJ}(r) = \\varepsilon r^2$",
+      "$U_{LJ}(r) = k(r-r_0)^2$"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 93,
+    "group": 10,
+    "group_name": "Lennard-Jones potential and empirical terms",
+    "stem": "The $-r^{-6}$ term in the Lennard-Jones potential models:",
+    "options": [
+      "Van der Waals attraction, from induced-dipole interactions",
+      "Covalent bond stretching",
+      "Coulomb repulsion between like charges",
+      "Nuclear spin coupling"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 94,
+    "group": 10,
+    "group_name": "Lennard-Jones potential and empirical terms",
+    "stem": "The $r^{-12}$ term in the Lennard-Jones potential models:",
+    "options": [
+      "Gravitational interaction",
+      "Magnetic dipole interaction",
+      "An exact quantum-mechanical repulsion law",
+      "Short-range Pauli repulsion, chosen crudely for computational convenience"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 95,
+    "group": 10,
+    "group_name": "Lennard-Jones potential and empirical terms",
+    "stem": "Why is $r^{-12}$ (rather than a more physically exact repulsion form) used for the repulsive term?",
+    "options": [
+      "Because it minimizes barren plateaus",
+      "Because it is computationally convenient (it is just the square of the $r^{-6}$ term)",
+      "Because it was experimentally measured to be exact",
+      "Because it is required by the Schrodinger equation"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 96,
+    "group": 10,
+    "group_name": "Lennard-Jones potential and empirical terms",
+    "stem": "Is the Lennard-Jones term still used in modern classical force fields (AMBER, CHARMM, OPLS)?",
+    "options": [
+      "No, it was replaced by machine learning in the 1990s",
+      "No, it was fully replaced by DFT",
+      "It was never adopted by any force field",
+      "Yes, it is still used as the van der Waals term"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 97,
+    "group": 10,
+    "group_name": "Lennard-Jones potential and empirical terms",
+    "stem": "The Lennard-Jones potential can be considered:",
+    "options": [
+      "A neural network architecture",
+      "A purely quantum-mechanical operator",
+      "A dataset, not a potential",
+      "Arguably the first 'force field' term in the modern sense"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 98,
+    "group": 10,
+    "group_name": "Lennard-Jones potential and empirical terms",
+    "stem": "Which parameter in $U_{LJ}$ sets the depth (strength) of the attractive well?",
+    "options": [
+      "$N$",
+      "$\\varepsilon$",
+      "$r$",
+      "$\\sigma$"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 99,
+    "group": 10,
+    "group_name": "Lennard-Jones potential and empirical terms",
+    "stem": "Which parameter in $U_{LJ}$ sets the characteristic distance scale?",
+    "options": [
+      "$\\varepsilon$",
+      "$\\sigma$",
+      "$k_b$",
+      "$q_i$"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 100,
+    "group": 10,
+    "group_name": "Lennard-Jones potential and empirical terms",
+    "stem": "The Lennard-Jones potential is an example of what broader category of model?",
+    "options": [
+      "An exact solution of the Schrodinger equation",
+      "An empirical, hand-built analytic potential, fit to reproduce known physics",
+      "A supervised deep-learning model",
+      "A variational quantum circuit"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 101,
+    "group": 11,
+    "group_name": "Molecular mechanics force fields (AMBER/CHARMM/OPLS)",
+    "stem": "AMBER, as a molecular mechanics force field, was developed by:",
+    "options": [
+      "Behler and Parrinello (2007)",
+      "Weiner and Kollman (1984)",
+      "Lennard-Jones (1924)",
+      "Schutt, Unke, and Gastegger (2021)"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 102,
+    "group": 11,
+    "group_name": "Molecular mechanics force fields (AMBER/CHARMM/OPLS)",
+    "stem": "CHARMM was developed by:",
+    "options": [
+      "Jorgensen (1988)",
+      "Brooks, Karplus, and colleagues (1983)",
+      "Peruzzo et al. (2014)",
+      "Kohn and Sham (1965)"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 103,
+    "group": 11,
+    "group_name": "Molecular mechanics force fields (AMBER/CHARMM/OPLS)",
+    "stem": "OPLS was developed by:",
+    "options": [
+      "Kiss et al. (2022)",
+      "Weiner and Kollman (1984)",
+      "Bartok et al. (2010)",
+      "Jorgensen (1988)"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 104,
+    "group": 11,
+    "group_name": "Molecular mechanics force fields (AMBER/CHARMM/OPLS)",
+    "stem": "The AMBER/CHARMM/OPLS-style energy expression sums over which terms?",
+    "options": [
+      "Only electrostatics",
+      "Bonds, angles, dihedrals, van der Waals, and electrostatics",
+      "Only the Schrodinger equation's kinetic term",
+      "Only van der Waals terms"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 105,
+    "group": 11,
+    "group_name": "Molecular mechanics force fields (AMBER/CHARMM/OPLS)",
+    "stem": "The bond-stretching term in a molecular mechanics force field typically has the form:",
+    "options": [
+      "$k_b(r-r_0)^2$, a harmonic term",
+      "$k_\\phi[1+\\cos(n\\phi-\\delta)]$",
+      "$\\exp(-i\\alpha\\vec x\\cdot\\vec\\sigma)$",
+      "$4\\varepsilon[(\\sigma/r)^{12}-(\\sigma/r)^6]$"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 106,
+    "group": 11,
+    "group_name": "Molecular mechanics force fields (AMBER/CHARMM/OPLS)",
+    "stem": "The dihedral (torsion) term typically has the form:",
+    "options": [
+      "$k_b(r-r_0)^2$",
+      "$k_\\phi[1+\\cos(n\\phi-\\delta)]$",
+      "$q_iq_j/(4\\pi\\epsilon_0 r_{ij})$",
+      "$4\\varepsilon[(\\sigma/r)^{12}-(\\sigma/r)^6]$"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 107,
+    "group": 11,
+    "group_name": "Molecular mechanics force fields (AMBER/CHARMM/OPLS)",
+    "stem": "How are the parameters ($k_b, r_0, k_\\theta,\\ldots$) of a molecular mechanics force field obtained?",
+    "options": [
+      "Learned online during every simulation via backpropagation",
+      "They are universal physical constants, never fit",
+      "Measured directly by a quantum computer",
+      "Fit once, offline, to experimental data and/or reference quantum-chemistry calculations"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 108,
+    "group": 11,
+    "group_name": "Molecular mechanics force fields (AMBER/CHARMM/OPLS)",
+    "stem": "Once fit, how are these parameters used during a simulation?",
+    "options": [
+      "Replaced by DFT at every step",
+      "Re-optimized at every single timestep",
+      "Reused unchanged for every simulation frame",
+      "Discarded after the first frame"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 109,
+    "group": 11,
+    "group_name": "Molecular mechanics force fields (AMBER/CHARMM/OPLS)",
+    "stem": "What is the main practical advantage of molecular mechanics force fields?",
+    "options": [
+      "They are extremely fast to evaluate and scale to systems with millions of atoms",
+      "They are more accurate than any quantum-chemical method",
+      "They require no parameter fitting at all",
+      "They can describe bond breaking natively"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 110,
+    "group": 11,
+    "group_name": "Molecular mechanics force fields (AMBER/CHARMM/OPLS)",
+    "stem": "Why did molecular mechanics force fields dominate computational chemistry for three decades?",
+    "options": [
+      "Because they are more accurate than DFT",
+      "Because no alternative method existed at all",
+      "Because they require quantum computers",
+      "Because their speed and scalability made large biomolecular/materials simulations (proteins, membranes) tractable"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 111,
+    "group": 12,
+    "group_name": "Limitations of classical force fields",
+    "stem": "A classical molecular-mechanics force field assumes:",
+    "options": [
+      "A fixed bonding topology, decided before the simulation starts",
+      "An exact solution of the electronic Schrodinger equation",
+      "A dynamically changing bonding topology at every step",
+      "No atoms at all, only fields"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 112,
+    "group": 12,
+    "group_name": "Limitations of classical force fields",
+    "stem": "Does a classical force field explicitly include electrons?",
+    "options": [
+      "Only for metals",
+      "Yes, but only core electrons",
+      "Yes, every electron is tracked individually",
+      "No -- charge is a fixed point charge per atom, never redistributed"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 113,
+    "group": 12,
+    "group_name": "Limitations of classical force fields",
+    "stem": "What can a classical force field NOT describe, as a direct consequence of its fixed topology?",
+    "options": [
+      "Van der Waals attraction",
+      "Temperature changes",
+      "Any atomic motion whatsoever",
+      "A chemical reaction (a bond breaking or forming)"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 114,
+    "group": 12,
+    "group_name": "Limitations of classical force fields",
+    "stem": "Besides reactions, what else does a classical force field fail to capture?",
+    "options": [
+      "The existence of bonds",
+      "Gravitational forces (irrelevant at this scale anyway)",
+      "Polarization and charge transfer",
+      "Atomic mass"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 115,
+    "group": 12,
+    "group_name": "Limitations of classical force fields",
+    "stem": "How reliable is a classical force field outside its narrow fitting domain?",
+    "options": [
+      "Unreliable -- its accuracy for configurations unlike its training/fitting data is not guaranteed",
+      "Perfectly reliable everywhere by construction",
+      "Irrelevant, since force fields have no domain restriction",
+      "More reliable than DFT everywhere"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 116,
+    "group": 12,
+    "group_name": "Limitations of classical force fields",
+    "stem": "What kind of process specifically requires going back to solving the underlying quantum mechanics?",
+    "options": [
+      "Simulating an ideal gas",
+      "Any process where electronic structure actually changes (e.g. reactive chemistry, catalysis)",
+      "Simulating a rigid crystal lattice",
+      "Any process at constant temperature"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 117,
+    "group": 12,
+    "group_name": "Limitations of classical force fields",
+    "stem": "What was 'built to close' the gap left by classical force fields' limitations?",
+    "options": [
+      "Ab initio quantum-chemical methods, and later machine-learned potentials",
+      "Larger simulation boxes",
+      "Longer simulation times",
+      "Faster classical computers alone"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 118,
+    "group": 12,
+    "group_name": "Limitations of classical force fields",
+    "stem": "Which of the following is an example of a process a classical force field cannot model correctly?",
+    "options": [
+      "A noble gas atom translating freely",
+      "An enzyme catalyzing a bond-breaking reaction",
+      "A protein vibrating around its equilibrium structure",
+      "Two neutral atoms held together purely by van der Waals attraction"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 119,
+    "group": 12,
+    "group_name": "Limitations of classical force fields",
+    "stem": "Machine-learned and quantum-mechanical potentials aim to fix this gap by:",
+    "options": [
+      "Increasing the simulation box size only",
+      "Learning or computing the true, geometry-dependent electronic energy surface instead of using a fixed functional form",
+      "Using a larger integration timestep",
+      "Removing all atoms from the simulation"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 120,
+    "group": 12,
+    "group_name": "Limitations of classical force fields",
+    "stem": "In one sentence, why is this limitation 'the fundamental motivation for everything that follows' in this document?",
+    "options": [
+      "Because classical force fields are no longer used at all today",
+      "Because it has no connection to the rest of the document",
+      "Because it is precisely the accuracy gap that ab initio methods and ML/QML force fields were developed to close",
+      "Because it only matters for quantum computers"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 121,
+    "group": 13,
+    "group_name": "Why atomistic simulation matters: application domains",
+    "stem": "In drug design, atomistic simulation is used to predict:",
+    "options": [
+      "The manufacturing cost only",
+      "The patent filing date",
+      "How a candidate molecule binds to a protein target (binding pose, binding free energy)",
+      "The color of the drug tablet"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 122,
+    "group": 13,
+    "group_name": "Why atomistic simulation matters: application domains",
+    "stem": "In catalysis research, what is typically computed using atomistic simulation?",
+    "options": [
+      "The catalyst's brand name",
+      "Reaction barriers on metal surfaces or in zeolites",
+      "The price of the catalyst on the market",
+      "Its shipping weight"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 123,
+    "group": 13,
+    "group_name": "Why atomistic simulation matters: application domains",
+    "stem": "Give an example industrial catalytic process mentioned as motivation for accurate simulation.",
+    "options": [
+      "Printing newspapers",
+      "Manufacturing glass bottles",
+      "Ammonia synthesis or CO2 reduction",
+      "Baking bread"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 124,
+    "group": 13,
+    "group_name": "Why atomistic simulation matters: application domains",
+    "stem": "In battery/energy materials research, what does atomistic simulation help predict?",
+    "options": [
+      "The battery's retail price",
+      "The color of the battery casing",
+      "Shipping regulations",
+      "Ion diffusion barriers in solid electrolytes and electrode degradation mechanisms"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 125,
+    "group": 13,
+    "group_name": "Why atomistic simulation matters: application domains",
+    "stem": "In semiconductor/materials science, atomistic simulation helps compute:",
+    "options": [
+      "Marketing strategy",
+      "Defect formation energies and band-structure-relevant geometries",
+      "Employee schedules",
+      "Factory floor layout"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 126,
+    "group": 13,
+    "group_name": "Why atomistic simulation matters: application domains",
+    "stem": "Why does simulating a protein-ligand complex require higher accuracy than simulating a rigid crystal?",
+    "options": [
+      "Proteins have no atoms",
+      "Ligands are always simulated classically with no need for accuracy",
+      "Because binding involves subtle energy differences that determine whether binding is favorable at all",
+      "It does not -- both require identical accuracy"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 127,
+    "group": 13,
+    "group_name": "Why atomistic simulation matters: application domains",
+    "stem": "Atomistic simulation substitutes for, or guides, which real-world activity?",
+    "options": [
+      "Financial accounting",
+      "Only theoretical mathematics with no experimental connection",
+      "Manufacturing quality control exclusively",
+      "Expensive physical experiments (synthesis, testing) across chemistry/materials/biology"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 128,
+    "group": 13,
+    "group_name": "Why atomistic simulation matters: application domains",
+    "stem": "Which application domain involves zeolites as a specific example material?",
+    "options": [
+      "Battery materials",
+      "Drug design",
+      "Semiconductor defects",
+      "Catalysis"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 129,
+    "group": 13,
+    "group_name": "Why atomistic simulation matters: application domains",
+    "stem": "Which application domain is most directly connected to 'ion diffusion'?",
+    "options": [
+      "Battery and energy materials",
+      "Catalysis on metal surfaces",
+      "Semiconductor band structure",
+      "Drug design"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 130,
+    "group": 13,
+    "group_name": "Why atomistic simulation matters: application domains",
+    "stem": "Across all these domains, what is the common computational quantity being predicted?",
+    "options": [
+      "Weather forecasts",
+      "Energies and forces (or energy differences) as a function of atomic/molecular configuration",
+      "Internet traffic patterns",
+      "Stock market prices"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 131,
+    "group": 14,
+    "group_name": "Why accuracy matters: Arrhenius law and chemical accuracy",
+    "stem": "The Arrhenius law relates reaction rate to energy barrier as:",
+    "options": [
+      "$k = A\\exp(-E_a/RT)$",
+      "$k = A E_a T$",
+      "$k = A/E_a$",
+      "$k = A - E_a T$"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 132,
+    "group": 14,
+    "group_name": "Why accuracy matters: Arrhenius law and chemical accuracy",
+    "stem": "Because of the exponential in the Arrhenius law, a small error in the computed barrier $E_a$ can:",
+    "options": [
+      "Have no effect on the predicted rate at all",
+      "Only affect the rate linearly, never exponentially",
+      "Change the predicted rate by an order of magnitude or more",
+      "Only matter at absolute zero temperature"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 133,
+    "group": 14,
+    "group_name": "Why accuracy matters: Arrhenius law and chemical accuracy",
+    "stem": "An error of 1-2 kcal/mol in a computed reaction barrier is:",
+    "options": [
+      "Larger than any realistic computational error",
+      "Only achievable by quantum computers",
+      "Impossible for any force field to produce",
+      "Well within what a poorly-fit classical force field can be off by"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 134,
+    "group": 14,
+    "group_name": "Why accuracy matters: Arrhenius law and chemical accuracy",
+    "stem": "'Chemical accuracy' is conventionally defined as errors below about:",
+    "options": [
+      "1 kcal/mol ($\\approx$43 meV)",
+      "100 kcal/mol",
+      "1 eV",
+      "1 J/mol"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 135,
+    "group": 14,
+    "group_name": "Why accuracy matters: Arrhenius law and chemical accuracy",
+    "stem": "Do classical force fields typically reach chemical accuracy for chemistry involving bond rearrangement?",
+    "options": [
+      "Always, by construction",
+      "Only above 1000 K",
+      "Only for noble gases",
+      "Almost never"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 136,
+    "group": 14,
+    "group_name": "Why accuracy matters: Arrhenius law and chemical accuracy",
+    "stem": "Can quantum-mechanical methods (DFT, CCSD(T)) reach chemical accuracy?",
+    "options": [
+      "Yes, and always for free",
+      "Only for systems with a single atom",
+      "Yes, but at a steep computational price",
+      "No, quantum methods are always less accurate than classical force fields"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 137,
+    "group": 14,
+    "group_name": "Why accuracy matters: Arrhenius law and chemical accuracy",
+    "stem": "What is the entire motivation for building faster surrogate models (classical ML, and now QML)?",
+    "options": [
+      "To reproduce quantum-mechanical accuracy without the quantum-mechanical computational cost",
+      "To avoid using computers entirely",
+      "To eliminate the need for any accuracy at all",
+      "To replace Newton's laws"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 138,
+    "group": 14,
+    "group_name": "Why accuracy matters: Arrhenius law and chemical accuracy",
+    "stem": "If a reaction barrier is underestimated by 1.4 kcal/mol at room temperature, the predicted rate is roughly:",
+    "options": [
+      "About one order of magnitude too fast (a rough rule of thumb from the exponential sensitivity)",
+      "Reduced to zero",
+      "Completely unaffected",
+      "Exactly halved"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 139,
+    "group": 14,
+    "group_name": "Why accuracy matters: Arrhenius law and chemical accuracy",
+    "stem": "Chemical reaction rates depend on the energy barrier:",
+    "options": [
+      "Not at all",
+      "Exponentially",
+      "Logarithmically",
+      "Linearly"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 140,
+    "group": 14,
+    "group_name": "Why accuracy matters: Arrhenius law and chemical accuracy",
+    "stem": "Why is 'accurate enough' described as 'a hard bar to clear'?",
+    "options": [
+      "Because the exponential sensitivity of rates to barrier height makes even small energy errors practically significant",
+      "Because no one has ever measured a reaction rate",
+      "Because computers cannot represent real numbers",
+      "Because energy is not a well-defined physical quantity"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 141,
+    "group": 15,
+    "group_name": "Schrodinger equation and Born-Oppenheimer approximation",
+    "stem": "The time-independent Schrodinger equation is written as:",
+    "options": [
+      "$\\hat H + \\Psi = E$",
+      "$\\hat H \\Psi = E\\Psi$",
+      "$\\hat H \\Psi = \\Psi$",
+      "$E = mc^2$"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 142,
+    "group": 15,
+    "group_name": "Schrodinger equation and Born-Oppenheimer approximation",
+    "stem": "The Schrodinger equation can be solved exactly, in closed form, for:",
+    "options": [
+      "Only systems with more than 100 electrons",
+      "Only crystalline solids",
+      "The hydrogen atom",
+      "Any molecule with more than 2 atoms"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 143,
+    "group": 15,
+    "group_name": "Schrodinger equation and Born-Oppenheimer approximation",
+    "stem": "For systems larger than hydrogen, the Schrodinger equation is:",
+    "options": [
+      "Not applicable at all",
+      "Solvable using only Newton's laws",
+      "Intractable to solve exactly in closed form",
+      "Trivially solvable by hand"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 144,
+    "group": 15,
+    "group_name": "Schrodinger equation and Born-Oppenheimer approximation",
+    "stem": "The Born-Oppenheimer approximation is justified because:",
+    "options": [
+      "Nuclei do not exist in quantum mechanics",
+      "Nuclei are about 1800 times heavier than electrons and move much more slowly",
+      "Electrons and nuclei have exactly equal mass",
+      "Electrons never move"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 145,
+    "group": 15,
+    "group_name": "Schrodinger equation and Born-Oppenheimer approximation",
+    "stem": "Under the Born-Oppenheimer approximation, the electronic Schrodinger equation is solved:",
+    "options": [
+      "Only after nuclei have finished moving forever",
+      "For fixed nuclear positions",
+      "By ignoring electrons entirely",
+      "Using classical mechanics for electrons"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 146,
+    "group": 15,
+    "group_name": "Schrodinger equation and Born-Oppenheimer approximation",
+    "stem": "The result of solving the electronic problem at fixed nuclear positions is:",
+    "options": [
+      "The electronic energy $E_{el}(\\{\\vec R_A\\})$, i.e. the potential energy surface (PES)",
+      "The nuclear mass",
+      "The temperature of the system",
+      "A random number with no physical meaning"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 147,
+    "group": 15,
+    "group_name": "Schrodinger equation and Born-Oppenheimer approximation",
+    "stem": "Under Born-Oppenheimer, nuclear motion is governed by:",
+    "options": [
+      "$M_A\\ddot{\\vec R}_A = -\\nabla_{\\vec R_A} E_{el}(\\{\\vec R_A\\})$",
+      "$M_A\\ddot{\\vec R}_A = 0$ always",
+      "$M_A\\ddot{\\vec R}_A = \\hat H\\Psi$",
+      "$M_A\\ddot{\\vec R}_A = E_{el}$"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 148,
+    "group": 15,
+    "group_name": "Schrodinger equation and Born-Oppenheimer approximation",
+    "stem": "According to this document, what 'is' the force field, defined rigorously rather than empirically?",
+    "options": [
+      "The Lennard-Jones parameter $\\sigma$",
+      "The potential energy surface $E_{el}(\\{\\vec R_A\\})$ itself",
+      "The simulation timestep",
+      "The number of qubits used"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 149,
+    "group": 15,
+    "group_name": "Schrodinger equation and Born-Oppenheimer approximation",
+    "stem": "Which methods in this project are all ultimately trying to evaluate $E_{el}$ and its gradient?",
+    "options": [
+      "Only classical MD",
+      "None of them -- they compute unrelated quantities",
+      "Only siVQLM",
+      "Classical MD force fields, PaiNN, and siVQLM"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 150,
+    "group": 15,
+    "group_name": "Schrodinger equation and Born-Oppenheimer approximation",
+    "stem": "The variable $\\Psi$ in the Schrodinger equation depends on:",
+    "options": [
+      "The positions of both electrons and nuclei, $\\{\\vec r_i\\}$ and $\\{\\vec R_A\\}$",
+      "Only the simulation software version",
+      "Only the temperature",
+      "Nothing -- it is a universal constant"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 151,
+    "group": 16,
+    "group_name": "Hartree-Fock and post-Hartree-Fock methods",
+    "stem": "Hartree-Fock approximates the many-electron wavefunction as:",
+    "options": [
+      "A single Gaussian function with no orbitals",
+      "A single Slater determinant of one-electron orbitals",
+      "A random matrix",
+      "A classical point-charge model"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 152,
+    "group": 16,
+    "group_name": "Hartree-Fock and post-Hartree-Fock methods",
+    "stem": "How is the Hartree-Fock equation typically solved?",
+    "options": [
+      "By ignoring the nuclei entirely",
+      "In a single closed-form algebraic step",
+      "Self-consistently (iteratively, until the orbitals converge)",
+      "Using only classical mechanics"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 153,
+    "group": 16,
+    "group_name": "Hartree-Fock and post-Hartree-Fock methods",
+    "stem": "What does Hartree-Fock famously miss, limiting its accuracy?",
+    "options": [
+      "The nuclear charge",
+      "The number of electrons",
+      "The existence of orbitals",
+      "Electron correlation"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 154,
+    "group": 16,
+    "group_name": "Hartree-Fock and post-Hartree-Fock methods",
+    "stem": "Post-HF methods such as MP2 and CCSD(T) improve accuracy by:",
+    "options": [
+      "Ignoring the nuclei",
+      "Adding electron correlation back into the calculation",
+      "Removing all electrons from the model",
+      "Using a larger simulation timestep"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 155,
+    "group": 16,
+    "group_name": "Hartree-Fock and post-Hartree-Fock methods",
+    "stem": "CCSD(T) is often referred to as:",
+    "options": [
+      "A purely classical force field",
+      "The fastest possible method",
+      "A dataset, not a method",
+      "The 'gold standard' of quantum chemistry"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 156,
+    "group": 16,
+    "group_name": "Hartree-Fock and post-Hartree-Fock methods",
+    "stem": "How does CCSD(T) formally scale with system size $N$?",
+    "options": [
+      "$O(\\log N)$",
+      "$O(N)$",
+      "$O(N^7)$",
+      "$O(1)$, independent of size"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 157,
+    "group": 16,
+    "group_name": "Hartree-Fock and post-Hartree-Fock methods",
+    "stem": "Why is CCSD(T), despite being highly accurate, not used for every large simulation?",
+    "options": [
+      "Its steep computational cost (poor scaling with system size) makes it impractical for large systems",
+      "It was never validated against experiment",
+      "It is less accurate than Hartree-Fock",
+      "It cannot be run on any computer"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 158,
+    "group": 16,
+    "group_name": "Hartree-Fock and post-Hartree-Fock methods",
+    "stem": "Which of these is a 'post-Hartree-Fock' method mentioned in this document?",
+    "options": [
+      "MP2",
+      "Lennard-Jones",
+      "DFT",
+      "PaiNN"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 159,
+    "group": 16,
+    "group_name": "Hartree-Fock and post-Hartree-Fock methods",
+    "stem": "The accuracy ordering (loosely) among these methods, from lower to higher, is typically:",
+    "options": [
+      "CCSD(T) < Hartree-Fock < DFT < MP2, always in that fixed order",
+      "Hartree-Fock < DFT (with a good functional) $\\lesssim$ MP2 < CCSD(T)",
+      "Accuracy is unrelated to method choice",
+      "All these methods have identical accuracy always"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 160,
+    "group": 16,
+    "group_name": "Hartree-Fock and post-Hartree-Fock methods",
+    "stem": "What Hartree-Fock and CCSD(T) have in common, versus DFT, is that both work in terms of:",
+    "options": [
+      "The many-electron wavefunction (or determinants/excitations built from orbitals)",
+      "The electron density alone, never the wavefunction",
+      "Only qubit operators",
+      "Only classical point charges"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 161,
+    "group": 17,
+    "group_name": "Density Functional Theory (DFT) and Kohn-Sham equations",
+    "stem": "DFT reformulates the electronic structure problem in terms of:",
+    "options": [
+      "The number of qubits available",
+      "The nuclear charge only",
+      "The simulation temperature",
+      "The electron density $n(\\vec r)$, rather than the many-body wavefunction"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 162,
+    "group": 17,
+    "group_name": "Density Functional Theory (DFT) and Kohn-Sham equations",
+    "stem": "The Kohn-Sham equations have the form:",
+    "options": [
+      "$[-\\tfrac12\\nabla^2 + v_{eff}[n](\\vec r)]\\phi_i(\\vec r) = \\epsilon_i\\phi_i(\\vec r)$",
+      "$n(\\vec r) = \\text{const}$",
+      "$\\hat H\\Psi = 0$ always",
+      "$m_i\\ddot{\\vec r}_i = \\vec F_i$"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 163,
+    "group": 17,
+    "group_name": "Density Functional Theory (DFT) and Kohn-Sham equations",
+    "stem": "In Kohn-Sham DFT, the electron density is reconstructed from the orbitals as:",
+    "options": [
+      "$n(\\vec r) = \\sum_i |\\phi_i(\\vec r)|^2$",
+      "$n(\\vec r) = \\epsilon_i$",
+      "$n(\\vec r) = \\sum_i \\phi_i(\\vec r)$",
+      "$n(\\vec r)$ is unrelated to the orbitals"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 164,
+    "group": 17,
+    "group_name": "Density Functional Theory (DFT) and Kohn-Sham equations",
+    "stem": "How does DFT typically scale with system size $N$, compared to CCSD(T)?",
+    "options": [
+      "Identically to CCSD(T), $O(N^7)$",
+      "Much more favourably, typically $O(N^3)$",
+      "DFT does not scale with $N$ at all",
+      "Worse than CCSD(T)"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 165,
+    "group": 17,
+    "group_name": "Density Functional Theory (DFT) and Kohn-Sham equations",
+    "stem": "What makes DFT 'the dominant workhorse for generating training data for machine-learned potentials'?",
+    "options": [
+      "Its favourable balance of reasonable accuracy (with a good exchange-correlation functional) and manageable cost",
+      "It is the only method that has ever been implemented in software",
+      "It requires no approximations whatsoever",
+      "It is more accurate than CCSD(T) in all cases"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 166,
+    "group": 17,
+    "group_name": "Density Functional Theory (DFT) and Kohn-Sham equations",
+    "stem": "What key ingredient of the Kohn-Sham equations is NOT exactly known and must be approximated?",
+    "options": [
+      "Newton's second law",
+      "The exchange-correlation functional",
+      "The number of atoms",
+      "The electron mass"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 167,
+    "group": 17,
+    "group_name": "Density Functional Theory (DFT) and Kohn-Sham equations",
+    "stem": "Which named functional is mentioned in this document as a reference level for the QM9 dataset?",
+    "options": [
+      "$\\omega$B97X",
+      "CCSD(T)",
+      "PBE+vdW",
+      "B3LYP"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 168,
+    "group": 17,
+    "group_name": "Density Functional Theory (DFT) and Kohn-Sham equations",
+    "stem": "Which reference level is mentioned for the MD17/rMD17 dataset?",
+    "options": [
+      "CCSD(T) exclusively",
+      "Hartree-Fock only",
+      "Experimental X-ray diffraction",
+      "DFT (PBE+vdW)"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 169,
+    "group": 17,
+    "group_name": "Density Functional Theory (DFT) and Kohn-Sham equations",
+    "stem": "DFT and Hartree-Fock differ fundamentally in that DFT works with:",
+    "options": [
+      "Exactly the same mathematical object as HF",
+      "The electron density, not the many-electron wavefunction directly",
+      "Qubit operators",
+      "Only classical trajectories"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 170,
+    "group": 17,
+    "group_name": "Density Functional Theory (DFT) and Kohn-Sham equations",
+    "stem": "Nearly every ML/QML force field dataset discussed in this document (QM9, MD17, ANI-1x, OC20) uses which family of reference method?",
+    "options": [
+      "Only Hartree-Fock",
+      "DFT (with various functionals)",
+      "Experimental calorimetry exclusively",
+      "Only classical force fields"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 171,
+    "group": 18,
+    "group_name": "Experimental validation: diffraction, spectroscopy, NMR, calorimetry",
+    "stem": "X-ray and neutron diffraction primarily give information about:",
+    "options": [
+      "Equilibrium molecular/crystal structures",
+      "Qubit coherence times",
+      "The exchange-correlation functional",
+      "Reaction rate constants directly"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 172,
+    "group": 18,
+    "group_name": "Experimental validation: diffraction, spectroscopy, NMR, calorimetry",
+    "stem": "Infrared (IR) and Raman spectroscopy primarily give information about:",
+    "options": [
+      "Electron correlation energy directly",
+      "Vibrational frequencies",
+      "Reaction yield percentages",
+      "Nuclear spin states only"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 173,
+    "group": 18,
+    "group_name": "Experimental validation: diffraction, spectroscopy, NMR, calorimetry",
+    "stem": "Vibrational frequencies from IR/Raman are sensitive to which property of the potential energy surface?",
+    "options": [
+      "Its curvature (second derivative) around the equilibrium geometry",
+      "Its first derivative (the force) only",
+      "Nothing about the PES -- they are unrelated",
+      "Its value at infinite separation only"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 174,
+    "group": 18,
+    "group_name": "Experimental validation: diffraction, spectroscopy, NMR, calorimetry",
+    "stem": "NMR spectroscopy primarily gives information about:",
+    "options": [
+      "Bulk crystal density",
+      "Reaction barrier heights directly",
+      "Qubit gate fidelities",
+      "Local chemical environments"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 175,
+    "group": 18,
+    "group_name": "Experimental validation: diffraction, spectroscopy, NMR, calorimetry",
+    "stem": "Calorimetry primarily gives information about:",
+    "options": [
+      "Electron density maps",
+      "Atomic positions to picometer precision",
+      "Reaction thermodynamics",
+      "Vibrational frequencies"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 176,
+    "group": 18,
+    "group_name": "Experimental validation: diffraction, spectroscopy, NMR, calorimetry",
+    "stem": "What do these experimental techniques validate, according to this document?",
+    "options": [
+      "Nothing useful for computational chemistry",
+      "That DFT/CCSD(T), as methods, are trustworthy",
+      "That quantum computers are faster than classical computers",
+      "That classical force fields never need experimental validation"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 177,
+    "group": 18,
+    "group_name": "Experimental validation: diffraction, spectroscopy, NMR, calorimetry",
+    "stem": "Why can't these experiments directly supply the training labels needed for supervised ML force fields?",
+    "options": [
+      "Because ML models cannot use any experimental data ever",
+      "Because experiments cannot be performed on molecules",
+      "Because experiments are always less accurate than any calculation",
+      "They measure bulk or ensemble-averaged properties, not atom-by-atom energy/force labels for arbitrary geometries"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 178,
+    "group": 18,
+    "group_name": "Experimental validation: diffraction, spectroscopy, NMR, calorimetry",
+    "stem": "What is used instead of direct experimental measurement to generate per-atom force labels for datasets like MD17?",
+    "options": [
+      "Guesses by the dataset authors",
+      "Direct laboratory force-sensor measurements on single atoms",
+      "Randomly generated numbers",
+      "Computed (not measured) DFT energies and forces for individual atomic configurations"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 179,
+    "group": 18,
+    "group_name": "Experimental validation: diffraction, spectroscopy, NMR, calorimetry",
+    "stem": "This document calls the process of running DFT to generate dataset labels:",
+    "options": [
+      "Computational 'measurement' (i.e. labelling)",
+      "Barren plateau mitigation",
+      "Experimental validation",
+      "Quantum error correction"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 180,
+    "group": 18,
+    "group_name": "Experimental validation: diffraction, spectroscopy, NMR, calorimetry",
+    "stem": "The overall two-step logic connecting theory to datasets is:",
+    "options": [
+      "There is no connection between experiment and datasets",
+      "Validate the QM method against experiment first, then use that trusted method to compute labels for many configurations",
+      "Use experiments directly as force labels with no computation involved",
+      "Skip experimental validation entirely and trust any QM method blindly"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 181,
+    "group": 19,
+    "group_name": "From equations to datasets: synthesis",
+    "stem": "Two activities are 'often conflated' under the question 'how do we know the energy/forces are right'. What are they?",
+    "options": [
+      "Experimental validation of the method, and computational labelling (running the method to generate data)",
+      "There is only one such activity, not two",
+      "Buying more expensive hardware and nothing else",
+      "Only running simulations twice"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 182,
+    "group": 19,
+    "group_name": "From equations to datasets: synthesis",
+    "stem": "If a new exchange-correlation functional were never checked against any spectroscopy or diffraction data, what would be missing?",
+    "options": [
+      "Experimental validation that the method itself is trustworthy",
+      "Nothing -- validation is unnecessary for DFT",
+      "The dataset labels would still be reliable regardless",
+      "The functional would automatically be exact"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 183,
+    "group": 19,
+    "group_name": "From equations to datasets: synthesis",
+    "stem": "Why does this document emphasize the distinction between 'validation' and 'labelling'?",
+    "options": [
+      "Because the two concepts are identical and the distinction is meaningless",
+      "Because only labelling matters and validation is irrelevant",
+      "Because ML force fields are trained on computed (labelling) data, which is only trustworthy because the underlying method was separately validated experimentally",
+      "Because only validation matters and labelling is irrelevant"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 184,
+    "group": 19,
+    "group_name": "From equations to datasets: synthesis",
+    "stem": "Which of the following best restates the logical chain from Section 1 of this document?",
+    "options": [
+      "Datasets come first, then Newton's laws are derived from them",
+      "Quantum computers were used to generate every historical dataset since 1924",
+      "None of these steps are actually connected",
+      "Newton's laws need a potential $\\to$ empirical potentials were limited $\\to$ quantum mechanics gives a rigorous potential $\\to$ DFT makes it computable $\\to$ DFT is validated experimentally $\\to$ DFT then labels datasets $\\to$ ML/QML learn from those datasets"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 185,
+    "group": 19,
+    "group_name": "From equations to datasets: synthesis",
+    "stem": "A vibrational frequency computed from DFT can be checked against which experimental technique?",
+    "options": [
+      "Only NMR",
+      "IR or Raman spectroscopy",
+      "Only calorimetry",
+      "Only X-ray diffraction"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 186,
+    "group": 19,
+    "group_name": "From equations to datasets: synthesis",
+    "stem": "An equilibrium bond length computed from DFT can be checked against which experimental technique?",
+    "options": [
+      "Only NMR",
+      "Only calorimetry",
+      "Only IR spectroscopy",
+      "X-ray or neutron diffraction"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 187,
+    "group": 19,
+    "group_name": "From equations to datasets: synthesis",
+    "stem": "Why is chemical accuracy (Group 14) relevant to the choice of reference method (Groups 16-17) for a dataset?",
+    "options": [
+      "Because chemical accuracy only applies to classical force fields",
+      "Because reference methods are chosen randomly regardless of accuracy",
+      "It is not relevant at all",
+      "Because the dataset's usefulness for training an accurate force field depends on its labels meeting chemical accuracy versus experiment"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 188,
+    "group": 19,
+    "group_name": "From equations to datasets: synthesis",
+    "stem": "If a force field is trained on DFT labels with a poor exchange-correlation functional, what is the likely consequence?",
+    "options": [
+      "The trained force field inherits and cannot exceed the errors of the underlying DFT functional",
+      "The force field will automatically be more accurate than the DFT it was trained on",
+      "The force field will instead learn the exact Schrodinger equation",
+      "There will be no consequence at all"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 189,
+    "group": 19,
+    "group_name": "From equations to datasets: synthesis",
+    "stem": "Is CCSD(T) or DFT more commonly used to label large-scale ML datasets like OC20 (millions of configurations)?",
+    "options": [
+      "Neither -- OC20 uses experimental data only",
+      "Hartree-Fock exclusively",
+      "CCSD(T), because it is cheaper",
+      "DFT, because of its far better computational scaling"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 190,
+    "group": 19,
+    "group_name": "From equations to datasets: synthesis",
+    "stem": "What is the ultimate practical payoff of training an ML force field on DFT-labelled data?",
+    "options": [
+      "Achieving CCSD(T) accuracy for free with no computation",
+      "Making the classical force field parameters irrelevant to memory",
+      "Approaching DFT-level accuracy at a small fraction of DFT's computational cost, at inference time",
+      "Eliminating the need for the Born-Oppenheimer approximation"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 191,
+    "group": 20,
+    "group_name": "Datasets I -- QM9 and MD17/rMD17",
+    "stem": "QM9 contains approximately how many small organic molecules?",
+    "options": [
+      "$\\sim$134,000",
+      "13",
+      "1.34 million",
+      "134"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 192,
+    "group": 20,
+    "group_name": "Datasets I -- QM9 and MD17/rMD17",
+    "stem": "QM9 molecules are limited to up to how many heavy (non-hydrogen) atoms?",
+    "options": [
+      "2",
+      "900",
+      "9",
+      "50"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 193,
+    "group": 20,
+    "group_name": "Datasets I -- QM9 and MD17/rMD17",
+    "stem": "QM9's reference level of theory is:",
+    "options": [
+      "Hartree-Fock only",
+      "Experimental calorimetry",
+      "CCSD(T)",
+      "DFT (B3LYP)"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 194,
+    "group": 20,
+    "group_name": "Datasets I -- QM9 and MD17/rMD17",
+    "stem": "QM9 is primarily used for:",
+    "options": [
+      "Battery manufacturing schedules",
+      "Real-time weather forecasting",
+      "Property prediction and pretraining",
+      "Protein folding exclusively"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 195,
+    "group": 20,
+    "group_name": "Datasets I -- QM9 and MD17/rMD17",
+    "stem": "MD17/rMD17 contains what kind of data?",
+    "options": [
+      "Only reaction rate constants",
+      "Only NMR spectra",
+      "MD trajectories of single small organic molecules, with energies and forces",
+      "Only equilibrium crystal structures"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 196,
+    "group": 20,
+    "group_name": "Datasets I -- QM9 and MD17/rMD17",
+    "stem": "The molecule size range in MD17 is:",
+    "options": [
+      "Exactly 100 atoms always",
+      "1 to 3 atoms",
+      "1000 to 5000 atoms",
+      "9 to 21 atoms"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 197,
+    "group": 20,
+    "group_name": "Datasets I -- QM9 and MD17/rMD17",
+    "stem": "MD17's reference level of theory is:",
+    "options": [
+      "CCSD(T) exclusively",
+      "B3LYP only",
+      "No quantum-chemical reference at all",
+      "DFT (PBE+vdW)"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 198,
+    "group": 20,
+    "group_name": "Datasets I -- QM9 and MD17/rMD17",
+    "stem": "Which models mentioned in this document all target the MD17/rMD17 benchmark family?",
+    "options": [
+      "Only AMBER and CHARMM",
+      "Only Lennard-Jones-based models",
+      "Only experimental spectroscopy techniques",
+      "PaiNN, NequIP, MACE, and siVQLM"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 199,
+    "group": 20,
+    "group_name": "Datasets I -- QM9 and MD17/rMD17",
+    "stem": "What distinguishes MD17 from QM9 in terms of scope?",
+    "options": [
+      "They are identical datasets with different names",
+      "QM9 has forces and MD17 does not",
+      "MD17 contains inorganic crystals, QM9 does not",
+      "MD17 focuses on force-field-relevant trajectories of single molecules; QM9 is a broad, static equilibrium-geometry property dataset"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 200,
+    "group": 20,
+    "group_name": "Datasets I -- QM9 and MD17/rMD17",
+    "stem": "Does MD17 provide per-atom forces, not just energies?",
+    "options": [
+      "Forces are provided but never used for training",
+      "No, only energies are provided",
+      "Yes -- forces are a core part of the dataset, essential for force-field training",
+      "No, only equilibrium structures are provided"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 201,
+    "group": 21,
+    "group_name": "Datasets II -- ANI-1x, Open Catalyst, Materials Project, SPICE",
+    "stem": "ANI-1/ANI-1x contain:",
+    "options": [
+      "Only equilibrium geometries",
+      "Millions of off-equilibrium conformations across a broad chemical space",
+      "Only inorganic crystals",
+      "Only 10 molecules total"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 202,
+    "group": 21,
+    "group_name": "Datasets II -- ANI-1x, Open Catalyst, Materials Project, SPICE",
+    "stem": "ANI-1x's reference level of theory is:",
+    "options": [
+      "Experimental NMR only",
+      "CCSD(T) exclusively",
+      "No DFT functional at all",
+      "DFT ($\\omega$B97X)"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 203,
+    "group": 21,
+    "group_name": "Datasets II -- ANI-1x, Open Catalyst, Materials Project, SPICE",
+    "stem": "ANI-1x-style datasets are primarily used for:",
+    "options": [
+      "Transferable, general-purpose potentials",
+      "Single-molecule spectroscopy only",
+      "Only battery materials",
+      "Weather prediction"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 204,
+    "group": 21,
+    "group_name": "Datasets II -- ANI-1x, Open Catalyst, Materials Project, SPICE",
+    "stem": "The Open Catalyst (OC20/OC22) dataset contains:",
+    "options": [
+      "Only protein structures",
+      "Only small organic molecules with no surfaces",
+      "Only NMR spectra",
+      "Millions of adsorbate-catalyst-surface configurations"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 205,
+    "group": 21,
+    "group_name": "Datasets II -- ANI-1x, Open Catalyst, Materials Project, SPICE",
+    "stem": "OC20/OC22 is primarily relevant for:",
+    "options": [
+      "Astronomical simulations",
+      "Drug binding affinity exclusively",
+      "Battery electrolyte diffusion exclusively",
+      "Catalysis-relevant surface force fields"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 206,
+    "group": 21,
+    "group_name": "Datasets II -- ANI-1x, Open Catalyst, Materials Project, SPICE",
+    "stem": "The Materials Project dataset contains:",
+    "options": [
+      ">100k inorganic crystal structures with formation energies",
+      "Only organic drug-like molecules",
+      "Only protein-ligand complexes",
+      "Only vibrational spectra"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 207,
+    "group": 21,
+    "group_name": "Datasets II -- ANI-1x, Open Catalyst, Materials Project, SPICE",
+    "stem": "Materials Project is primarily used for:",
+    "options": [
+      "Weather forecasting",
+      "Materials discovery and screening",
+      "Protein folding prediction exclusively",
+      "Drug binding affinity exclusively"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 208,
+    "group": 21,
+    "group_name": "Datasets II -- ANI-1x, Open Catalyst, Materials Project, SPICE",
+    "stem": "The SPICE dataset focuses on:",
+    "options": [
+      "Only inorganic crystals",
+      "Only catalytic surfaces",
+      "Only vibrational spectra with no energies",
+      "Drug-like molecules, with a DFT/coupled-cluster mix of reference levels"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 209,
+    "group": 21,
+    "group_name": "Datasets II -- ANI-1x, Open Catalyst, Materials Project, SPICE",
+    "stem": "SPICE is primarily used for:",
+    "options": [
+      "Catalytic surface reactions exclusively",
+      "Materials discovery in inorganic crystals",
+      "Weather prediction",
+      "Force fields for biomolecular simulation"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 210,
+    "group": 21,
+    "group_name": "Datasets II -- ANI-1x, Open Catalyst, Materials Project, SPICE",
+    "stem": "Which dataset among ANI-1x, OC20, Materials Project, and SPICE is most directly relevant to catalysis?",
+    "options": [
+      "SPICE",
+      "Materials Project",
+      "ANI-1x",
+      "Open Catalyst (OC20/OC22)"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 211,
+    "group": 22,
+    "group_name": "The ML era I -- Behler-Parrinello and GAP",
+    "stem": "The Behler-Parrinello neural-network potential was introduced in:",
+    "options": [
+      "2021",
+      "1924",
+      "1984",
+      "2007"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 212,
+    "group": 22,
+    "group_name": "The ML era I -- Behler-Parrinello and GAP",
+    "stem": "Behler-Parrinello potentials encode atomic environments using:",
+    "options": [
+      "A quantum circuit",
+      "Only the total molecular mass",
+      "Hand-encoded, rotation/permutation-invariant 'atom-centered symmetry functions' (ACSFs)",
+      "A raw list of Cartesian coordinates fed directly to the network with no preprocessing"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 213,
+    "group": 22,
+    "group_name": "The ML era I -- Behler-Parrinello and GAP",
+    "stem": "In Behler-Parrinello potentials, who designs the descriptor (ACSF)?",
+    "options": [
+      "The researcher -- it is engineered by hand, not learned",
+      "The neural network learns it end-to-end automatically",
+      "It is derived directly from experimental spectra",
+      "A quantum computer generates it"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 214,
+    "group": 22,
+    "group_name": "The ML era I -- Behler-Parrinello and GAP",
+    "stem": "After computing ACSFs, what processes them in a Behler-Parrinello model?",
+    "options": [
+      "A per-atom feed-forward neural network",
+      "A classical Lennard-Jones formula only",
+      "A parameter-shift quantum circuit",
+      "A convolutional filter over images"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 215,
+    "group": 22,
+    "group_name": "The ML era I -- Behler-Parrinello and GAP",
+    "stem": "Gaussian Approximation Potentials (GAP) were introduced by Bartok et al. in:",
+    "options": [
+      "2022",
+      "2010",
+      "2007",
+      "1924"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 216,
+    "group": 22,
+    "group_name": "The ML era I -- Behler-Parrinello and GAP",
+    "stem": "GAP is based on which machine-learning technique?",
+    "options": [
+      "Random forests",
+      "Deep convolutional neural networks",
+      "Kernel-based (Gaussian process) regression",
+      "Variational quantum circuits"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 217,
+    "group": 22,
+    "group_name": "The ML era I -- Behler-Parrinello and GAP",
+    "stem": "GAP typically operates on which kind of descriptor?",
+    "options": [
+      "Qubit measurement statistics",
+      "Invariant descriptors such as SOAP",
+      "Stock price time series",
+      "Raw unprocessed pixel images"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 218,
+    "group": 22,
+    "group_name": "The ML era I -- Behler-Parrinello and GAP",
+    "stem": "GAP is described as particularly popular for materials where:",
+    "options": [
+      "Only experimental data is available",
+      "No quantum-chemical reference exists",
+      "Training data is infinite",
+      "Training data is scarce"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 219,
+    "group": 22,
+    "group_name": "The ML era I -- Behler-Parrinello and GAP",
+    "stem": "What do Behler-Parrinello and GAP have in common, contrasted with later deep-learning potentials?",
+    "options": [
+      "Both use exactly the same neural network architecture",
+      "Both were introduced after SchNet",
+      "Neither has ever been used for real materials",
+      "Both rely on hand-crafted (not learned) descriptors of the atomic environment"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 220,
+    "group": 22,
+    "group_name": "The ML era I -- Behler-Parrinello and GAP",
+    "stem": "In the historical timeline of this document, Behler-Parrinello (2007) and GAP (2010) both precede:",
+    "options": [
+      "AMBER (1984)",
+      "The Lennard-Jones potential (1924)",
+      "SchNet (2017) and the equivariant wave (2021-2022)",
+      "The Schrodinger equation itself"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 221,
+    "group": 23,
+    "group_name": "The ML era II -- SchNet to the equivariant wave",
+    "stem": "SchNet, introduced in 2017, was significant as:",
+    "options": [
+      "The first molecular dynamics simulation ever performed",
+      "The first widely-used deep-learning potential in this project's direct baseline lineage",
+      "A purely classical force field with no learning",
+      "A quantum circuit-based model"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 222,
+    "group": 23,
+    "group_name": "The ML era II -- SchNet to the equivariant wave",
+    "stem": "SchNet's core architectural mechanism is:",
+    "options": [
+      "Fixed Lennard-Jones parameters only",
+      "Continuous-filter convolutions over interatomic distances",
+      "Hand-crafted ACSF descriptors with no convolution",
+      "Attention over qubit measurement outcomes"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 223,
+    "group": 23,
+    "group_name": "The ML era II -- SchNet to the equivariant wave",
+    "stem": "Is SchNet invariant or equivariant?",
+    "options": [
+      "Equivariant only under permutation, never rotation",
+      "Purely equivariant, carrying explicit vector channels",
+      "Purely invariant",
+      "Neither -- it has no symmetry properties at all"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 224,
+    "group": 23,
+    "group_name": "The ML era II -- SchNet to the equivariant wave",
+    "stem": "Which model is described as SchNet's 'direct successor', covered in full architectural detail elsewhere in this document?",
+    "options": [
+      "GAP",
+      "Behler-Parrinello",
+      "PaiNN",
+      "siVQLM"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 225,
+    "group": 23,
+    "group_name": "The ML era II -- SchNet to the equivariant wave",
+    "stem": "The 'equivariant wave' of models (2021-2022) includes:",
+    "options": [
+      "Only Behler-Parrinello and GAP",
+      "PaiNN, NequIP, Allegro, and MACE",
+      "Only siVQLM and Kiss et al. 2022",
+      "Only Lennard-Jones and AMBER"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 226,
+    "group": 23,
+    "group_name": "The ML era II -- SchNet to the equivariant wave",
+    "stem": "What did the equivariant wave replace, compared to earlier invariant-only models?",
+    "options": [
+      "All neural networks, replaced with kernel methods",
+      "Newton's laws, replaced with quantum mechanics",
+      "DFT itself, replaced with experiments",
+      "Hand-crafted invariant descriptors, replaced with learned, geometry-respecting vector/tensor features"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 227,
+    "group": 23,
+    "group_name": "The ML era II -- SchNet to the equivariant wave",
+    "stem": "What is claimed as the practical benefit of the equivariant wave models?",
+    "options": [
+      "Closing most of the accuracy gap to DFT at a fraction of the computational cost",
+      "Removing the need for the Born-Oppenheimer approximation",
+      "Making DFT completely obsolete and unnecessary",
+      "Eliminating the need for any training data"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 228,
+    "group": 23,
+    "group_name": "The ML era II -- SchNet to the equivariant wave",
+    "stem": "According to this document's stated 'throughline', what does each ML generation remove?",
+    "options": [
+      "One more hand-engineered assumption (functional form of $U$, then the descriptor, then the invariant-only restriction)",
+      "The requirement of using a computer at all",
+      "All physical laws, replaced entirely by data",
+      "The need for any atoms in the simulation"
+    ],
+    "correct_index": 0
+  },
+  {
+    "id": 229,
+    "group": 23,
+    "group_name": "The ML era II -- SchNet to the equivariant wave",
+    "stem": "Where in this document is the equivariant wave (PaiNN, NequIP, MACE) compared in detail?",
+    "options": [
+      "Nowhere -- they are only mentioned in Section 1",
+      "Section 3 (PaiNN architecture) and the project's Literature Review",
+      "Only in the MCQ exam file",
+      "Only in the siVQLM circuit diagram"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 230,
+    "group": 23,
+    "group_name": "The ML era II -- SchNet to the equivariant wave",
+    "stem": "Today's classical state-of-the-art machine-learned force fields, per this document, are:",
+    "options": [
+      "AMBER and CHARMM",
+      "The equivariant-wave models (PaiNN, NequIP, Allegro, MACE)",
+      "Lennard-Jones-only models",
+      "Behler-Parrinello potentials"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 231,
+    "group": 24,
+    "group_name": "The quantum-computing frontier: VQE vs QML force fields, encoding",
+    "stem": "Quantum computing enters computational chemistry through how many conceptually different 'doors', per this document?",
+    "options": [
+      "Zero",
+      "One",
+      "Five",
+      "Two"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 232,
+    "group": 24,
+    "group_name": "The quantum-computing frontier: VQE vs QML force fields, encoding",
+    "stem": "VQE (Variational Quantum Eigensolver) was introduced by Peruzzo et al. in:",
+    "options": [
+      "2022",
+      "2007",
+      "1924",
+      "2014"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 233,
+    "group": 24,
+    "group_name": "The quantum-computing frontier: VQE vs QML force fields, encoding",
+    "stem": "VQE targets which problem directly?",
+    "options": [
+      "Classical molecular dynamics integration",
+      "Weather forecasting",
+      "Protein sequence alignment",
+      "The electronic structure problem itself"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 234,
+    "group": 24,
+    "group_name": "The quantum-computing frontier: VQE vs QML force fields, encoding",
+    "stem": "In VQE, the molecular electronic Hamiltonian is mapped from fermionic operators to qubit operators via:",
+    "options": [
+      "A classical force field parametrization",
+      "The Fourier transform only",
+      "The Born-Oppenheimer approximation",
+      "The Jordan-Wigner or Bravyi-Kitaev transformation"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 235,
+    "group": 24,
+    "group_name": "The quantum-computing frontier: VQE vs QML force fields, encoding",
+    "stem": "In VQE, what does the parametrized quantum circuit do?",
+    "options": [
+      "Replaces the need for any Hamiltonian",
+      "Prepares a trial wavefunction whose energy is variationally minimized",
+      "Directly simulates Newton's equations of motion",
+      "Stores classical MD trajectories only"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 236,
+    "group": 24,
+    "group_name": "The quantum-computing frontier: VQE vs QML force fields, encoding",
+    "stem": "VQE is described as directly replacing which classical methods, as the electronic-structure solver?",
+    "options": [
+      "Only experimental spectroscopy",
+      "Hartree-Fock/DFT/CCSD(T)",
+      "Only classical force fields like AMBER",
+      "Only Newtonian mechanics"
+    ],
+    "correct_index": 1
+  },
+  {
+    "id": 237,
+    "group": 24,
+    "group_name": "The quantum-computing frontier: VQE vs QML force fields, encoding",
+    "stem": "What is VQE's long-term motivating hope?",
+    "options": [
+      "That VQE eliminates the need for any qubits",
+      "That VQE will replace Newton's second law for all classical MD",
+      "That VQE only works for the hydrogen atom",
+      "That a fault-tolerant quantum computer could reach CCSD(T)-or-better accuracy at polynomial rather than exponential cost for strongly-correlated systems"
+    ],
+    "correct_index": 3
+  },
+  {
+    "id": 238,
+    "group": 24,
+    "group_name": "The quantum-computing frontier: VQE vs QML force fields, encoding",
+    "stem": "In contrast to VQE, what do QML force fields (Kiss et al. 2022, siVQLM) attempt to do?",
+    "options": [
+      "They replace DFT as the electronic-structure solver",
+      "They are identical to VQE in every respect",
+      "They do NOT attempt to solve the electronic structure problem on the quantum computer at all",
+      "They solve the exact many-electron Schrodinger equation on a quantum computer"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 239,
+    "group": 24,
+    "group_name": "The quantum-computing frontier: VQE vs QML force fields, encoding",
+    "stem": "In QML force fields, what role does the variational quantum circuit play?",
+    "options": [
+      "An electronic-structure solver replacing CCSD(T)",
+      "A classical force field with fixed parameters",
+      "A flexible, trainable function approximator $f_\\Theta: \\mathcal X \\to \\mathbb R$ mapping nuclear coordinates to predicted energy",
+      "A random number generator with no training"
+    ],
+    "correct_index": 2
+  },
+  {
+    "id": 240,
+    "group": 24,
+    "group_name": "The quantum-computing frontier: VQE vs QML force fields, encoding",
+    "stem": "What is 'encoded' into the quantum circuit in a QML force field (siVQLM), as clarified in this document?",
+    "options": [
+      "Classical geometric/nuclear coordinate data, not the electronic wavefunction",
+      "Nothing -- QML force fields require no encoding",
+      "The full electronic wavefunction, exactly as in VQE",
+      "Experimental spectroscopy data directly"
+    ],
+    "correct_index": 0
   }
 ]

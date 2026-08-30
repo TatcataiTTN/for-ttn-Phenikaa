@@ -36,12 +36,41 @@ function groupBy(questions) {
   return map;
 }
 
+function renderQuizSummary() {
+  const bar = document.getElementById("quiz-summary");
+  if (!bar) return;
+  const groups = groupBy(QUESTIONS);
+  let totalScore = 0, totalDone = 0;
+  groups.forEach((g, groupId) => {
+    const saved = loadProgress(groupId);
+    if (saved) { totalScore += saved.score; totalDone += 1; }
+  });
+  const totalGroups = groups.size;
+  const lang = CURRENT_LANG;
+  bar.innerHTML = `
+    <span class="summary-chip">${lang === "vi" ? "Nhóm đã làm" : "Groups done"}: ${totalDone}/${totalGroups}</span>
+    <span class="summary-chip">${lang === "vi" ? "Tổng điểm" : "Total score"}: ${totalScore}/${totalDone * 10}</span>
+  `;
+}
+
+const PART_DIVIDERS = {
+  1: { vi: "Phần 1 — Kiến trúc PaiNN & siVQLM (nhóm 1–8)", en: "Part 1 — PaiNN & siVQLM architecture (groups 1–8)" },
+  9: { vi: "Phần 2 — Bối cảnh lịch sử & khoa học (nhóm 9–24)", en: "Part 2 — Historical & scientific context (groups 9–24)" },
+};
+
 function renderQuiz() {
   const container = document.getElementById("quiz-groups");
   container.innerHTML = "";
   const groups = groupBy(QUESTIONS);
 
   groups.forEach((g, groupId) => {
+    if (PART_DIVIDERS[groupId]) {
+      const divider = document.createElement("h2");
+      divider.className = "part-divider";
+      divider.textContent = PART_DIVIDERS[groupId][CURRENT_LANG];
+      container.appendChild(divider);
+    }
+
     const saved = loadProgress(groupId);
     const card = document.createElement("div");
     card.className = "group-card";
@@ -51,7 +80,8 @@ function renderQuiz() {
     const scoreText = saved
       ? `${I18N[CURRENT_LANG].score_label}: ${saved.score}/10`
       : I18N[CURRENT_LANG].not_done;
-    head.innerHTML = `<h3>Nhóm ${groupId} — ${g.name}</h3><span class="group-score">${scoreText}</span>`;
+    const groupLabel = CURRENT_LANG === "vi" ? "Nhóm" : "Group";
+    head.innerHTML = `<h3>${groupLabel} ${groupId} — ${g.name}</h3><span class="group-score">${scoreText}</span>`;
     card.appendChild(head);
 
     const body = document.createElement("div");
@@ -101,6 +131,7 @@ function renderQuiz() {
   if (firstBody) firstBody.classList.add("open");
 
   renderMathIn(container);
+  renderQuizSummary();
 }
 
 function renderMathIn(el) {
@@ -144,6 +175,7 @@ function submitGroup(groupId, items, head) {
   });
   saveProgress(groupId, { score, answers });
   head.querySelector(".group-score").textContent = `${I18N[CURRENT_LANG].score_label}: ${score}/10`;
+  renderQuizSummary();
 }
 
 function resetGroup(groupId, body, head, items) {
@@ -158,6 +190,7 @@ function resetGroup(groupId, body, head, items) {
     });
   });
   head.querySelector(".group-score").textContent = I18N[CURRENT_LANG].not_done;
+  renderQuizSummary();
 }
 
 function escapeHtml(s) {
@@ -197,13 +230,9 @@ function initExercise2() {
 }
 
 window.rerenderDynamicLabels = function () {
-  // re-render quiz score labels + compare table text on language switch
-  document.querySelectorAll(".group-head").forEach(head => {
-    const scoreEl = head.querySelector(".group-score");
-    if (scoreEl && scoreEl.textContent.indexOf("/10") === -1) {
-      scoreEl.textContent = I18N[CURRENT_LANG].not_done;
-    }
-  });
+  // full re-render of quiz (reads saved progress back from localStorage) + timeline on language switch
+  if (QUESTIONS.length) renderQuiz();
+  if (window.renderTimeline) renderTimeline();
 };
 
 // ---------------- Boot ----------------
@@ -221,4 +250,5 @@ document.addEventListener("DOMContentLoaded", async () => {
       `<div class="result-box show bad">Không tải được ngân hàng câu hỏi (data/questions.json): ${err.message}</div>`;
   }
   renderCompareTable();
+  renderTimeline();
 });
