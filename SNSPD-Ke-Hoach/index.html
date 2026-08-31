@@ -1,0 +1,1096 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<title>Kế Hoạch Nghiên Cứu — SNSPD cho Truyền Thông Lượng Tử Vệ Tinh</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;1,300;1,400;1,500&family=Hanken+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+<style>
+  :root {
+    --paper:    #F0EBDE;   /* warm cream / ivory paper canvas */
+    --paper-2:  #E6E0CE;
+    --ink:      #1F2BE0;   /* electric cobalt / royal blue */
+    --ink-soft: #5560E5;   /* lighter cobalt for secondary marks */
+    --grid:     rgba(31, 43, 224, 0.10);  /* very faint blue grid */
+    --rule:     #1F2BE0;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; background: #0a0a0a; }
+  body {
+    font-family: 'Hanken Grotesk', 'Helvetica Neue', sans-serif;
+    color: var(--ink);
+    overflow: hidden;
+  }
+
+  /* Deck wrapper — fills the viewport */
+  .deck { position: fixed; inset: 0; display: grid; place-items: center; }
+  .stage {
+    position: relative;
+    width: 100vw; height: 100vh;
+    overflow: hidden;
+    background: var(--paper);
+  }
+
+  /* Graph-paper grid behind every slide */
+  .stage::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(to right, var(--grid) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+    background-size: clamp(28px, 2.2vw, 44px) clamp(28px, 2.2vw, 44px);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .slide {
+    position: absolute; inset: 0;
+    opacity: 0; pointer-events: none;
+    transition: opacity 280ms ease;
+    z-index: 2;
+  }
+  .slide.active { opacity: 1; pointer-events: auto; }
+
+  /* ─── TYPE SYSTEM ──────────────────────────────────────────── */
+  .disp {
+    font-family: 'Newsreader', Georgia, serif;
+    
+    font-weight: 400;
+    line-height: 0.92;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+  .body-tx {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .micro {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink);
+  }
+  .mono {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-weight: 400;
+    color: var(--ink);
+  }
+
+  /* Single page-number marker, shared across slides.
+     Sits ABOVE the bottom hairline rule, with deliberate space between the
+     two so the chrome elements don't collide on any slide. */
+  .pagenum {
+    position: absolute;
+    right: clamp(28px, 2.4vw, 48px);
+    bottom: clamp(48px, 4.8vh, 76px);
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(11px, 0.82vw, 13px);
+    color: var(--ink);
+    letter-spacing: 0.06em;
+    z-index: 9;
+  }
+
+  /* Top + bottom slim hairlines that frame each slide.
+     Echo of the reference's thin rule above and below the composition. The
+     bottom rule is pinned at the slide's lower edge so the page number,
+     which sits above it, has clear space and never overlaps. */
+  .hairlines::before,
+  .hairlines::after {
+    content: '';
+    position: absolute;
+    left: clamp(36px, 3.6vw, 80px);
+    right: clamp(36px, 3.6vw, 80px);
+    height: 1.5px;
+    background: var(--ink);
+    z-index: 4;
+    pointer-events: none;
+  }
+  .hairlines::before { top: clamp(28px, 2.6vh, 48px); }
+  .hairlines::after  { bottom: clamp(20px, 2vh, 32px); }
+
+  /* Fixed nav hint — sits above the bottom hairline, same vertical level
+     as the page number on the opposite side, so neither overlaps the rule. */
+  .nav-hint {
+    position: fixed;
+    left: clamp(36px, 3.6vw, 80px);
+    bottom: clamp(48px, 4.8vh, 76px);
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(10px, 0.75vw, 12px);
+    color: var(--ink);
+    letter-spacing: 0.08em;
+    opacity: 0.4;
+    z-index: 12;
+    pointer-events: none;
+  }
+
+  /* ─── DECORATIVE: pixel-glitch stair (reusable SVG) ─────────── */
+  /* The SVG below renders a column of stair-stepped rectangles, each
+     filled with vertical scanlines — a direct echo of the reference's
+     "pixelated" shape on the right side. Decorative only, pointer-events
+     disabled, sits behind content. */
+  .pixel-glitch {
+    position: absolute;
+    pointer-events: none;
+    z-index: 3;
+  }
+  .pixel-glitch svg { display: block; width: 100%; height: 100%; }
+
+  /* ─── DECORATIVE: small QR-style block ───────────────────────── */
+  /* The QR is paper-backgrounded so it reads as a discrete patch when it
+     overlaps the pixel-glitch column behind it — without the paper fill,
+     the empty grid cells let the glitch's vertical scanlines bleed
+     through and the QR loses its shape. */
+  .qr-block {
+    position: absolute;
+    pointer-events: none;
+    z-index: 5;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    gap: 1.5px;
+    background: var(--paper);
+    padding: 4px;
+    box-shadow: 0 0 0 1.5px var(--paper);
+  }
+  .qr-block .px { background: var(--paper); }
+  .qr-block .px.on { background: var(--ink); }
+
+  /* ──────────────────────────────────────────────────────────────
+     SLIDE 1 — COVER
+     ────────────────────────────────────────────────────────────── */
+  .s-cover { background: var(--paper); }
+
+  .s-cover .titlewrap {
+    position: absolute;
+    left: clamp(36px, 3.6vw, 80px);
+    top: clamp(80px, 9vh, 160px);
+    z-index: 5;
+    max-width: 60%;
+  }
+  .s-cover .title {
+    font-family: 'Newsreader', Georgia, serif;
+    
+    font-weight: 400;
+    font-size: clamp(100px, min(11vw, 18vh), 200px);
+    line-height: 0.92;
+    letter-spacing: -0.008em;
+    color: var(--ink);
+  }
+  .s-cover .subkicker {
+    margin-top: clamp(20px, 2.2vh, 36px);
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .s-cover .subkicker .l {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: clamp(13px, 1vw, 16px);
+    color: var(--ink);
+  }
+  .s-cover .subkicker .ed {
+    font-family: 'Newsreader', Georgia, serif;
+    
+    font-size: clamp(28px, min(2.8vw, 4.6vh), 50px);
+    line-height: 1.1;
+    color: var(--ink);
+  }
+
+  /* Pixel-glitch column on the right side of the cover */
+  .s-cover .pixel-glitch {
+    top: clamp(60px, 6vh, 120px);
+    right: clamp(36px, 3.6vw, 80px);
+    width: clamp(280px, 32vw, 560px);
+    bottom: clamp(110px, 12vh, 200px);
+  }
+
+  /* QR block top-right */
+  .s-cover .qr-block {
+    top: clamp(60px, 6vh, 120px);
+    right: clamp(120px, 8vw, 200px);
+    width: clamp(58px, 4.2vw, 84px);
+    height: clamp(58px, 4.2vw, 84px);
+  }
+
+  /* Vertical right-side label column (reads as a stack of micro-text,
+     replacing the Korean column in the reference). */
+  .s-cover .vstack {
+    position: absolute;
+    right: clamp(36px, 3.6vw, 60px);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    display: flex; flex-direction: column;
+    gap: clamp(10px, 1.2vh, 18px);
+    align-items: end;
+  }
+  .s-cover .vstack .v-row {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(12px, 0.9vw, 15px);
+    line-height: 1;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  /* Footer row */
+  .s-cover .cfooter {
+    /* Constrained to the left half so it never runs under the right-side
+       pixel-glitch column on any viewport. */
+    position: absolute;
+    left: clamp(36px, 3.6vw, 80px);
+    right: clamp(680px, 40vw, 880px);
+    bottom: clamp(82px, 8vh, 120px);
+    display: flex; justify-content: flex-start; align-items: end;
+    z-index: 5;
+    gap: clamp(28px, 3vw, 56px);
+  }
+  .s-cover .cfooter .colf {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(14px, 0.92vw, 15px);
+    line-height: 1.45;
+    color: var(--ink);
+  }
+  .s-cover .cfooter .colf .ftag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
+    font-size: clamp(11px, 0.78vw, 13px);
+    margin-bottom: 4px;
+    color: var(--ink);
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     SLIDE 2 — MANIFESTO
+     ────────────────────────────────────────────────────────────── */
+  .s-manifesto { background: var(--paper); }
+  .s-manifesto .stmt-wrap {
+    position: absolute;
+    left: clamp(60px, 8vw, 160px);
+    right: clamp(60px, 8vw, 160px);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    text-align: left;
+  }
+  .s-manifesto .stmt {
+    font-family: 'Newsreader', Georgia, serif;
+    
+    font-weight: 400;
+    font-size: clamp(56px, min(6.4vw, 11vh), 120px);
+    line-height: 1.05;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+  .s-manifesto .stmt .roman {
+    font-style: normal;
+    font-weight: 500;
+  }
+  .s-manifesto .attr {
+    margin-top: clamp(28px, 3vh, 50px);
+    display: flex; gap: clamp(14px, 1.4vw, 24px); align-items: center;
+    border-top: 1px solid var(--ink);
+    padding-top: clamp(10px, 1.2vh, 18px);
+  }
+  .s-manifesto .attr .who {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: clamp(12px, 0.85vw, 14px);
+    color: var(--ink);
+  }
+  .s-manifesto .attr .meta-tag {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(12px, 0.82vw, 14px);
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    opacity: 0.78;
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     SLIDE 3 — INDEX (numbered list of trends)
+     ────────────────────────────────────────────────────────────── */
+  .s-index { background: var(--paper); }
+  .s-index .frame {
+    position: absolute;
+    inset: clamp(76px, 8vh, 130px) clamp(36px, 3.6vw, 80px) clamp(100px, 10vh, 150px);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    gap: clamp(20px, 2.2vh, 36px);
+    z-index: 5;
+  }
+  .s-index .topbar {
+    display: flex; align-items: end; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: clamp(12px, 1.4vh, 22px);
+    gap: 30px;
+  }
+  .s-index .topbar .h {
+    font-family: 'Newsreader', Georgia, serif;
+    
+    font-size: clamp(48px, min(5vw, 8.5vh), 100px);
+    line-height: 0.95;
+    color: var(--ink);
+  }
+  .s-index .topbar .lab-tag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
+    font-size: clamp(12px, 0.9vw, 14px);
+    color: var(--ink); text-align: right;
+  }
+  .s-index .list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: clamp(14px, 2vh, 28px) clamp(28px, 3vw, 56px);
+  }
+  .s-index .row { align-self: stretch; }
+  .s-index .row {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: clamp(12px, 1.4vw, 22px);
+    border-bottom: 1px solid rgba(31, 43, 224, 0.18);
+    padding-bottom: clamp(12px, 1.4vh, 20px);
+  }
+  .s-index .row .num-tag {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(13px, 0.9vw, 15px);
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    padding-top: 6px;
+  }
+  .s-index .row h3 {
+    margin: 0 0 6px 0;
+    font-family: 'Newsreader', Georgia, serif;
+    
+    font-weight: 400;
+    font-size: clamp(26px, 2vw, 40px);
+    line-height: 1.05;
+    color: var(--ink);
+  }
+  .s-index .row p {
+    margin: 0;
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(14px, 0.95vw, 15px);
+    line-height: 1.5;
+    color: var(--ink);
+    max-width: 92%;
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     SLIDE 4 — CHAPTER (display + intro on glitch background)
+     ────────────────────────────────────────────────────────────── */
+  .s-chapter { background: var(--paper); }
+  .s-chapter .pixel-glitch {
+    top: clamp(60px, 6vh, 120px);
+    right: clamp(0px, 0vw, 0px);
+    width: clamp(220px, 26vw, 460px);
+    bottom: clamp(110px, 12vh, 200px);
+    opacity: 0.75;
+  }
+  .s-chapter .frame {
+    position: absolute;
+    left: clamp(36px, 3.6vw, 80px);
+    right: clamp(280px, 30vw, 540px);
+    top: clamp(80px, 9vh, 140px);
+    bottom: clamp(110px, 11vh, 170px);
+    display: flex; flex-direction: column;
+    justify-content: center;
+    z-index: 5;
+    gap: clamp(18px, 2vh, 32px);
+  }
+  .s-chapter .nm-tag {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(13px, 0.92vw, 15px);
+    color: var(--ink);
+    letter-spacing: 0.06em;
+  }
+  .s-chapter .ttl {
+    font-family: 'Newsreader', Georgia, serif;
+    
+    font-weight: 400;
+    font-size: clamp(56px, min(6vw, 10vh), 130px);
+    line-height: 1.0;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .s-chapter .lede {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 400;
+    font-size: clamp(15px, 1vw, 18px);
+    line-height: 1.5;
+    color: var(--ink);
+    max-width: 56ch;
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     SLIDE 5 — DATA (vertical pixel-stack bar chart)
+     ────────────────────────────────────────────────────────────── */
+  .s-data { background: var(--paper); }
+  .s-data .frame {
+    position: absolute;
+    inset: clamp(76px, 8vh, 130px) clamp(36px, 3.6vw, 80px) clamp(100px, 10vh, 150px);
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: clamp(20px, 2vh, 36px);
+    z-index: 5;
+  }
+  .s-data .topbar {
+    display: flex; align-items: end; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: clamp(12px, 1.4vh, 22px);
+    gap: 30px;
+  }
+  .s-data .topbar .h {
+    font-family: 'Newsreader', Georgia, serif;
+    
+    font-size: clamp(46px, min(4.8vw, 8.2vh), 92px);
+    line-height: 0.95;
+    color: var(--ink);
+  }
+  .s-data .topbar .lab-tag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
+    font-size: clamp(12px, 0.9vw, 14px);
+    color: var(--ink); text-align: right;
+  }
+  .s-data .body {
+    display: grid;
+    grid-template-columns: 0.8fr 1.6fr;
+    gap: clamp(28px, 3vw, 56px);
+  }
+  .s-data .col-a {
+    display: flex; flex-direction: column; justify-content: center;
+    gap: clamp(20px, 2.4vh, 36px);
+  }
+  .s-data .stat .vbig {
+    font-family: 'Newsreader', Georgia, serif;
+    
+    font-weight: 400;
+    font-size: clamp(110px, min(11vw, 18vh), 240px);
+    line-height: 0.92;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+  }
+  .s-data .stat .lab2 {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: clamp(13px, 0.95vw, 15px);
+    color: var(--ink);
+    margin-top: 6px;
+  }
+  .s-data .stat .desc {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(15px, 1vw, 17px);
+    line-height: 1.5;
+    color: var(--ink);
+    max-width: 30ch;
+    margin-top: 6px;
+  }
+
+  /* The chart itself: a row of vertical "pixel stacks" — each track is
+     a column of small filled cells, with cell count proportional to the
+     value. Visually echoes the reference's pixel-glitch decoration. */
+  .s-data .chart {
+    display: flex; flex-direction: column; justify-content: end;
+    gap: clamp(10px, 1.2vh, 18px);
+  }
+  .s-data .chart .bars {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: clamp(10px, 1vw, 18px);
+    align-items: end;
+    height: 100%;
+    min-height: clamp(280px, 38vh, 540px);
+  }
+  .s-data .chart .stack {
+    display: flex; flex-direction: column-reverse; gap: 3px;
+    height: 100%;
+  }
+  .s-data .chart .stack .cell {
+    flex: 1 1 0;
+    min-height: 6px;
+    background: rgba(31, 43, 224, 0.10);
+  }
+  .s-data .chart .stack .cell.on { background: var(--ink); }
+  .s-data .chart .ticks {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: clamp(10px, 1vw, 18px);
+    border-top: 1.5px solid var(--ink);
+    padding-top: clamp(8px, 1vh, 14px);
+  }
+  .s-data .chart .ticks .ticklab {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(12px, 0.85vw, 14px);
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     SLIDE 6 — QUOTE
+     ────────────────────────────────────────────────────────────── */
+  .s-quote { background: var(--paper); }
+  .s-quote .pixel-glitch {
+    top: clamp(40px, 4vh, 80px);
+    right: clamp(36px, 3.6vw, 80px);
+    width: clamp(160px, 16vw, 280px);
+    bottom: clamp(40px, 4vh, 80px);
+    opacity: 0.6;
+  }
+  .s-quote .qframe {
+    position: absolute;
+    left: clamp(36px, 3.6vw, 80px);
+    right: clamp(220px, 22vw, 380px);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+  }
+  .s-quote .qkicker {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: clamp(12px, 0.9vw, 14px);
+    color: var(--ink);
+    margin-bottom: clamp(16px, 1.8vh, 28px);
+  }
+  .s-quote .qbody {
+    font-family: 'Newsreader', Georgia, serif;
+    
+    font-weight: 400;
+    font-size: clamp(50px, min(5.6vw, 9vh), 110px);
+    line-height: 1.05;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+    max-width: 92%;
+  }
+  .s-quote .qattr {
+    margin-top: clamp(24px, 2.6vh, 40px);
+    display: grid; grid-template-columns: auto 1fr;
+    gap: clamp(14px, 1.4vw, 24px);
+    align-items: end;
+    border-top: 1px solid var(--ink);
+    padding-top: clamp(10px, 1.2vh, 18px);
+  }
+  .s-quote .qattr .who-tag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: clamp(13px, 0.92vw, 15px);
+    color: var(--ink);
+  }
+  .s-quote .qattr .role-meta {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(12px, 0.85vw, 14px);
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    opacity: 0.78;
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     SLIDE 7 — TREND TABLE (dense ledger)
+     ────────────────────────────────────────────────────────────── */
+  .s-table { background: var(--paper); }
+  .s-table .frame {
+    position: absolute;
+    inset: clamp(76px, 8vh, 130px) clamp(36px, 3.6vw, 80px) clamp(100px, 10vh, 150px);
+    display: flex; flex-direction: column;
+    z-index: 5;
+  }
+  .s-table .topbar {
+    display: flex; align-items: end; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: clamp(12px, 1.4vh, 22px);
+    margin-bottom: clamp(14px, 1.6vh, 24px);
+    gap: 30px;
+  }
+  .s-table .topbar .h {
+    font-family: 'Newsreader', Georgia, serif;
+    
+    font-size: clamp(46px, min(4.8vw, 8.2vh), 92px);
+    line-height: 0.95;
+    color: var(--ink);
+  }
+  .s-table .topbar .lab-tag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
+    font-size: clamp(12px, 0.9vw, 14px);
+    color: var(--ink); text-align: right;
+  }
+  .s-table .ledger {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    /* Distribute the rows so they fill the available height.
+       The header row stays at the top, body rows space evenly below. */
+    justify-content: stretch;
+  }
+  .s-table .row {
+    display: grid;
+    grid-template-columns: 76px 0.6fr 1.4fr 0.7fr 0.5fr;
+    gap: clamp(14px, 1.4vw, 28px);
+    align-items: center;
+    padding: 0;
+    flex: 1 1 0;
+    min-height: clamp(46px, 6vh, 80px);
+    border-bottom: 1px solid rgba(31, 43, 224, 0.18);
+  }
+  .s-table .row.headrow {
+    border-bottom: 1.5px solid var(--ink);
+    flex: 0 0 auto;
+    min-height: 0;
+    padding: 8px 0;
+  }
+  .s-table .row.headrow > div {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
+    font-size: clamp(11px, 0.75vw, 12px);
+    color: var(--ink);
+  }
+  .s-table .num-tag {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(13px, 0.95vw, 15px);
+    color: var(--ink);
+    letter-spacing: 0.04em;
+  }
+  .s-table .nm {
+    font-family: 'Newsreader', Georgia, serif;
+    
+    font-size: clamp(20px, 1.6vw, 28px);
+    line-height: 1.15;
+    color: var(--ink);
+  }
+  .s-table .desc {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(14px, 0.95vw, 15px);
+    line-height: 1.4;
+    color: var(--ink);
+  }
+  .s-table .mood-tag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: clamp(13px, 0.92vw, 15px);
+    color: var(--ink);
+  }
+  .s-table .delta-tag {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(13px, 0.92vw, 15px);
+    text-align: right;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+  }
+  .s-table .delta-tag.up::before  { content: '↑ '; }
+  .s-table .delta-tag.down::before { content: '↓ '; opacity: 0.6; }
+  .s-table .delta-tag.flat::before { content: '— '; opacity: 0.6; }
+
+  /* ──────────────────────────────────────────────────────────────
+     SLIDE 8 — COLOPHON / CLOSING
+     ────────────────────────────────────────────────────────────── */
+  .s-colophon { background: var(--paper); }
+  .s-colophon .pixel-glitch {
+    top: clamp(80px, 9vh, 160px);
+    left: clamp(36px, 3.6vw, 80px);
+    width: clamp(220px, 26vw, 460px);
+    bottom: clamp(220px, 22vh, 360px);
+    opacity: 0.75;
+  }
+  .s-colophon .qr-block {
+    top: clamp(80px, 9vh, 160px);
+    right: clamp(36px, 3.6vw, 80px);
+    width: clamp(72px, 5vw, 100px);
+    height: clamp(72px, 5vw, 100px);
+  }
+  .s-colophon .titlewrap {
+    position: absolute;
+    right: clamp(36px, 3.6vw, 80px);
+    top: 28%;
+    z-index: 5;
+    max-width: 56%;
+    text-align: right;
+  }
+  .s-colophon .ktag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: clamp(12px, 0.9vw, 14px);
+    color: var(--ink);
+    margin-bottom: clamp(14px, 1.6vh, 24px);
+  }
+  .s-colophon .ttl {
+    font-family: 'Newsreader', Georgia, serif;
+    
+    font-weight: 400;
+    font-size: clamp(72px, min(8.4vw, 14vh), 180px);
+    line-height: 0.96;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .s-colophon .col-footer {
+    position: absolute;
+    left: clamp(36px, 3.6vw, 80px);
+    right: clamp(36px, 3.6vw, 80px);
+    bottom: clamp(106px, 10.4vh, 160px);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1.2fr;
+    gap: clamp(20px, 2.4vw, 44px);
+    z-index: 5;
+  }
+  .s-colophon .col-footer > div {
+    border-top: 1.5px solid var(--ink);
+    padding-top: clamp(10px, 1.2vh, 16px);
+  }
+  .s-colophon .col-footer .ftag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: clamp(11px, 0.78vw, 13px);
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+  .s-colophon .col-footer .ftxt {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(14px, 0.95vw, 15px);
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  /* ══════════════════════════════════════════════════════════════
+     EXTENSION LAYOUTS — designed within the Cobalt Grid system
+     ══════════════════════════════════════════════════════════════ */
+  .s-ext .frame {
+    position: absolute;
+    inset: clamp(76px, 8vh, 130px) clamp(36px, 3.6vw, 80px) clamp(100px, 10vh, 150px);
+    display: flex; flex-direction: column;
+    z-index: 5;
+  }
+  .s-ext .topbar {
+    display: flex; align-items: end; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: clamp(12px, 1.4vh, 22px);
+    margin-bottom: clamp(18px, 2vh, 30px);
+    gap: 30px; flex: 0 0 auto;
+  }
+  .s-ext .topbar .h {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: clamp(38px, min(4vw, 6.6vh), 76px);
+    line-height: 1.02;
+    color: var(--ink);
+  }
+  .s-ext .topbar .lab-tag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
+    font-size: clamp(12px, 0.9vw, 14px);
+    color: var(--ink); text-align: right; white-space: nowrap;
+  }
+  .kicker {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
+    font-size: clamp(11px, 0.8vw, 13px);
+    color: var(--ink); opacity: 0.72;
+  }
+  .s-formula .body {
+    flex: 1; display: grid; grid-template-rows: auto 1fr; gap: clamp(18px, 2.2vh, 32px);
+    min-height: 0;
+  }
+  .s-formula .eqn-stage {
+    border: 1.5px solid var(--ink);
+    padding: clamp(22px, 3.2vh, 48px) clamp(24px, 3vw, 56px);
+    display: flex; align-items: center; justify-content: center;
+    min-height: clamp(120px, 20vh, 260px);
+    background: var(--paper);
+  }
+  .s-formula .eqn-stage .katex { font-size: clamp(22px, 2.1vw, 40px) !important; color: var(--ink); }
+  .s-formula .eqn-note {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(11px, 0.78vw, 13px);
+    color: var(--ink); opacity: 0.6; text-align: center; margin-top: clamp(10px,1.2vh,16px);
+  }
+  .plain-box { border-top: 1.5px solid var(--ink); padding-top: clamp(14px, 1.6vh, 22px); overflow: auto; }
+  .plain-box .kicker { margin-bottom: clamp(8px, 1vh, 14px); display: block; }
+  .plain-box p {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(14px, 0.98vw, 16px);
+    line-height: 1.55;
+    color: var(--ink);
+    max-width: 100ch;
+  }
+  .plain-box p + p { margin-top: 0.8em; }
+  .plain-box b, .plain-box strong { font-weight: 700; }
+  .plain-box em { font-style: italic; }
+  .s-split .body {
+    flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(30px, 3.6vw, 64px);
+    min-height: 0; align-items: stretch;
+  }
+  .s-split .body.wide-left { grid-template-columns: 1.3fr 1fr; }
+  .s-split .body.wide-right { grid-template-columns: 1fr 1.3fr; }
+  .s-split .col { display: flex; flex-direction: column; justify-content: center; gap: clamp(12px,1.4vh,20px); min-height: 0; }
+  .s-split .col p {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(14px, 1vw, 17px);
+    line-height: 1.55; color: var(--ink); max-width: 52ch;
+  }
+  .s-split .col ul { list-style: none; display: flex; flex-direction: column; gap: clamp(10px,1.2vh,16px); }
+  .s-split .col ul li {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(14px, 1vw, 16px); line-height: 1.5; color: var(--ink);
+    padding-left: 1.4em; position: relative; max-width: 54ch;
+  }
+  .s-split .col ul li::before { content: '—'; position: absolute; left: 0; opacity: 0.7; }
+  .s-split .col h4 {
+    font-family: 'Newsreader', Georgia, serif; font-weight: 400;
+    font-size: clamp(20px, 1.7vw, 28px); color: var(--ink); line-height: 1.15;
+  }
+  .diagram-frame {
+    border: 1.5px solid var(--ink); position: relative;
+    display: flex; align-items: center; justify-content: center;
+    min-height: clamp(220px, 34vh, 460px); background: var(--paper); overflow: hidden;
+  }
+  .diagram-frame svg { width: 100%; height: 100%; display: block; }
+  .diagram-cap {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(11px, 0.75vw, 12px); color: var(--ink); opacity: 0.6;
+    letter-spacing: 0.04em; margin-top: clamp(8px, 1vh, 12px); text-align: center;
+  }
+  .qa-block { border-top: 1px solid rgba(31,43,224,0.35); padding-top: clamp(10px,1.2vh,14px); }
+  .qa-block .q {
+    font-family: 'Newsreader', Georgia, serif; font-style: italic;
+    font-size: clamp(15px, 1.05vw, 18px); color: var(--ink); margin-bottom: 6px;
+  }
+  .qa-block .a {
+    font-family: 'Hanken Grotesk', sans-serif; font-size: clamp(13px, 0.9vw, 15px);
+    color: var(--ink); opacity: 0.72; line-height: 1.5;
+  }
+  /* ── task-list layout: dense numbered rows for 50-task plan ──── */
+  .s-tasklist .frame {
+    position: absolute;
+    inset: clamp(76px, 8vh, 130px) clamp(36px, 3.6vw, 80px) clamp(100px, 10vh, 150px);
+    display: flex; flex-direction: column; z-index: 5;
+  }
+  .s-tasklist .topbar {
+    display: flex; align-items: end; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: clamp(12px, 1.4vh, 22px);
+    margin-bottom: clamp(16px, 1.8vh, 26px); gap: 30px; flex: 0 0 auto;
+  }
+  .s-tasklist .topbar .h {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: clamp(34px, min(3.6vw, 6vh), 68px);
+    line-height: 1.02; color: var(--ink);
+  }
+  .s-tasklist .topbar .lab-tag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
+    font-size: clamp(12px, 0.9vw, 14px); color: var(--ink); text-align: right; white-space: nowrap;
+  }
+  .tasks { display: flex; flex-direction: column; gap: 0; flex: 1; }
+  .tasks .trow {
+    display: grid; grid-template-columns: 52px 1fr;
+    gap: clamp(14px, 1.6vw, 26px); align-items: start;
+    border-bottom: 1px solid rgba(31,43,224,0.18);
+    padding: clamp(9px, 1.1vh, 14px) 0;
+  }
+  .tasks .trow .tnum {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(13px, 0.95vw, 16px); color: var(--ink); letter-spacing: 0.04em; padding-top: 2px;
+  }
+  .tasks .trow .ttxt {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(13.5px, 0.92vw, 15.5px); line-height: 1.42; color: var(--ink);
+  }
+  @keyframes spin90 { 0%,15% { transform: rotate(0deg);} 45%,65% { transform: rotate(90deg);} 95%,100% { transform: rotate(0deg);} }
+  @keyframes floatbob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  @keyframes pulseop { 0%,100% { opacity: 0.25; } 50% { opacity: 1; } }
+  @keyframes blinkbar { 0%,100% { opacity: 1; } 50% { opacity: 0.15; } }
+  .anim-spin { transform-origin: center; transform-box: fill-box; animation: spin90 4s ease-in-out infinite; }
+  .anim-float { animation: floatbob 3.2s ease-in-out infinite; }
+  .anim-pulse { animation: pulseop 2.4s ease-in-out infinite; }
+  .anim-blink { animation: blinkbar 1.6s steps(2) infinite; }
+</style>
+</head>
+<body>
+
+<svg style="display:none" aria-hidden="true">
+  <defs>
+    <pattern id="vstripes" width="3" height="100" patternUnits="userSpaceOnUse">
+      <line x1="0.5" y1="0" x2="0.5" y2="100" stroke="#1F2BE0" stroke-width="1.2" />
+    </pattern>
+  </defs>
+</svg>
+
+<div class="deck">
+  <div class="stage">
+
+    <section class="slide s-cover hairlines active">
+      <div class="titlewrap"><h1 class="title">K&#7871; Ho&#7841;ch<br/>Nghi&#234;n C&#7913;u</h1><div class="subkicker"><div class="l caption">SNSPD &middot; H&#7885;c M&#225;y &middot; Truy&#7873;n Th&#244;ng L&#432;&#7907;ng T&#7917; V&#7879; Tinh</div><div class="ed">50 task, 7 giai &#273;o&#7841;n &mdash; t&#7915; l&#253; thuy&#7871;t &#273;&#7871;n pipeline ML &#273;&#7847;y &#273;&#7911;.</div></div></div><div class="pixel-glitch" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><defs><pattern id="vsY1" width="2.4" height="100" patternUnits="userSpaceOnUse"><line x1="0.5" y1="0" x2="0.5" y2="100" stroke="#1F2BE0" stroke-width="1.0" /></pattern></defs><rect x="36" y="0"  width="38" height="14" fill="url(#vsY1)"/><rect x="22" y="14" width="50" height="12" fill="url(#vsY1)"/><rect x="34" y="26" width="46" height="11" fill="url(#vsY1)"/><rect x="16" y="37" width="60" height="13" fill="url(#vsY1)"/><rect x="28" y="50" width="48" height="11" fill="url(#vsY1)"/><rect x="18" y="61" width="62" height="14" fill="url(#vsY1)"/><rect x="34" y="75" width="44" height="12" fill="url(#vsY1)"/><rect x="22" y="87" width="50" height="13" fill="url(#vsY1)"/></svg></div><div class="vstack"><div class="v-row caption">nbn.nbtin.wsi</div><div class="v-row caption">satellite.qkd</div><div class="v-row caption">50.tasks</div></div><div class="cfooter"><div class="colf"><div class="ftag caption">Bi&#234;n so&#7841;n</div><div>Tr&#432;&#417;ng Tu&#7845;n Nghĩa &middot; MS &#272;&#7873; c&#432;&#417;ng</div></div><div class="colf"><div class="ftag caption">GVHD d&#7921; ki&#7871;n</div><div>TS. Nguy&#7877;n V&#259;n Duy &middot; Khoa KH&amp;KT V&#7853;t li&#7879;u</div></div></div>
+      <div class="pagenum">01 / 24</div>
+    </section>
+    <section class="slide s-manifesto hairlines">
+      <div class="stmt-wrap"><p class="stmt">Thay v&#236; m&#244; ph&#7887;ng &#273;i&#7879;n-nhi&#7879;t t&#7889;n k&#233;m cho t&#7915;ng thi&#7871;t k&#7871;, <span class="roman">h&#7885;c m&#225;y c&#243; th&#7875; d&#7921; &#273;o&#225;n hi&#7879;u su&#7845;t SNSPD trong t&#7913;c th&#7901;i.</span></p><div class="attr"><div class="who caption">C&#226;u h&#7887;i m&#7903; &#273;&#7847;u</div><div class="meta-tag caption">K&#7871; ho&#7841;ch nghi&#234;n c&#7913;u thu&#7847;n d&#7921; &#225;n &middot; 7 giai &#273;o&#7841;n &middot; 50 task</div></div></div>
+      <div class="pagenum">02 / 24</div>
+    </section>
+    <section class="slide s-index hairlines">
+      <div class="frame"><div class="topbar"><div class="h">M&#7909;c ti&#234;u lu&#7853;n v&#259;n.</div><div class="lab-tag caption">4 c&#226;u h&#7887;i nghi&#234;n c&#7913;u</div></div><div class="list"><div class="row"><div class="num-tag caption">01</div><div><h3>&#272;&#7897; ch&#237;nh x&#225;c</h3><p>ML c&#243; d&#7921; &#273;o&#225;n SDE, dark count, jitter t&#7915; v&#7853;t li&#7879;u+h&#236;nh h&#7885;c v&#7899;i sai s&#7889; ch&#7845;p nh&#7853;n &#273;&#432;&#7907;c so v&#7899;i m&#244; ph&#7887;ng tr&#7921;c ti&#7871;p kh&#244;ng?</p></div></div><div class="row"><div class="num-tag caption">02</div><div><h3>T&#7893;ng qu&#225;t ho&#225;</h3><p>M&#244; h&#236;nh c&#243; ho&#7841;t &#273;&#7897;ng t&#7889;t tr&#234;n nhi&#7873;u v&#7853;t li&#7879;u (NbN, NbTiN, WSi) c&#249;ng l&#250;c kh&#244;ng?</p></div></div><div class="row"><div class="num-tag caption">03</div><div><h3>T&#259;ng t&#7889;c</h3><p>M&#7913;c t&#259;ng t&#7889;c th&#7921;c t&#7871; so v&#7899;i m&#244; ph&#7887;ng tr&#7921;c ti&#7871;p l&#7899;n bao nhi&#234;u?</p></div></div><div class="row"><div class="num-tag caption">04</div><div><h3>&#7912;ng d&#7909;ng th&#7853;t</h3><p>Thi&#7871;t k&#7871; t&#7889;i &#432;u c&#243; kh&#7843; thi ch&#7871; t&#7841;o, &#273;&#7889;i chi&#7871;u thi&#7871;t b&#7883; th&#7853;t (NIST 98%, v&#7879; tinh Hao 2024) kh&#244;ng?</p></div></div></div></div>
+      <div class="pagenum">03 / 24</div>
+    </section>
+    <section class="slide s-index hairlines">
+      <div class="frame"><div class="topbar"><div class="h">7 giai &#273;o&#7841;n, 50 task.</div><div class="lab-tag caption">L&#7897; tr&#236;nh t&#7893;ng quan</div></div><div class="list"><div class="row"><div class="num-tag caption">1</div><div><h3>N&#7873;n t&#7843;ng l&#253; thuy&#7871;t & h&#7841; t&#7847;ng</h3><p>10 task &mdash; &#273;&#7885;c paper, d&#7921;ng l&#7841;i c&#244;ng th&#7913;c, thi&#7871;t l&#7853;p code + unit test.</p></div></div><div class="row"><div class="num-tag caption">2</div><div><h3>B&#7853;c 1: Tc t&#7915; th&#224;nh ph&#7847;n</h3><p>6 task &mdash; t&#225;i l&#7853;p benchmark Stanev et al. 2018.</p></div></div><div class="row"><div class="num-tag caption">3</div><div><h3>B&#7853;c 2: M&#224;ng m&#7887;ng</h3><p>6 task &mdash; Tc/Jc theo &#273;&#7897; d&#224;y & v&#244; tr&#7853;t t&#7921;.</p></div></div><div class="row"><div class="num-tag caption">4</div><div><h3>B&#7853;c 3: D&#226;y nano l&#253; t&#432;&#7903;ng ho&#225;</h3><p>10 task &mdash; m&#244; h&#236;nh hotspot t&#7921; vi&#7871;t + ML &#273;&#7847;u ti&#234;n.</p></div></div><div class="row"><div class="num-tag caption">5</div><div><h3>B&#7853;c 4: Thi&#7871;t b&#7883; SNSPD th&#7853;t</h3><p>10 task &mdash; k&#7871;t h&#7907;p TMM+hotspot, GNN cu&#7889;i c&#249;ng &mdash; k&#7871;t qu&#7843; ch&#237;nh.</p></div></div><div class="row"><div class="num-tag caption">6</div><div><h3>&#7912;ng d&#7909;ng v&#7879; tinh & m&#7903; r&#7897;ng</h3><p>4 task &mdash; &#273;&#7889;i chi&#7871;u thi&#7871;t b&#7883; th&#7853;t, h&#432;&#7899;ng Josephson.</p></div></div><div class="row"><div class="num-tag caption">7</div><div><h3>T&#7893;ng h&#7907;p & c&#244;ng b&#7889;</h3><p>4 task &mdash; b&#224;i b&#225;o, repo, b&#225;o c&#225;o t&#7893;ng k&#7871;t.</p></div></div></div></div>
+      <div class="pagenum">04 / 24</div>
+    </section>
+    <section class="slide s-chapter hairlines">
+      <div class="pixel-glitch" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><defs><pattern id="vsY2" width="2.4" height="100" patternUnits="userSpaceOnUse"><line x1="0.5" y1="0" x2="0.5" y2="100" stroke="#1F2BE0" stroke-width="1.0" /></pattern></defs><rect x="36" y="0"  width="38" height="14" fill="url(#vsY2)"/><rect x="22" y="14" width="50" height="12" fill="url(#vsY2)"/><rect x="34" y="26" width="46" height="11" fill="url(#vsY2)"/><rect x="16" y="37" width="60" height="13" fill="url(#vsY2)"/><rect x="28" y="50" width="48" height="11" fill="url(#vsY2)"/><rect x="18" y="61" width="62" height="14" fill="url(#vsY2)"/><rect x="34" y="75" width="44" height="12" fill="url(#vsY2)"/><rect x="22" y="87" width="50" height="13" fill="url(#vsY2)"/></svg></div><div class="frame"><div class="nm-tag caption">Giai &#273;o&#7841;n 1 &middot; 10 task</div><h2 class="ttl">N&#7873;n t&#7843;ng l&#253; thuy&#7871;t & h&#7841; t&#7847;ng k&#7929; thu&#7853;t.</h2><p class="lede">Kh&#244;ng vi&#7871;t d&#242;ng code n&#224;o tr&#432;&#7899;c khi hi&#7875;u v&#224; ki&#7875;m ch&#7913;ng &#273;&#432;&#7907;c ngu&#7891;n g&#7889;c v&#7853;t l&#253; &mdash; b&#224;i h&#7885;c t&#7915; l&#7895;i "code sai v&#7853;t l&#253;" &#7903; d&#7921; &#225;n tr&#432;&#7899;c.</p></div>
+      <div class="pagenum">05 / 24</div>
+    </section>
+    <section class="slide s-tasklist s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Task 1&ndash;10.</div><div class="lab-tag caption">Giai &#273;o&#7841;n 1</div></div><div class="tasks"><div class="trow"><div class="tnum">01</div><div class="ttxt">&#272;&#7885;c + ghi ch&#250; 4 paper c&#7889;t l&#245;i &#273;&#227; t&#7843;i (Stanev 2018, Grosso 2017, Hao 2024, Bistritzer 2011) v&#224;o <code>Reading_Notes/</code>.</div></div><div class="trow"><div class="tnum">02</div><div class="ttxt">&#272;&#7885;c + ghi ch&#250; 3 paper arXiv &#273;&#227; t&#7843;i (vortex mechanism, NbN design, satellite system).</div></div><div class="trow"><div class="tnum">03</div><div class="ttxt">Xin b&#7843;n &#273;&#7847;y &#273;&#7911; 3 paper b&#7883; ch&#7863;n t&#7843;i t&#7921; &#273;&#7897;ng (Gol&#8217;tsman 2001, Esmaeil Zadeh 2021, Tripathy 2024) qua th&#432; vi&#7879;n.</div></div><div class="trow"><div class="tnum">04</div><div class="ttxt">&#212;n t&#7853;p l&#253; thuy&#7871;t BCS si&#234;u d&#7851;n c&#417; b&#7843;n.</div></div><div class="trow"><div class="tnum">05</div><div class="ttxt">T&#7921; suy l&#7841;i b&#7857;ng tay ph&#432;&#417;ng tr&#236;nh m&#244; h&#236;nh hotspot t&#7915; paper g&#7889;c.</div></div><div class="trow"><div class="tnum">06</div><div class="ttxt">Vi&#7871;t Literature Review ch&#237;nh th&#7913;c, &#273;&#7847;y &#273;&#7911; cho &#273;&#7873; c&#432;&#417;ng.</div></div><div class="trow"><div class="tnum">07</div><div class="ttxt">Thi&#7871;t l&#7853;p m&#244;i tr&#432;&#7901;ng t&#237;nh to&#225;n (Python/SciPy/JAX), t&#225;i c&#7845;u tr&#250;c th&#432; m&#7909;c d&#7921; &#225;n.</div></div><div class="trow"><div class="tnum">08</div><div class="ttxt">Kh&#7843;o s&#225;t + li&#7879;t k&#234; ngu&#7891;n d&#7919; li&#7879;u c&#244;ng khai v&#224;o <code>Datasets_and_Resources.md</code>.</div></div><div class="trow"><div class="tnum">09</div><div class="ttxt">Thi&#7871;t k&#7871; ki&#7871;n tr&#250;c code: t&#225;ch physics engine / ML model / evaluation.</div></div><div class="trow"><div class="tnum">10</div><div class="ttxt">Vi&#7871;t unit test cho t&#7915;ng c&#244;ng th&#7913;c v&#7853;t l&#253; tr&#432;&#7899;c khi d&#249;ng sinh d&#7919; li&#7879;u &mdash; <b>b&#7855;t bu&#7897;c</b>.</div></div></div></div>
+      <div class="pagenum">06 / 24</div>
+    </section>
+    <section class="slide s-chapter hairlines">
+      <div class="pixel-glitch" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><defs><pattern id="vsY3" width="2.4" height="100" patternUnits="userSpaceOnUse"><line x1="0.5" y1="0" x2="0.5" y2="100" stroke="#1F2BE0" stroke-width="1.0" /></pattern></defs><rect x="36" y="0"  width="38" height="14" fill="url(#vsY3)"/><rect x="22" y="14" width="50" height="12" fill="url(#vsY3)"/><rect x="34" y="26" width="46" height="11" fill="url(#vsY3)"/><rect x="16" y="37" width="60" height="13" fill="url(#vsY3)"/><rect x="28" y="50" width="48" height="11" fill="url(#vsY3)"/><rect x="18" y="61" width="62" height="14" fill="url(#vsY3)"/><rect x="34" y="75" width="44" height="12" fill="url(#vsY3)"/><rect x="22" y="87" width="50" height="13" fill="url(#vsY3)"/></svg></div><div class="frame"><div class="nm-tag caption">Giai &#273;o&#7841;n 2&ndash;3 &middot; 12 task</div><h2 class="ttl">B&#7853;c thang d&#7877;: Tc t&#7915; th&#224;nh ph&#7847;n & m&#224;ng m&#7887;ng.</h2><p class="lede">Ki&#7875;m tra to&#224;n b&#7897; pipeline code &#273;&#250;ng b&#7857;ng c&#225;ch t&#225;i l&#7853;p benchmark &#273;&#227; c&#244;ng b&#7889; tr&#432;&#7899;c khi t&#7921; sinh d&#7919; li&#7879;u m&#7899;i.</p></div>
+      <div class="pagenum">07 / 24</div>
+    </section>
+    <section class="slide s-tasklist s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Tc t&#7915; th&#224;nh ph&#7847;n ho&#225; h&#7885;c &mdash; Task 11&ndash;16.</div><div class="lab-tag caption">Giai &#273;o&#7841;n 2 &middot; B&#7853;c 1</div></div><div class="tasks"><div class="trow"><div class="tnum">11</div><div class="ttxt">T&#7843;i + l&#224;m s&#7841;ch b&#7897; d&#7919; li&#7879;u SuperCon.</div></div><div class="trow"><div class="tnum">12</div><div class="ttxt">T&#225;i l&#7853;p feature engineering c&#7911;a Stanev et al.</div></div><div class="trow"><div class="tnum">13</div><div class="ttxt">C&#224;i &#273;&#7863;t + hu&#7845;n luy&#7879;n baseline regressor.</div></div><div class="trow"><div class="tnum">14</div><div class="ttxt">Ki&#7875;m ch&#7913;ng &#273;&#7897; ch&#237;nh x&#225;c &#8776;92% nh&#432; &#273;&#227; c&#244;ng b&#7889;.</div></div><div class="trow"><div class="tnum">15</div><div class="ttxt">Ph&#226;n t&#237;ch feature importance, &#273;&#7889;i chi&#7871;u hi&#7875;u bi&#7871;t v&#7853;t l&#253;.</div></div><div class="trow"><div class="tnum">16</div><div class="ttxt">Vi&#7871;t b&#225;o c&#225;o Milestone 1.</div></div></div></div>
+      <div class="pagenum">08 / 24</div>
+    </section>
+    <section class="slide s-tasklist s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">M&#224;ng m&#7887;ng Tc/Jc &mdash; Task 17&ndash;22.</div><div class="lab-tag caption">Giai &#273;o&#7841;n 3 &middot; B&#7853;c 2</div></div><div class="tasks"><div class="trow"><div class="tnum">17</div><div class="ttxt">Thu th&#7853;p s&#7889; li&#7879;u literature cho NbN/NbTiN/WSi (Tripathy 2024 + review).</div></div><div class="trow"><div class="tnum">18</div><div class="ttxt">C&#224;i &#273;&#7863;t c&#244;ng th&#7913;c BCS hi&#7879;u ch&#7881;nh v&#244; tr&#7853;t t&#7921; (Finkel&#8217;stein-type).</div></div><div class="trow"><div class="tnum">19</div><div class="ttxt">T&#7893;ng h&#7907;p b&#7897; d&#7919; li&#7879;u nh&#7887; (~50&ndash;200 &#273;i&#7875;m), g&#7855;n ngu&#7891;n tr&#237;ch d&#7851;n r&#245; r&#224;ng.</div></div><div class="trow"><div class="tnum">20</div><div class="ttxt">Hu&#7845;n luy&#7879;n m&#244; h&#236;nh B&#7853;c 2, so s&#225;nh v&#7899;i c&#244;ng th&#7913;c b&#225;n-gi&#7843;i t&#237;ch.</div></div><div class="trow"><div class="tnum">21</div><div class="ttxt">&#272;&#225;nh gi&#225; &#273;&#7897; kh&#7899;p, x&#225;c &#273;&#7883;nh gi&#7899;i h&#7841;n ngo&#7841;i suy.</div></div><div class="trow"><div class="tnum">22</div><div class="ttxt">Vi&#7871;t b&#225;o c&#225;o Milestone 2.</div></div></div></div>
+      <div class="pagenum">09 / 24</div>
+    </section>
+    <section class="slide s-chapter hairlines">
+      <div class="pixel-glitch" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><defs><pattern id="vsY4" width="2.4" height="100" patternUnits="userSpaceOnUse"><line x1="0.5" y1="0" x2="0.5" y2="100" stroke="#1F2BE0" stroke-width="1.0" /></pattern></defs><rect x="36" y="0"  width="38" height="14" fill="url(#vsY4)"/><rect x="22" y="14" width="50" height="12" fill="url(#vsY4)"/><rect x="34" y="26" width="46" height="11" fill="url(#vsY4)"/><rect x="16" y="37" width="60" height="13" fill="url(#vsY4)"/><rect x="28" y="50" width="48" height="11" fill="url(#vsY4)"/><rect x="18" y="61" width="62" height="14" fill="url(#vsY4)"/><rect x="34" y="75" width="44" height="12" fill="url(#vsY4)"/><rect x="22" y="87" width="50" height="13" fill="url(#vsY4)"/></svg></div><div class="frame"><div class="nm-tag caption">Giai &#273;o&#7841;n 4 &middot; 10 task</div><h2 class="ttl">B&#7853;c 3: D&#226;y nano l&#253; t&#432;&#7903;ng ho&#225; &mdash; m&#244; h&#236;nh hotspot.</h2><p class="lede">L&#245;i lu&#7853;n v&#259;n ph&#7847;n 1. T&#7921; vi&#7871;t m&#244; h&#236;nh v&#7853;t l&#253; l&#224;m ngu&#7891;n sinh d&#7919; li&#7879;u &mdash; kh&#244;ng ph&#7909; thu&#7897;c lab.</p></div>
+      <div class="pagenum">10 / 24</div>
+    </section>
+    <section class="slide s-split s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Photon ph&#225; c&#7863;p Cooper &#8594; xung &#273;i&#7879;n &#225;p.</div><div class="lab-tag caption">4.1 &middot; c&#417; ch&#7871;</div></div><div class="body wide-left"><div class="col"><p>M&#244; h&#236;nh hotspot (Gol&#8217;tsman et al. 2001): photon h&#7845;p th&#7909; ph&#225; v&#7905; h&#224;ng tr&#259;m c&#7863;p Cooper, t&#7841;o v&#249;ng &#273;i&#7879;n tr&#7903; c&#7909;c b&#7897;. D&#242;ng si&#234;u d&#7851;n b&#7883; d&#7891;n xung quanh, v&#432;&#7907;t d&#242;ng t&#7899;i h&#7841;n &#8594; mi&#7873;n th&#432;&#7901;ng b&#7855;c ngang d&#226;y &#8594; xung &#273;i&#7879;n &#225;p &#273;o &#273;&#432;&#7907;c.</p><p>&#272;&#226;y l&#224; ph&#432;&#417;ng tr&#236;nh vi ph&#226;n &#273;i&#7879;n-nhi&#7879;t &#273;&#227; ki&#7875;m ch&#7913;ng >20 n&#259;m &mdash; d&#249;ng l&#224;m "ground truth" sinh d&#7919; li&#7879;u t&#7893;ng h&#7907;p, gi&#7889;ng c&#225;ch m&#244; h&#236;nh Bistritzer&ndash;MacDonald t&#7915;ng d&#249;ng cho TBG.</p></div><div class="col"><div class="diagram-frame"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><line x1="8" y1="70" x2="92" y2="70" stroke="#1F2BE0" stroke-width="2"/><circle cx="50" cy="70" r="6" fill="#1F2BE0" class="anim-pulse"/><circle cx="50" cy="70" r="12" fill="none" stroke="#1F2BE0" stroke-width="1.4" stroke-dasharray="2,2" class="anim-pulse"/><line x1="50" y1="58" x2="50" y2="20" stroke="rgba(31,43,224,0.18)" stroke-width="1.4" stroke-dasharray="2,2"/><circle cx="50" cy="20" r="4" fill="#1F2BE0"/><text x="50" y="12" text-anchor="middle" font-size="6" fill="#1F2BE0" font-family="Hanken Grotesk">photon</text><text x="50" y="88" text-anchor="middle" font-size="6" fill="#1F2BE0" font-family="DM Mono, monospace">hotspot</text><text x="15" y="66" text-anchor="middle" font-size="5.5" fill="#1F2BE0" font-family="DM Mono, monospace">I_bias</text><text x="85" y="66" text-anchor="middle" font-size="5.5" fill="#1F2BE0" font-family="DM Mono, monospace">V(t)</text></svg></div><div class="diagram-cap">photon ph&#225; c&#7863;p Cooper &#8594; hotspot &#8594; xung &#273;i&#7879;n &#225;p</div></div></div></div>
+      <div class="pagenum">11 / 24</div>
+    </section>
+    <section class="slide s-tasklist s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Task 23&ndash;27.</div><div class="lab-tag caption">Giai &#273;o&#7841;n 4 &middot; ph&#7847;n 1</div></div><div class="tasks"><div class="trow"><div class="tnum">23</div><div class="ttxt">Nghi&#234;n c&#7913;u s&#226;u ph&#432;&#417;ng tr&#236;nh vi ph&#226;n &#273;i&#7879;n-nhi&#7879;t c&#7911;a m&#244; h&#236;nh hotspot.</div></div><div class="trow"><div class="tnum">24</div><div class="ttxt">C&#224;i &#273;&#7863;t m&#244; h&#236;nh b&#7857;ng Python (gi&#7843;i ODE v&#7899;i SciPy/JAX).</div></div><div class="trow"><div class="tnum">25</div><div class="ttxt">Ki&#7875;m tra th&#7913; nguy&#234;n/&#273;&#417;n v&#7883; & gi&#7899;i h&#7841;n v&#7853;t l&#253; tr&#432;&#7899;c khi tin k&#7871;t qu&#7843;.</div></div><div class="trow"><div class="tnum">26</div><div class="ttxt">Ki&#7875;m ch&#7913;ng so v&#7899;i &#273;&#432;&#7901;ng cong &#273;&#227; c&#244;ng b&#7889; (Wang et al., arXiv:1612.02840).</div></div><div class="trow"><div class="tnum">27</div><div class="ttxt">Thi&#7871;t k&#7871; kh&#244;ng gian tham s&#7889; c&#7847;n qu&#233;t (b&#7873; r&#7897;ng, &#273;&#7897; d&#224;y, d&#242;ng ph&#226;n c&#7921;c, v&#7853;t li&#7879;u).</div></div></div></div>
+      <div class="pagenum">12 / 24</div>
+    </section>
+    <section class="slide s-tasklist s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Task 28&ndash;32.</div><div class="lab-tag caption">Giai &#273;o&#7841;n 4 &middot; ph&#7847;n 2</div></div><div class="tasks"><div class="trow"><div class="tnum">28</div><div class="ttxt">Sinh b&#7897; d&#7919; li&#7879;u t&#7893;ng h&#7907;p quy m&#244; l&#7899;n (m&#7909;c ti&#234;u v&#224;i ngh&#236;n m&#7851;u).</div></div><div class="trow"><div class="tnum">29</div><div class="ttxt">Thi&#7871;t k&#7871; ki&#7871;n tr&#250;c ML ph&#249; h&#7907;p (regressor vs. GNN).</div></div><div class="trow"><div class="tnum">30</div><div class="ttxt">Hu&#7845;n luy&#7879;n m&#244; h&#236;nh ML B&#7853;c 3, tinh ch&#7881;nh hyperparameter.</div></div><div class="trow"><div class="tnum">31</div><div class="ttxt">&#272;&#225;nh gi&#225;: &#273;&#7897; ch&#237;nh x&#225;c, t&#7889;c &#273;&#7897; so v&#7899;i gi&#7843;i ODE tr&#7921;c ti&#7871;p, kh&#7843; n&#259;ng t&#7893;ng qu&#225;t ho&#225;.</div></div><div class="trow"><div class="tnum">32</div><div class="ttxt">Vi&#7871;t b&#225;o c&#225;o Milestone 3 (d&#249;ng cho b&#225;o c&#225;o gi&#7919;a k&#7923;).</div></div></div></div>
+      <div class="pagenum">13 / 24</div>
+    </section>
+    <section class="slide s-chapter hairlines">
+      <div class="pixel-glitch" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><defs><pattern id="vsY5" width="2.4" height="100" patternUnits="userSpaceOnUse"><line x1="0.5" y1="0" x2="0.5" y2="100" stroke="#1F2BE0" stroke-width="1.0" /></pattern></defs><rect x="36" y="0"  width="38" height="14" fill="url(#vsY5)"/><rect x="22" y="14" width="50" height="12" fill="url(#vsY5)"/><rect x="34" y="26" width="46" height="11" fill="url(#vsY5)"/><rect x="16" y="37" width="60" height="13" fill="url(#vsY5)"/><rect x="28" y="50" width="48" height="11" fill="url(#vsY5)"/><rect x="18" y="61" width="62" height="14" fill="url(#vsY5)"/><rect x="34" y="75" width="44" height="12" fill="url(#vsY5)"/><rect x="22" y="87" width="50" height="13" fill="url(#vsY5)"/></svg></div><div class="frame"><div class="nm-tag caption">Giai &#273;o&#7841;n 5 &middot; 10 task</div><h2 class="ttl">B&#7853;c 4: Thi&#7871;t b&#7883; SNSPD th&#7853;t &mdash; target ch&#237;nh.</h2><p class="lede">L&#245;i lu&#7853;n v&#259;n ph&#7847;n 2. K&#7871;t h&#7907;p quang h&#7885;c (TMM) + &#273;i&#7879;n-nhi&#7879;t (hotspot) th&#224;nh pipeline th&#7889;ng nh&#7845;t.</p></div>
+      <div class="pagenum">14 / 24</div>
+    </section>
+    <section class="slide s-split s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">T&#7915; h&#236;nh h&#7885;c &#273;&#7871;n hi&#7879;u su&#7845;t d&#7921; &#273;o&#225;n.</div><div class="lab-tag caption">5.1 &middot; pipeline</div></div><div class="body wide-left"><div class="col"><p>Input: v&#7853;t li&#7879;u (NbN/NbTiN/WSi) + h&#236;nh h&#7885;c d&#226;y (b&#7873; r&#7897;ng, &#273;&#7897; d&#224;y, meander) + c&#7845;u tr&#250;c cavity quang. M&#244; h&#236;nh GNN h&#7885;c tr&#7921;c ti&#7871;p t&#7915; h&#236;nh h&#7885;c, gi&#7889;ng h&#7879;t c&#225;ch PaiNN h&#7885;c t&#7915; t&#7885;a &#273;&#7897; ph&#226;n t&#7917;.</p><p>Ground truth &#273;&#7875; train: k&#7871;t h&#7907;p transfer-matrix method (h&#7845;p th&#7909; quang trong cavity) + m&#244; h&#236;nh hotspot (ph&#225;t hi&#7879;n photon) &mdash; c&#7843; hai &#273;&#7873;u l&#224; l&#253; thuy&#7871;t &#273;&#227; ki&#7875;m ch&#7913;ng, kh&#244;ng c&#7847;n &#273;o lab.</p></div><div class="col"><div class="diagram-frame"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><rect x="4" y="44" width="26" height="16" fill="none" stroke="#1F2BE0" stroke-width="2"/><rect x="37" y="44" width="26" height="16" fill="none" stroke="#1F2BE0" stroke-width="2.4"/><rect x="70" y="44" width="26" height="16" fill="none" stroke="#1F2BE0" stroke-width="2"/><text x="17" y="51" text-anchor="middle" font-size="3.6" fill="#1F2BE0" font-family="Hanken Grotesk">v&#7853;t li&#7879;u</text><text x="17" y="57" text-anchor="middle" font-size="3.6" fill="#1F2BE0" font-family="Hanken Grotesk">+ h&#236;nh h&#7885;c</text><text x="50" y="54" text-anchor="middle" font-size="6" fill="#1F2BE0" font-family="DM Mono, monospace">GNN</text><text x="83" y="51" text-anchor="middle" font-size="3.6" fill="#1F2BE0" font-family="Hanken Grotesk">SDE,</text><text x="83" y="57" text-anchor="middle" font-size="3.6" fill="#1F2BE0" font-family="Hanken Grotesk">DCR</text><line x1="30" y1="52" x2="36" y2="52" stroke="#1F2BE0" stroke-width="1.6" marker-end="url(#ph1)"/><line x1="63" y1="52" x2="69" y2="52" stroke="#1F2BE0" stroke-width="1.6" marker-end="url(#ph1)"/><defs><marker id="ph1" markerWidth="4" markerHeight="4" markerUnits="userSpaceOnUse" refX="2" refY="2" orient="auto"><path d="M0,0 L4,2 L0,4 Z" fill="#1F2BE0"/></marker></defs><path d="M17,44 C17,26 83,26 83,44" fill="none" stroke="rgba(31,43,224,0.18)" stroke-width="1.4" stroke-dasharray="2,2"/><text x="50" y="18" text-anchor="middle" font-size="3.4" fill="#1F2BE0" font-family="Hanken Grotesk">ground truth: TMM (quang)</text><text x="50" y="23" text-anchor="middle" font-size="3.4" fill="#1F2BE0" font-family="Hanken Grotesk">+ hotspot (&#273;i&#7879;n-nhi&#7879;t)</text></svg></div><div class="diagram-cap">pipeline surrogate: input h&#236;nh h&#7885;c &#8594; GNN &#8594; hi&#7879;u su&#7845;t d&#7921; &#273;o&#225;n</div></div></div></div>
+      <div class="pagenum">15 / 24</div>
+    </section>
+    <section class="slide s-tasklist s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Task 33&ndash;37.</div><div class="lab-tag caption">Giai &#273;o&#7841;n 5 &middot; ph&#7847;n 1</div></div><div class="tasks"><div class="trow"><div class="tnum">33</div><div class="ttxt">Nghi&#234;n c&#7913;u l&#253; thuy&#7871;t transfer-matrix method (TMM) cho c&#7845;u tr&#250;c cavity nhi&#7873;u l&#7899;p.</div></div><div class="trow"><div class="tnum">34</div><div class="ttxt">C&#224;i &#273;&#7863;t m&#244; ph&#7887;ng h&#7845;p th&#7909; quang (TMM) cho cavity SNSPD.</div></div><div class="trow"><div class="tnum">35</div><div class="ttxt">Ki&#7875;m ch&#7913;ng TMM so v&#7899;i thi&#7871;t k&#7871; cavity &#273;&#227; c&#244;ng b&#7889;.</div></div><div class="trow"><div class="tnum">36</div><div class="ttxt">K&#7871;t h&#7907;p pipeline quang h&#7885;c (TMM) + &#273;i&#7879;n-nhi&#7879;t (hotspot) th&#224;nh 1 h&#7879; th&#7889;ng nh&#7845;t.</div></div><div class="trow"><div class="tnum">37</div><div class="ttxt">Ki&#7875;m ch&#7913;ng t&#7893;ng th&#7875; so v&#7899;i SDE ~98% (NIST) v&#224; thi&#7871;t b&#7883; v&#7879; tinh th&#7853;t (Hao et al. 2024).</div></div></div></div>
+      <div class="pagenum">16 / 24</div>
+    </section>
+    <section class="slide s-tasklist s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Task 38&ndash;42.</div><div class="lab-tag caption">Giai &#273;o&#7841;n 5 &middot; ph&#7847;n 2</div></div><div class="tasks"><div class="trow"><div class="tnum">38</div><div class="ttxt">Thi&#7871;t k&#7871; kh&#244;ng gian tham s&#7889; &#273;&#7847;y &#273;&#7911; (v&#7853;t li&#7879;u &times; h&#236;nh h&#7885;c &times; cavity).</div></div><div class="trow"><div class="tnum">39</div><div class="ttxt">Sinh b&#7897; d&#7919; li&#7879;u l&#7899;n (xin PIAS n&#7871;u c&#7847;n).</div></div><div class="trow"><div class="tnum">40</div><div class="ttxt">Hu&#7845;n luy&#7879;n m&#244; h&#236;nh GNN cu&#7889;i c&#249;ng tr&#234;n b&#7897; d&#7919; li&#7879;u &#273;&#7847;y &#273;&#7911;.</div></div><div class="trow"><div class="tnum">41</div><div class="ttxt">&#272;&#225;nh gi&#225; to&#224;n di&#7879;n: &#273;&#7897; ch&#237;nh x&#225;c, t&#7889;c &#273;&#7897; t&#259;ng, kh&#7843; n&#259;ng &#273;&#7873; xu&#7845;t thi&#7871;t k&#7871; m&#7899;i.</div></div><div class="trow"><div class="tnum">42</div><div class="ttxt">Vi&#7871;t b&#225;o c&#225;o Milestone 4 &mdash; k&#7871;t qu&#7843; ch&#237;nh c&#7911;a lu&#7853;n v&#259;n.</div></div></div></div>
+      <div class="pagenum">17 / 24</div>
+    </section>
+    <section class="slide s-chapter hairlines">
+      <div class="pixel-glitch" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><defs><pattern id="vsY6" width="2.4" height="100" patternUnits="userSpaceOnUse"><line x1="0.5" y1="0" x2="0.5" y2="100" stroke="#1F2BE0" stroke-width="1.0" /></pattern></defs><rect x="36" y="0"  width="38" height="14" fill="url(#vsY6)"/><rect x="22" y="14" width="50" height="12" fill="url(#vsY6)"/><rect x="34" y="26" width="46" height="11" fill="url(#vsY6)"/><rect x="16" y="37" width="60" height="13" fill="url(#vsY6)"/><rect x="28" y="50" width="48" height="11" fill="url(#vsY6)"/><rect x="18" y="61" width="62" height="14" fill="url(#vsY6)"/><rect x="34" y="75" width="44" height="12" fill="url(#vsY6)"/><rect x="22" y="87" width="50" height="13" fill="url(#vsY6)"/></svg></div><div class="frame"><div class="nm-tag caption">Giai &#273;o&#7841;n 6&ndash;7 &middot; 8 task</div><h2 class="ttl">&#7912;ng d&#7909;ng v&#7879; tinh, m&#7903; r&#7897;ng, t&#7893;ng h&#7907;p.</h2><p class="lede">N&#7889;i k&#7871;t qu&#7843; l&#7841;i v&#7899;i &#273;&#7897;ng l&#7921;c ban &#273;&#7847;u: truy&#7873;n th&#244;ng l&#432;&#7907;ng t&#7917; v&#7879; tinh.</p></div>
+      <div class="pagenum">18 / 24</div>
+    </section>
+    <section class="slide s-tasklist s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">&#7912;ng d&#7909;ng v&#7879; tinh & m&#7903; r&#7897;ng &mdash; Task 43&ndash;46.</div><div class="lab-tag caption">Giai &#273;o&#7841;n 6</div></div><div class="tasks"><div class="trow"><div class="tnum">43</div><div class="ttxt">&#272;&#7889;i chi&#7871;u thi&#7871;t k&#7871; t&#7889;i &#432;u v&#7899;i r&#224;ng bu&#7897;c thi&#7871;t b&#7883; v&#7879; tinh (kh&#7889;i l&#432;&#7907;ng, l&#224;m l&#7841;nh, hi&#7879;u su&#7845;t b&#432;&#7899;c s&#243;ng li&#234;n k&#7871;t).</div></div><div class="trow"><div class="tnum">44</div><div class="ttxt">Ph&#226;n t&#237;ch thi&#7871;t k&#7871; ph&#249; h&#7907;p nh&#7845;t cho k&#7883;ch b&#7843;n li&#234;n k&#7871;t quang l&#432;&#7907;ng t&#7917; t&#7921; do v&#7879; tinh-m&#7863;t &#273;&#7845;t.</div></div><div class="trow"><div class="tnum">45</div><div class="ttxt">Vi&#7871;t ch&#432;&#417;ng li&#234;n h&#7879; &#7913;ng d&#7909;ng satellite quantum communication.</div></div><div class="trow"><div class="tnum">46</div><div class="ttxt">Ph&#225;c th&#7843;o h&#432;&#7899;ng m&#7903; r&#7897;ng sang Josephson metamaterials.</div></div></div></div>
+      <div class="pagenum">19 / 24</div>
+    </section>
+    <section class="slide s-tasklist s-ext hairlines">
+      <div class="frame"><div class="topbar"><div class="h">T&#7893;ng h&#7907;p & c&#244;ng b&#7889; &mdash; Task 47&ndash;50.</div><div class="lab-tag caption">Giai &#273;o&#7841;n 7</div></div><div class="tasks"><div class="trow"><div class="tnum">47</div><div class="ttxt">Vi&#7871;t b&#7843;n t&#243;m t&#7855;t/b&#224;i b&#225;o ng&#7855;n (kh&#7843; n&#259;ng g&#7917;i h&#7897;i ngh&#7883;).</div></div><div class="trow"><div class="tnum">48</div><div class="ttxt">Chu&#7849;n b&#7883; b&#7897; slide tr&#236;nh b&#224;y k&#7871;t qu&#7843; nghi&#234;n c&#7913;u.</div></div><div class="trow"><div class="tnum">49</div><div class="ttxt">T&#7893;ng h&#7907;p code + t&#224;i li&#7879;u th&#224;nh repo ho&#224;n ch&#7881;nh, c&#243; README.</div></div><div class="trow"><div class="tnum">50</div><div class="ttxt">Vi&#7871;t b&#225;o c&#225;o t&#7893;ng k&#7871;t d&#7921; &#225;n, &#273;&#7889;i chi&#7871;u 4 c&#226;u h&#7887;i nghi&#234;n c&#7913;u ban &#273;&#7847;u.</div></div></div></div>
+      <div class="pagenum">20 / 24</div>
+    </section>
+    <section class="slide s-table hairlines">
+      <div class="frame"><div class="topbar"><div class="h">T&#7915; n&#7873;n t&#7843;ng &#273;&#7871;n ho&#224;n t&#7845;t.</div><div class="lab-tag caption">M&#7889;c ki&#7875;m tra ti&#7871;n &#273;&#7897;</div></div><div class="ledger"><div class="row headrow" style="grid-template-columns:0px 190px 1fr 100px 0px"><div class="caption"></div><div class="caption">M&#7889;c</div><div class="caption">Deliverable</div><div class="caption">Sau task</div><div class="caption"></div></div><div class="row" style="grid-template-columns:0px 190px 1fr 100px 0px"><div class="num-tag caption"></div><div class="nm">N&#7873;n t&#7843;ng s&#7861;n s&#224;ng</div><div class="desc">Lit. review + h&#7841; t&#7847;ng + unit test</div><div class="mood-tag">Task 10</div><div class="delta-tag  caption"></div></div><div class="row" style="grid-template-columns:0px 190px 1fr 100px 0px"><div class="num-tag caption"></div><div class="nm">Milestone 1</div><div class="desc">Pipeline ML c&#417; b&#7843;n &#273;&#250;ng, t&#225;i l&#7853;p benchmark</div><div class="mood-tag">Task 16</div><div class="delta-tag  caption"></div></div><div class="row" style="grid-template-columns:0px 190px 1fr 100px 0px"><div class="num-tag caption"></div><div class="nm">Milestone 2</div><div class="desc">M&#244; h&#236;nh m&#224;ng m&#7887;ng kh&#7899;p s&#7889; li&#7879;u</div><div class="mood-tag">Task 22</div><div class="delta-tag  caption"></div></div><div class="row" style="grid-template-columns:0px 190px 1fr 100px 0px"><div class="num-tag caption"></div><div class="nm">Milestone 3</div><div class="desc">M&#244; h&#236;nh hotspot + ML B&#7853;c 3</div><div class="mood-tag">Task 32</div><div class="delta-tag  caption"></div></div><div class="row" style="grid-template-columns:0px 190px 1fr 100px 0px"><div class="num-tag caption"></div><div class="nm">Milestone 4</div><div class="desc">Pipeline &#273;&#7847;y &#273;&#7911; &mdash; k&#7871;t qu&#7843; ch&#237;nh</div><div class="mood-tag">Task 42</div><div class="delta-tag  caption"></div></div><div class="row" style="grid-template-columns:0px 190px 1fr 100px 0px"><div class="num-tag caption"></div><div class="nm">Ho&#224;n t&#7845;t</div><div class="desc">Repo + b&#225;o c&#225;o t&#7893;ng k&#7871;t s&#7861;n s&#224;ng</div><div class="mood-tag">Task 50</div><div class="delta-tag  caption"></div></div></div></div>
+      <div class="pagenum">21 / 24</div>
+    </section>
+    <section class="slide s-data hairlines">
+      <div class="frame"><div class="topbar"><div class="h">Th&#7901;i gian &#432;&#7899;c t&#237;nh m&#7895;i b&#7853;c.</div><div class="lab-tag caption">B&#7853;c thang &#273;&#7897; ph&#7913;c t&#7841;p</div></div><div class="body"><div class="col-a"><div class="stat"><div class="vbig">4</div><div class="lab2 caption">b&#7853;c thang</div><div class="desc">T&#7915; Tc-t&#7915;-th&#224;nh-ph&#7847;n &#273;&#7871;n thi&#7871;t b&#7883; SNSPD &#273;&#7847;y &#273;&#7911;.</div></div><div class="stat"><div class="vbig" style="font-size: clamp(60px, min(6vw, 9vh), 130px);">3.5&ndash;5.5</div><div class="lab2 caption">th&#225;ng</div><div class="desc">&#431;&#7899;c t&#237;nh t&#7893;ng cho l&#245;i nghi&#234;n c&#7913;u (Giai &#273;o&#7841;n 2&ndash;5).</div></div></div><div class="chart"><div class="bars"><div class="stack"><div class="cell on"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div></div><div class="stack"><div class="cell on"></div><div class="cell on"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div></div><div class="stack"><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div></div><div class="stack"><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div></div></div><div class="ticks"><div class="ticklab caption">B&#7853;c 1: 1-2 tu&#7847;n</div><div class="ticklab caption">B&#7853;c 2: +2-3 tu&#7847;n</div><div class="ticklab caption">B&#7853;c 3: +4-6 tu&#7847;n</div><div class="ticklab caption">B&#7853;c 4: +6-10 tu&#7847;n</div></div></div></div></div>
+      <div class="pagenum">22 / 24</div>
+    </section>
+    <section class="slide s-manifesto hairlines">
+      <div class="stmt-wrap"><p class="stmt">50 task kh&#244;ng ph&#7843;i danh s&#225;ch vi&#7879;c c&#7847;n l&#224;m &mdash; <span class="roman">&#273;&#243; l&#224; b&#7857;ng ch&#7913;ng cho th&#7845;y &#273;&#7873; t&#224;i n&#224;y kh&#7843; thi, c&#243; th&#7875; ki&#7875;m tra t&#7915;ng b&#432;&#7899;c.</span></p><div class="attr"><div class="who caption">Suy ngh&#297; k&#7871;t</div><div class="meta-tag caption">M&#7895;i b&#7853;c &#273;&#7873;u c&#243; th&#7875; d&#7915;ng l&#7841;i, ki&#7875;m tra, v&#224; b&#225;o c&#225;o &#273;&#7897;c l&#7853;p</div></div></div>
+      <div class="pagenum">23 / 24</div>
+    </section>
+    <section class="slide s-colophon hairlines">
+      <div class="pixel-glitch" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><defs><pattern id="vsY7" width="2.4" height="100" patternUnits="userSpaceOnUse"><line x1="0.5" y1="0" x2="0.5" y2="100" stroke="#1F2BE0" stroke-width="1.0" /></pattern></defs><rect x="36" y="0"  width="38" height="14" fill="url(#vsY7)"/><rect x="22" y="14" width="50" height="12" fill="url(#vsY7)"/><rect x="34" y="26" width="46" height="11" fill="url(#vsY7)"/><rect x="16" y="37" width="60" height="13" fill="url(#vsY7)"/><rect x="28" y="50" width="48" height="11" fill="url(#vsY7)"/><rect x="18" y="61" width="62" height="14" fill="url(#vsY7)"/><rect x="34" y="75" width="44" height="12" fill="url(#vsY7)"/><rect x="22" y="87" width="50" height="13" fill="url(#vsY7)"/></svg></div><div class="qr-block" aria-hidden="true"><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span></div><div class="titlewrap"><div class="ktag caption">Colophon &middot; K&#7871; Ho&#7841;ch SNSPD</div><h2 class="ttl">C&#7843;m &#417;n &#273;&#227;<br/>theo d&#245;i.</h2></div><div class="col-footer"><div><div class="ftag caption">Bi&#234;n so&#7841;n</div><div class="ftxt">Tr&#432;&#417;ng Tu&#7845;n Nghĩa<br/>k&#7871; ho&#7841;ch nghi&#234;n c&#7913;u SNSPD</div></div><div><div class="ftag caption">Ngu&#7891;n</div><div class="ftxt">Literature Review for Proposal.md<br/>&#273;&#227; x&#225;c minh qua CrossRef/Unpaywall</div></div><div><div class="ftag caption">GVHD d&#7921; ki&#7871;n</div><div class="ftxt">TS. Nguy&#7877;n V&#259;n Duy<br/>Khoa KH&amp;KT V&#7853;t li&#7879;u, Phenikaa</div></div><div><div class="ftag caption">Ti&#7871;p theo</div><div class="ftxt">So&#7841;n &#273;&#7873; c&#432;&#417;ng m&#7851;u 3a/3c<br/>d&#7921;a tr&#234;n k&#7871; ho&#7841;ch n&#224;y.</div></div></div>
+      <div class="pagenum">24 / 24</div>
+    </section>
+
+  </div>
+</div>
+
+<div class="caption nav-hint">&larr; / &rarr; &middot; space</div>
+
+<script>
+  // Plain vanilla navigation: arrows, space, home/end, swipe.
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let current = 0;
+  function show(i) {
+    if (i < 0) i = 0;
+    if (i > slides.length - 1) i = slides.length - 1;
+    slides[current].classList.remove('active');
+    slides[i].classList.add('active');
+    current = i;
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); show(current + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp')               { e.preventDefault(); show(current - 1); }
+    else if (e.key === 'Home')                                            { e.preventDefault(); show(0); }
+    else if (e.key === 'End')                                             { e.preventDefault(); show(slides.length - 1); }
+  });
+  let tx = null;
+  document.addEventListener('touchstart', (e) => { tx = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', (e) => {
+    if (tx == null) return;
+    const dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 40) show(current + (dx < 0 ? 1 : -1));
+    tx = null;
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    if (window.katex) {
+      document.querySelectorAll(".eqn-stage").forEach(function (el) {
+        var src = el.textContent.trim().replace(/^\\\[/, "").replace(/\\\]$/, "").trim();
+        try {
+          katex.render(src, el, { displayMode: true, throwOnError: false, strict: false });
+        } catch (e) {
+          console.error("KaTeX render failed for:", src, e);
+        }
+      });
+    }
+    if (window.renderMathInElement) {
+      renderMathInElement(document.body, {
+        delimiters: [
+          {left: "\\(", right: "\\)", display: false}
+        ],
+        throwOnError: false,
+        strict: false,
+        ignoredClasses: ["eqn-stage"]
+      });
+    }
+  });
+</script>
+
+</body>
+</html>
