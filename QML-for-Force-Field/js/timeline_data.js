@@ -10,11 +10,27 @@ const TIMELINE = [
     }
   },
   {
+    year: "1964–1965",
+    label: { vi: "Nền tảng DFT (Hohenberg–Kohn, Kohn–Sham)", en: "DFT foundations (Hohenberg–Kohn, Kohn–Sham)" },
+    detail: {
+      vi: "Hohenberg & Kohn (<i>Phys. Rev.</i> 136, B864, 1964) chứng minh năng lượng chỉ là hàm của mật độ electron $n(\\vec r)$, không cần hàm sóng đầy đủ. Kohn & Sham (<i>Phys. Rev.</i> 140, A1133, 1965) biến điều đó thành phương trình tự hợp giải được thực tế — khai sinh Density Functional Theory (DFT), phương pháp sẽ trở thành công cụ chính sinh nhãn huấn luyện cho mọi ML force field sau này, kể cả MD17 và QM9.",
+      en: "Hohenberg & Kohn (<i>Phys. Rev.</i> 136, B864, 1964) prove the energy is a functional of the electron density $n(\\vec r)$ alone, no full wavefunction needed. Kohn & Sham (<i>Phys. Rev.</i> 140, A1133, 1965) turn this into a practically solvable self-consistent equation — the birth of Density Functional Theory (DFT), which becomes the dominant method generating training labels for every ML force field since, including MD17 and QM9."
+    }
+  },
+  {
     year: "1983–1988",
     label: { vi: "AMBER, CHARMM, OPLS", en: "AMBER, CHARMM, OPLS" },
     detail: {
       vi: "CHARMM (Brooks, Karplus, 1983), AMBER (Weiner & Kollman, 1984), OPLS (Jorgensen, 1988): trường lực cơ học phân tử đầy đủ, dạng hàm cố định (bonds/angles/dihedrals/van der Waals/electrostatics), tham số khớp offline. Nhanh, scale tới hàng triệu nguyên tử, nhưng không mô tả được phản ứng hoá học vì topology liên kết cố định.",
       en: "CHARMM (Brooks, Karplus, 1983), AMBER (Weiner & Kollman, 1984), OPLS (Jorgensen, 1988): full molecular-mechanics force fields with a fixed functional form, offline-fit parameters. Fast, scale to millions of atoms, but cannot describe chemical reactions since bonding topology is fixed."
+    }
+  },
+  {
+    year: "1988–1996",
+    label: { vi: "DFT trở thành chuẩn mực (B3LYP, PBE)", en: "DFT becomes standard (B3LYP, PBE)" },
+    detail: {
+      vi: "Becke 1993 + Lee–Yang–Parr 1988 tạo thành B3LYP (hàm phổ biến nhất hoá học); Perdew–Burke–Ernzerhof 1996 (PBE) là hàm phổ biến nhất vật liệu. Bằng chứng cho mức độ thống trị: trong danh sách \"top 100 bài báo được trích dẫn nhiều nhất mọi thời đại, mọi ngành khoa học\" (Van Noorden, Maher, Nuzzo, <i>Nature</i> 514, 550, 2014), <b>2 trong top 10</b> chính là hai bài hàm phiếm DFT này. DFT hiện được dùng trong hơn 10.000 công bố khoa học mỗi năm — không phải cảm giác, mà là con số kiểm chứng được.",
+      en: "Becke 1993 + Lee–Yang–Parr 1988 combine into B3LYP (chemistry's most popular functional); Perdew–Burke–Ernzerhof 1996 (PBE) is materials science's most popular functional. Evidence of just how dominant: in the list of \"top 100 most-cited papers of all time, across all of science\" (Van Noorden, Maher, Nuzzo, <i>Nature</i> 514, 550, 2014), <b>2 of the top 10</b> are these two DFT functional papers. DFT is now used in over 10,000 publications per year — not a feeling, a verifiable number."
     }
   },
   {
