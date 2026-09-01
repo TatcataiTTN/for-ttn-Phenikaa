@@ -904,7 +904,9 @@
   @keyframes ripple { 0% { r: 3; opacity: 0.9; } 100% { r: 34; opacity: 0; } }
   @keyframes swing { 0%,100% { transform: rotate(-14deg); } 50% { transform: rotate(14deg); } }
   @keyframes blinkbar { 0%,100% { opacity: 1; } 50% { opacity: 0.15; } }
-  .anim-spin { transform-origin: center; transform-box: fill-box; animation: spin90 4s ease-in-out infinite; }
+  .anim-spin { animation: spin90 4s ease-in-out infinite; }
+  @keyframes spin90ccw { 0%,15% { transform: rotate(0deg);} 45%,65% { transform: rotate(-90deg);} 95%,100% { transform: rotate(0deg);} }
+  .anim-spin-ccw { animation: spin90ccw 4s ease-in-out infinite; }
   .anim-draw { animation: drawline 2.6s ease-out forwards; }
   .anim-float { animation: floatbob 3.2s ease-in-out infinite; }
   .anim-pulse { animation: pulseop 2.4s ease-in-out infinite; }
@@ -1047,7 +1049,7 @@
       <div class="pagenum">30 / 62</div>
     </section>
     <section class="slide s-split s-ext hairlines">
-      <div class="frame"><div class="topbar"><div class="h">Xoay một vector bằng ma trận thật.</div><div class="lab-tag caption">2.1 &middot; ví dụ số</div></div><div class="body wide-left"><div class="col"><p>\(R_z(90^\circ)\) áp lên \(\vec v=(1,0,0)\) cho (0,1,0): mũi tên chỉ x nay chỉ y &mdash; đúng một góc phần tư. Kiểm tra: \(\|\vec v\|=1\) và \(\|R\vec v\|=1\) &mdash; không đổi.</p><p>Đây chính xác là phép tính, cho từng nguyên tử, mỗi khi tài liệu nói "xoay phân tử."</p></div><div class="col"><div class="diagram-frame"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><circle cx="50" cy="50" r="34" fill="none" stroke="rgba(31,43,224,0.18)" stroke-width="1"/><line x1="50" y1="50" x2="50" y2="50" x2="50" y2="16" stroke="#1F2BE0" stroke-width="0" /><g class="anim-spin" style="transform-origin:50px 50px;"><line x1="50" y1="50" x2="50" y2="16" stroke="#1F2BE0" stroke-width="2.4"/><polygon points="50,10 45,20 55,20" fill="#1F2BE0"/></g><circle cx="50" cy="50" r="3" fill="#1F2BE0"/></svg></div><div class="diagram-cap">R · vector đang xoay quanh gốc, độ dài không đổi</div></div></div></div>
+      <div class="frame"><div class="topbar"><div class="h">Xoay một vector bằng ma trận thật.</div><div class="lab-tag caption">2.1 &middot; ví dụ số</div></div><div class="body wide-left"><div class="col"><p>\(R_z(90^\circ)\) áp lên \(\vec v=(1,0,0)\) cho (0,1,0): mũi tên chỉ x nay chỉ y &mdash; đúng một góc phần tư. Kiểm tra: \(\|\vec v\|=1\) và \(\|R\vec v\|=1\) &mdash; không đổi.</p><p>Đây chính xác là phép tính, cho từng nguyên tử, mỗi khi tài liệu nói "xoay phân tử."</p></div><div class="col"><div class="diagram-frame"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><circle cx="50" cy="50" r="34" fill="none" stroke="rgba(31,43,224,0.18)" stroke-width="1"/><line x1="50" y1="50" x2="88" y2="50" stroke="rgba(31,43,224,0.18)" stroke-width="1"/><line x1="50" y1="50" x2="50" y2="12" stroke="rgba(31,43,224,0.18)" stroke-width="1"/><text x="90" y="53" font-size="6" fill="rgba(31,43,224,0.18)" font-family="DM Mono, monospace">x</text><text x="46" y="12" font-size="6" fill="rgba(31,43,224,0.18)" font-family="DM Mono, monospace">y</text><g class="anim-spin-ccw" style="transform-origin:50px 50px;"><line x1="50" y1="50" x2="84" y2="50" stroke="#1F2BE0" stroke-width="2.4"/><polygon points="90,50 80,45 80,55" fill="#1F2BE0"/></g><circle cx="50" cy="50" r="3" fill="#1F2BE0"/></svg></div><div class="diagram-cap">R · vector chỉ x quay ngược kim đồng hồ thành vector chỉ y</div></div></div></div>
       <div class="pagenum">31 / 62</div>
     </section>
     <section class="slide s-formula s-ext hairlines">
